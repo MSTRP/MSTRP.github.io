@@ -1233,7 +1233,10 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
             var leftPos = element_being_scrolled.scrollLeft()
             //get initial position
 
-            var scroll_amount = (direction === "left" ? leftPos - 15 : leftPos + 15)
+            let speed = 10;
+            //amount to scroll per second 20 = fast, 10 = medium, 5 = slow 
+
+            var scroll_amount = (direction === "left" ? leftPos - speed : leftPos + speed)
             //set scroll increment depending on scroll direction specified
 
             element_being_scrolled
