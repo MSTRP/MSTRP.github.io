@@ -1199,7 +1199,9 @@ var keyupSwitch = function (buttons) {
             || jQuery(this).val().replace(/,/,"") == ""
         }); //blank inputs whic appear before teh current one
 
-        let nextIndex = buttons.length - 1;
+        let nextIndex = (buttons.length == 3) ? 2 : 1;
+        //set next index depending on the number of buttons provided
+        
         let action = function () {
             nextbuttonSwitch(sections[buttons[Index]], sections[buttons[nextIndex]]);
         };
