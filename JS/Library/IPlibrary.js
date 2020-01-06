@@ -59,6 +59,9 @@ var sections = {
     End: "Submit report"
 };
 
+//references for question with string filter values
+var stringfilters = ["SixBD", "Supporting"];
+
 //question table headings:
 var columnNames = {
     "3a": {
@@ -278,6 +281,13 @@ var filterBlanks = function (selector) {
             || jQuery(this).val().length == 0
         //or if the field is empty
 
+    })
+};
+
+//get an array of the input fields on the page excluding the buttons:
+var filterButtons = function () {
+    return jQuery("input").filter(function () {
+        return jQuery(this).attr('id') != "PreviousButton" || jQuery(this).attr('id') != "NextButton"
     })
 };
 
@@ -1075,6 +1085,7 @@ var nextbuttonSwitch = function (detailsBtn, nextBtn) {
     //select the next button
     let nb = jQuery("#NextButton");
 
+
     if (jQuery("input").val().replace(/,/g, "") > 0) {
         //use replace() to extract commas from cleave
 
@@ -1121,9 +1132,6 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
     };
     //function to set filter logical
     let setfilter = function (index) {
-
-        let stringfilters = ["ThreeB", "SixBD", "Supporting"];
-        //references for question with string filter values
 
         if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] != "Supporting") {
             //if the current  button reference is in stringfilters
@@ -1173,8 +1181,36 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
 };
 
 var keyupSwitch = function (buttons) {
-    jQuery("input").keyup(function () {
-        (nextbuttonSwitch(sections[buttons[0]], sections[buttons[1]]))
+
+    let i = filterButtons();
+    //array of inputs on the page excluding the next buttons
+
+    i.keyup(function () {
+        let I = jQuery(this); 
+        let Index = i.indexOf(I); //index of current input
+
+        //arrays for comparison:
+        let first = i.filter(function (){
+            return i.indexOf(jQuery(this)) < Index
+        }); //input which appear before the current one
+
+        let firstBlanks = first.filter(function (){
+            return jQuery(this).val().replace(/,/,"") == 0 
+            || jQuery(this).val().replace(/,/,"") == ""
+        }); //blank inputs whic appear before teh current one
+
+        let nextIndex = buttons.length - 1;
+        let action = function () {
+            nextbuttonSwitch(sections[buttons[Index]], sections[buttons[nextIndex]]);
+        };
+
+        if (Index > 0 && firstBlanks.length == first.length) {
+            //if all the previous inputs are blank 
+            action();
+        } else if (Index == 0) {
+            //or if this is the first input
+            action();
+        };
     })
 };
 
@@ -1223,7 +1259,7 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
             };
             //add hover text to buttons:
             hoverTextAdd(jQuery(".Scroll--right"), hoverText["right"]) //right
-            hoverTextAdd(jQuery(this), hoverText["left"]) //left 
+            hoverTextAdd(jQuery(this), hoverText["left"]) //left k
         };
 
 
@@ -1821,13 +1857,7 @@ var carry3b = function (answerlist) {
         var nPF = NPF[rowindex];
         //Patent app status
 
-        if (nPF !== "F") {
-            //if F was not selected
-
-            jQuery(this).hide();
-            //hide this row
-
-        } else {
+        if (nPF == "F") {
 
             //define the fields + input selector
             var awardN = thisRow.find("td:nth-child(4)");
@@ -2096,7 +2126,7 @@ var revenueFormatting = function (parentarray) {
         var directCostsInput = inputSelect(inputs.find(columnSelect("directCostsRef", parentarray))); //direct costs
         var contributionWTInput = inputSelect(inputs.find(columnSelect("contributionWTRef", parentarray))); //WT contribution %
         var contributionJustInput = textareaselect(inputs.find(columnSelect("contributionJust", parentarray))); //WT contribution Justification
-        
+
         var revShareWTInput = inputSelect(inputs.find(columnSelect("revShareWTRef", parentarray))); //WT revenue share %
         var selectorFieldRN = inputSelect(inputs.find(columnSelect("revNetRef", parentarray))); //net revenue
         var selectorFieldRA = inputSelect(inputs.find(columnSelect("revWTRef", parentarray))); //revenue attributable to WT
