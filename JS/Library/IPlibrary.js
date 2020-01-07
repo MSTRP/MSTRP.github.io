@@ -282,10 +282,11 @@ var filterBlanks = function (selector) {
 
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
-    return jQuery("input")
-        .filter(selector => jQuery("input")
-            .index(selector) < jQuery("input").length - 3)
-};
+    return jQuery("input").filter(function () {
+        jQuery("input").index(jQuery(this)) < jQuery("input").length - 3
+    })
+}
+
 
 //functions to check the arrays:
 
@@ -1217,24 +1218,28 @@ var keyupSwitch = function (buttons) {
 
         let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
 
+        //set array indecies for nextbuttonSwitch function:
+        let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
+        //if more than 2 inputs on page flip buttons array so that it 
+        //can still work with loadSwitch method syntax
+
+        let nextIndex = (buttons.length > 2) ? 0 : 1;
+        //set next index depending on the number of buttons provided
+
         //arrays for comparison:
         let first = i.filter(function () {
             return i.index(jQuery(this)) < Index
-            
         });//inputs which appear before the current one
+
+        console.log("first: ", first);
 
         let firstBlanks = first.filter(function () {
             return jQuery(this).val().replace(/,/g, "") == 0 ||
                 jQuery(this).val().replace(/,/g, "") == ""
         });//blank inputs whic appear before the current one
+        console.log("firstBlanks : ", firstBlanks);
 
-        //set array indecies for nextbuttonSwitch function:
-        let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
-        //if more than 2 inputs on page flip buttons array so that it 
-        //can still work with loadSwith method syntax
-
-        let nextIndex = (buttons.length > 2) ? 0 : 1;
-        //set next index depending on the number of buttons provided
+        console.log(jQuery(this).val().replace(/,/g, ""));
 
         if (Index > 0 && firstBlanks.length == first.length) {
             //if all the previous inputs are blank 
