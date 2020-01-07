@@ -1196,10 +1196,10 @@ var keyupSwitch = function (buttons) {
     //array of inputs on the page excluding the next buttons
 
     i.keyup(function () {
+
         let I = jQuery(this);
 
-
-        //set buttons array and reference indecies depending on the 
+        /* //set buttons array and reference indecies depending on the 
         //amount of input on the page so they can still work with 
         //loadSwith and nextbuttonSwitch methods
         switch (true) {
@@ -1213,26 +1213,29 @@ var keyupSwitch = function (buttons) {
                 var Index = i.index(I);
                 var Buttons = buttons;
                 var nextIndex = 1;
-        };
-        /* let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input */
+        }; */
+
+        let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
 
         //arrays for comparison:
-
-        let first = i.filter(input => i.index(input) < Index);
-        //input which appear before the current one
+        let first = i.filter(function () {
+            return i.index(jQuery(this)) < Index
+            
+        });//inputs which appear before the current one
 
         let firstBlanks = first.filter(function () {
-            return jQuery(this).val().replace(/,/g, "") == 0 || jQuery(this).val().replace(/,/g, "") == ""
-        }); //blank inputs whic appear before the current one
+            return jQuery(this).val().replace(/,/g, "") == 0 ||
+                jQuery(this).val().replace(/,/g, "") == ""
+        });//blank inputs whic appear before the current one
 
-        /* //set array indecies for nextbuttonSwitch function:
+        //set array indecies for nextbuttonSwitch function:
         let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
         //if more than 2 inputs on page flip buttons array so that it 
         //can still work with loadSwith method syntax
 
         let nextIndex = (buttons.length > 2) ? 0 : 1;
         //set next index depending on the number of buttons provided
-        */
+
         if (Index > 0 && firstBlanks.length == first.length) {
             //if all the previous inputs are blank 
             nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
