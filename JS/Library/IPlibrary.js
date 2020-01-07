@@ -287,7 +287,7 @@ var filterBlanks = function (selector) {
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
     return jQuery("input").filter(function () {
-        
+
         return jQuery(this).attr('id').includes("Button") == false;
     })
 };
@@ -1082,12 +1082,15 @@ var prevbuttonDefault = function (prevBtn) {
 };
 
 //next button switcher
-var nextbuttonSwitch = function (detailsBtn, nextBtn) {
-    //select the next button
-    let nb = jQuery("#NextButton");
+var nextbuttonSwitch = function (detailsBtn, nextBtn, input) {
+    //input is optional
 
+    let nb = jQuery("#NextButton");//select the next button
 
-    if (jQuery("input").val().replace(/,/g, "") > 0) {
+    let selector = (input === undefined) ? jQuery("input") : input;
+    //define the selector for listener
+
+    if (selector.val().replace(/,/g, "") > 0) {
         //use replace() to extract commas from cleave
 
         // when filter is above 0 replace button text
@@ -1211,7 +1214,7 @@ var keyupSwitch = function (buttons) {
         //set next index depending on the number of buttons provided
 
         let action = function () {
-            nextbuttonSwitch(sections[buttons[Index]], sections[buttons[nextIndex]]);
+            nextbuttonSwitch(sections[buttons[Index]], sections[buttons[nextIndex]], I);
         };
 
         if (Index > 0 && firstBlanks.length == first.length) {
