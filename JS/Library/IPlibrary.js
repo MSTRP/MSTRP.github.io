@@ -274,11 +274,12 @@ var getFilters = function (question, filters) {
 
 //2) array and object methods:
 var filterBlanks = function (selector) {
-    return selector.filter(input =>
-        input.val().length == 1 && jQuery(this).val().charAt(0) == "£"
-        //if the first character is "£" and the field has no other characters
-        || input.val().length == 0 //or if the field is empty
-    )
+    return selector.filter(function () {
+        return jQuery(this).val().length == 1 && jQuery(this).val().charAt(0) == "£"
+            //if the first character is "£" and the field has no other characters
+            || jQuery(this).val().length == 0
+        //or if the field is empty
+    })
 };
 
 //get an array of the input fields on the page excluding the buttons:
