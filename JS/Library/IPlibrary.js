@@ -1204,6 +1204,7 @@ var keyupSwitch = function (buttons) {
         //loadSwith and nextbuttonSwitch methods
         switch (true) {
             case buttons.length > 2:
+                console.log("yup");
                 var Buttons = buttons.reverse();
                 var nextIndex = 0;//next will always be 0
                 var Index = i.index(I) + 1; //new 0 based index                
