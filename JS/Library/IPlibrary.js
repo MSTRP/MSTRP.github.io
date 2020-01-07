@@ -274,22 +274,16 @@ var getFilters = function (question, filters) {
 
 //2) array and object methods:
 var filterBlanks = function (selector) {
-    return selector.filter(function () {
-
-        return jQuery(this).val().length == 1 && jQuery(this).val().charAt(0) == "£"
-            //if the first character is "£" and the field has no other characters
-            || jQuery(this).val().length == 0
-        //or if the field is empty
-
-    })
+    return selector.filter(input =>
+        input.val().length == 1 && jQuery(this).val().charAt(0) == "£"
+        //if the first character is "£" and the field has no other characters
+        || input.val().length == 0 //or if the field is empty
+    )
 };
 
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
-    return jQuery("input").filter(function () {
-
-        return jQuery(this).attr('id').includes("Button") == false;
-    })
+    return jQuery("input").filter(inputs => inputs.attr('id').includes("Button") == false)
 };
 
 //functions to check the arrays:
@@ -1127,7 +1121,7 @@ var clickSwitch = function (buttons, wrapperID, optionindex) {
 };//on click
 
 var loadSwitch = function (direction, buttoninfo, filterArray) {
-    
+
     //define the function to run depending on direction
     switch (direction) {
         case 'next':
@@ -1200,26 +1194,41 @@ var keyupSwitch = function (buttons) {
 
     i.keyup(function () {
         let I = jQuery(this);
-        let Index = i.index(I); //index of current input
+
+
+        //set buttons array and reference indecies depending on the 
+        //amount of input on the page so they can still work with 
+        //loadSwith and nextbuttonSwitch methods
+        switch (true) {
+            case buttons.length > 2:
+                var Buttons = buttons.reverse();
+                var nextIndex = 0;//next will always be 0
+                var Index = i.index(I) + 1; //new 0 based index                
+                break;
+            default:
+                var Index = i.index(I);
+                var Buttons = buttons;
+                var nextIndex = 1;
+        };
+        /* let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input */
 
         //arrays for comparison:
-        let first = i.filter(function () {
-            return i.index(jQuery(this)) < Index
-        }); //input which appear before the current one
 
-        let firstBlanks = first.filter(function () {
-            return jQuery(this).val().replace(/,/g, "") == 0
-                || jQuery(this).val().replace(/,/g, "") == ""
-        }); //blank inputs whic appear before the current one
+        let first = i.filter(input => i.index(input) < Index);
+        //input which appear before the current one
 
-        //set array indecies for nextbuttonSwitch function:
+        let firstBlanks = first.filter(input => input.val().replace(/,/g, "") == 0 ||
+            input.val().replace(/,/g, "") == ""
+        ); //blank inputs whic appear before the current one
+
+        /* //set array indecies for nextbuttonSwitch function:
         let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
         //if more than 2 inputs on page flip buttons array so that it 
         //can still work with loadSwith method syntax
 
         let nextIndex = (buttons.length > 2) ? 0 : 1;
         //set next index depending on the number of buttons provided
-
+        */
         if (Index > 0 && firstBlanks.length == first.length) {
             //if all the previous inputs are blank 
             nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
