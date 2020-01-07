@@ -1188,13 +1188,12 @@ var keyupSwitch = function (buttons) {
 
     let i = filterButtons();
     //array of inputs on the page excluding the next buttons
-    console.log("i: ", i);
-
+    
     i.keyup(function () {
         let I = jQuery(this);
         let Index = i.index(I); //index of current input
 
-        console.log("index: ", Index);
+        console.log("index: ", Index, " val: ", I.val().replace(/,/g, ""));
 
         //arrays for comparison:
         let first = i.filter(function () {
@@ -1204,8 +1203,8 @@ var keyupSwitch = function (buttons) {
         console.log("first: ", first);
 
         let firstBlanks = first.filter(function () {
-            return jQuery(this).val().replace(/,/, "") == 0
-                || jQuery(this).val().replace(/,/, "") == ""
+            return jQuery(this).val().replace(/,/g, "") == 0
+                || jQuery(this).val().replace(/,/g, "") == ""
         }); //blank inputs whic appear before the current one
 
         console.log("first blanks: ", firstBlanks);
@@ -1213,16 +1212,12 @@ var keyupSwitch = function (buttons) {
         let nextIndex = (buttons.length == 3) ? 2 : 1;
         //set next index depending on the number of buttons provided
 
-        let action = function () {
-            nextbuttonSwitch(sections[buttons[Index]], sections[buttons[nextIndex]], I);
-        };
-
         if (Index > 0 && firstBlanks.length == first.length) {
             //if all the previous inputs are blank 
-            action();
+            nextbuttonSwitch(sections[buttons[Index]], sections[buttons[nextIndex]], I);
         } else if (Index == 0) {
             //or if this is the first input
-            action();
+            nextbuttonSwitch(sections[buttons[Index]], sections[buttons[nextIndex]], I);
         };
     })
 };
