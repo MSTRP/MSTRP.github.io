@@ -1195,6 +1195,7 @@ var keyupSwitch = function (buttons) {
 
     let i = filterButtons();
     //array of inputs on the page excluding the next buttons
+    console.log("i: ", i);
 
     i.keyup(function () {
 
@@ -1237,9 +1238,10 @@ var keyupSwitch = function (buttons) {
             return jQuery(this).val().replace(/,/g, "") == 0 ||
                 jQuery(this).val().replace(/,/g, "") == ""
         });//blank inputs whic appear before the current one
+       
         console.log("firstBlanks : ", firstBlanks);
 
-        console.log(jQuery(this).val().replace(/,/g, ""));
+        console.log(I.val().replace(/,/g, ""));
 
         if (Index > 0 && firstBlanks.length == first.length) {
             //if all the previous inputs are blank 
