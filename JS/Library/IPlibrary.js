@@ -1189,15 +1189,21 @@ var keyupSwitch = function (buttons) {
         let I = jQuery(this); 
         let Index = i.indexOf(I); //index of current input
 
+        console.log("index: ", Index);
+
         //arrays for comparison:
         let first = i.filter(function (){
             return i.indexOf(jQuery(this)) < Index
         }); //input which appear before the current one
 
+        console.log("first: ", first);
+
         let firstBlanks = first.filter(function (){
             return jQuery(this).val().replace(/,/,"") == 0 
             || jQuery(this).val().replace(/,/,"") == ""
         }); //blank inputs whic appear before teh current one
+
+        console.log("first blanks: ", firstBlanks);
 
         let nextIndex = (buttons.length == 3) ? 2 : 1;
         //set next index depending on the number of buttons provided
@@ -1218,7 +1224,7 @@ var keyupSwitch = function (buttons) {
 
 //---------------copy button
 var copyButton = function (buttonSelector, copySelector) {
-    console.log("buttonSelector #: ", buttonSelector.lastIndexOf(""));
+    //console.log("buttonSelector #: ", buttonSelector.lastIndexOf(""));
 
     jQuery(buttonSelector).click(function () {
 
