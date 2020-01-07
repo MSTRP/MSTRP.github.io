@@ -283,7 +283,7 @@ var filterBlanks = function (selector) {
 
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
-    return jQuery("input").filter(inputs => jQuery(inputs).attr('id').includes("Button") == false)
+    return jQuery("input").filter(selector => selector.attr('id').includes("Button") == false)
 };
 
 //functions to check the arrays:
