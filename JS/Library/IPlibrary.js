@@ -276,15 +276,15 @@ var getFilters = function (question, filters) {
 var filterBlanks = function (selector) {
     return selector.filter(function () {
         return jQuery(this).val().length == 1 && jQuery(this).val().charAt(0) == "£"
-            //if the first character is "£" and the field has no other characters
             || jQuery(this).val().length == 0
-        //or if the field is empty
     })
-};
+};//get array of blank values from selector
 
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
-    return jQuery("input").filter(selector => jQuery("input").index(selector) < jQuery("input").length - 3)
+    return jQuery("input")
+        .filter(selector => jQuery("input")
+            .index(selector) < jQuery("input").length - 3)
 };
 
 //functions to check the arrays:
@@ -292,7 +292,8 @@ var filterButtons = function () {
 //filter an array of inpur and return an array with the blank fields
 var getBlank = function (array, exception) {
     if (exception != undefined) {
-        var allBlanks = array.filter(selector => selector.val().length === 0 || selector != exception)
+        var allBlanks = array.filter(selector => selector.val().length === 0
+            || selector != exception)
         return allBlanks
     } else {
         var allBlanks = array.filter(selector => selector.val().length === 0)
@@ -303,7 +304,8 @@ var getBlank = function (array, exception) {
 //filter an array of inpur and return an array with the blank fields
 var getNotBlank = function (array, exception) {
     if (exception != undefined) {
-        var nonBlanks = array.filter(selector => selector.val().length > 0 || selector == exception)
+        var nonBlanks = array.filter(selector => selector.val().length > 0
+            || selector == exception)
         return nonBlanks
     } else {
         var nonBlanks = array.filter(selector => selector.val().length > 0)
@@ -1218,9 +1220,9 @@ var keyupSwitch = function (buttons) {
         let first = i.filter(input => i.index(input) < Index);
         //input which appear before the current one
 
-        let firstBlanks = first.filter(input => input.val().replace(/,/g, "") == 0 ||
-            input.val().replace(/,/g, "") == ""
-        ); //blank inputs whic appear before the current one
+        let firstBlanks = first.filter(function () {
+            return jQuery(this).val().replace(/,/g, "") == 0 || jQuery(this).val().replace(/,/g, "") == ""
+        }); //blank inputs whic appear before the current one
 
         /* //set array indecies for nextbuttonSwitch function:
         let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
