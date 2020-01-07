@@ -287,7 +287,7 @@ var filterBlanks = function (selector) {
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
     return jQuery("input").filter(function () {
-        return jQuery(this).attr('id') != "PreviousButton" || jQuery(this).attr('id') != "NextButton"
+        return jQuery(this).attr('id') !== "PreviousButton" || jQuery(this).attr('id') !== "NextButton"
     })
 };
 
@@ -1184,6 +1184,7 @@ var keyupSwitch = function (buttons) {
 
     let i = filterButtons();
     //array of inputs on the page excluding the next buttons
+    console.log("i: ", i);
 
     i.keyup(function () {
         let I = jQuery(this); 
