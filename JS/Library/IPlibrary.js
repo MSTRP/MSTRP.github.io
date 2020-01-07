@@ -1061,7 +1061,7 @@ var loadtemplate = function (templatewrapper, questionNumber, filters) {
     if (filter > 30) {
         jQuery(templatewrapper).show()
     } else {
-        jQuery(templatewrapper).hide
+        jQuery(templatewrapper).hide()
     };
 };
 
