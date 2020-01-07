@@ -287,7 +287,7 @@ var filterBlanks = function (selector) {
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
     return jQuery("input").filter(function () {
-        return jQuery(this).attr('id') !== "PreviousButton" || jQuery(this).attr('id') !== "NextButton"
+        return jQuery(this).attr('id').indexOf("Button") == -1
     })
 };
 
@@ -1187,28 +1187,28 @@ var keyupSwitch = function (buttons) {
     console.log("i: ", i);
 
     i.keyup(function () {
-        let I = jQuery(this); 
-        let Index = i.indexOf(I); //index of current input
+        let I = jQuery(this);
+        let Index = i.index(I); //index of current input
 
         console.log("index: ", Index);
 
         //arrays for comparison:
-        let first = i.filter(function (){
-            return i.indexOf(jQuery(this)) < Index
+        let first = i.filter(function () {
+            return i.index(jQuery(this)) < Index
         }); //input which appear before the current one
 
         console.log("first: ", first);
 
-        let firstBlanks = first.filter(function (){
-            return jQuery(this).val().replace(/,/,"") == 0 
-            || jQuery(this).val().replace(/,/,"") == ""
-        }); //blank inputs whic appear before teh current one
+        let firstBlanks = first.filter(function () {
+            return jQuery(this).val().replace(/,/, "") == 0
+                || jQuery(this).val().replace(/,/, "") == ""
+        }); //blank inputs whic appear before the current one
 
         console.log("first blanks: ", firstBlanks);
 
         let nextIndex = (buttons.length == 3) ? 2 : 1;
         //set next index depending on the number of buttons provided
-        
+
         let action = function () {
             nextbuttonSwitch(sections[buttons[Index]], sections[buttons[nextIndex]]);
         };
