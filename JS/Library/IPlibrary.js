@@ -280,6 +280,12 @@ var filterBlanks = function (selector) {
     })
 };//get array of blank values from selector
 
+var filterBlanks2 = function (selector) {
+    return selector.filter(function () {
+        return checkNum(jQuery(this)) == "B/0"
+    })
+}
+
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
     return jQuery("input").filter(function () {
@@ -291,27 +297,38 @@ var filterButtons = function () {
 
 //filter an array of inpur and return an array with the blank fields
 var getBlank = function (array, exception) {
-    if (exception != undefined) {
-        var allBlanks = array.filter(selector => selector.val().length === 0
-            || selector != exception)
-        return allBlanks
-    } else {
-        var allBlanks = array.filter(selector => selector.val().length === 0)
-        return allBlanks
-    }
+    let Blanks = (exception != undefined) ?
+        array.filter(selector => selector.val().length === 0 || selector != exception)
+        : array.filter(selector => selector.val().length === 0);
+
+    return Blanks
+
+    /*  if (exception != undefined) {
+         var allBlanks = array.filter(selector => selector.val().length === 0
+             || selector != exception)
+         return allBlanks
+     } else {
+         var allBlanks = array.filter(selector => selector.val().length === 0)
+         return allBlanks
+     } */
 };
 
 //filter an array of inpur and return an array with the blank fields
 var getNotBlank = function (array, exception) {
-    if (exception != undefined) {
+    let nonBlanks = (exception != undefined) ?
+        array.filter(selector => selector.val().length > 0 || selector == exception)
+        : array.filter(selector => selector.val().length > 0);
+
+    return nonBlanks
+
+    /* if (exception != undefined) {
         var nonBlanks = array.filter(selector => selector.val().length > 0
             || selector == exception)
         return nonBlanks
     } else {
         var nonBlanks = array.filter(selector => selector.val().length > 0)
         return nonBlanks
-    }
-
+    } */
 };
 
 //filter an array of inputs and return the fields otehr than the current field specifed
@@ -847,6 +864,13 @@ var formatWC = function (selectors) {
 };
 
 //6) theme formatting and functionality:
+//check if input is blank or 0
+var checkNum = function (selector) {
+    let status = (selector.val().replace(/,/g, "") == 0 || selector.val().replace(/,/g, ""))
+        ? "B/0" : "Not B/0";
+    return status
+};
+
 //menubar scroll shadow
 var menuScroll = function () {
     //add -- shadow when scrolling 
@@ -1107,7 +1131,7 @@ var nextbuttonSwitch = function (detailsBtn, nextBtn, input) {
 };//basic
 
 var clickSwitch = function (buttons, wrapperID, optionindex) {
-    //butons is an array: [next button text, details button text]
+    //buttons is an array: [next button text, details button text]
     //option index is the option index (1 based) of the trigger question e.g.
     //yes (1)
     //maybe (2)
@@ -1120,7 +1144,7 @@ var clickSwitch = function (buttons, wrapperID, optionindex) {
             //if yes is selected
 
             nextbuttonDefault(sections[buttons[1]])
-            //update nexttoon to "details"
+            //update next button to "details"
         } else {
             nextbuttonDefault(sections[buttons[0]])
             //otherwise set to "next"
@@ -1151,7 +1175,7 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
         if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] != "Supporting") {
             //if the current  button reference is in stringfilters
 
-            var filter = (filterArray[buttoninfo[index]].length > 0) ? true : false
+            var filter = (filterArray[buttoninfo[index]].length > 0) ? true : false;
             //do logical based on string length
 
         } else if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] == "Supporting") {
@@ -1205,21 +1229,7 @@ var keyupSwitch = function (buttons) {
 
         let I = jQuery(this);
 
-        /* //set buttons array and reference indecies depending on the 
-        //amount of input on the page so they can still work with 
-        //loadSwith and nextbuttonSwitch methods
-        switch (true) {
-            case buttons.length > 2:
-                console.log("yup");
-                var Buttons = buttons.reverse();
-                var nextIndex = 0;//next will always be 0
-                var Index = i.index(I) + 1; //new 0 based index                
-                break;
-            default:
-                var Index = i.index(I);
-                var Buttons = buttons;
-                var nextIndex = 1;
-        }; */
+        let checkI = checkNum(I);
 
         //define conditional variables:
         let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
@@ -1238,7 +1248,7 @@ var keyupSwitch = function (buttons) {
 
         // define arrays for comparison:
         let first = i.filter(function () {
-            let actualIndex = (buttons.length> 2)? Index-1 : Index; 
+            let actualIndex = (buttons.length > 2) ? Index - 1 : Index;
             //undo index increase if more than 3 inputs
 
             return i.index(jQuery(this)) < actualIndex
@@ -1246,17 +1256,21 @@ var keyupSwitch = function (buttons) {
 
         console.log("first: ", first);
 
-        let firstBlanks = first.filter(function () {
-            return jQuery(this).val().replace(/,/g, "") == 0 ||
-                jQuery(this).val().replace(/,/g, "") == ""
-        });//blank inputs whic appear before the current one
+
+        let firstBlanks = filterBlanks2(first);//blank inputs which appear before the current one
 
         console.log("firstBlanks : ", firstBlanks);
 
+
+
+        let otherBlanks = filterBlanks2(getOthers(i, I));
+
+        console.log("otherBlanks: ", otherBlanks);
+
         console.log(I.val().replace(/,/g, ""));
 
-        let action = function () {
-            nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
+        let action = function (next, details) {
+            nextbuttonSwitch(sections[Buttons[next]], sections[Buttons[details]], I);
         };
 
         //switch case of actions:
@@ -1267,12 +1281,26 @@ var keyupSwitch = function (buttons) {
                 if (Index > 1 && firstBlanks.length == first.length) {
                     //if this isn't the first input and all the previous inputs are blank 
                     console.log("2nd input");
-                    action();
+                    action(Index, nextIndex);
 
                 } else if (Index == 1) {
                     //or if this is the first input
                     console.log("first input");
-                    action();
+
+                    switch (checkI) {
+                        case "B/0":
+                            console.log("first is blank");
+                            if (otherBlanks.length < getOthers(i, I)) {
+                                let InB = getOthers(i, I).indexOf(getNotBlank(i)[0]) + 1;
+                                //indexof next non blank field
+                                console.log("next non blank value: ", InB.val())
+                                action(InB, nextIndex)
+                            };
+                            break;
+                        default:
+                            console.log("first is not blank");
+                            action(Index, nextIndex);
+                    };
                 };
                 break;
             default:
