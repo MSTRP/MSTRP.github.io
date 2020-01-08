@@ -1217,7 +1217,8 @@ var keyupSwitch = function (buttons) {
         }; */
 
         let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
-
+        console.log("I: ", I);
+        
         //set array indecies for nextbuttonSwitch function:
         let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
         //if more than 2 inputs on page flip buttons array so that it 
@@ -1244,9 +1245,12 @@ var keyupSwitch = function (buttons) {
 
         if (Index > 0 && firstBlanks.length == first.length) {
             //if all the previous inputs are blank 
+            console.log("2nd input")
             nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
+            
         } else if (Index == 0) {
             //or if this is the first input
+            console.log("first input")
             nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
         };
     })
