@@ -1217,8 +1217,8 @@ var keyupSwitch = function (buttons) {
         }; */
 
         let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
-        console.log("I: ", I);
-        
+        console.log("Index: ", Index);
+
         //set array indecies for nextbuttonSwitch function:
         let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
         //if more than 2 inputs on page flip buttons array so that it 
