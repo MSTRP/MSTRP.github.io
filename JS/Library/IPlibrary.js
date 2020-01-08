@@ -1298,7 +1298,7 @@ var keyupSwitch = function (buttons) {
 
         console.log(I.val().replace(/,/g, ""));
 
-        let action = function (next, details) {
+        let action = function (details, next) {
             nextbuttonSwitch(sections[Buttons[details]], sections[Buttons[next]], I);
         };
 
