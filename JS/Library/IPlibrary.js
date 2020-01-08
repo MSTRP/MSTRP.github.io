@@ -283,7 +283,7 @@ var filterBlanks = function (selector) {
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
     return jQuery("input").filter(function () {
-       return jQuery(this).attr('id').includes("Button") == false
+        return jQuery(this).attr('id').includes("Button") == false
     })
 };
 
@@ -1084,11 +1084,15 @@ var nextbuttonSwitch = function (detailsBtn, nextBtn, input) {
 
     let nb = jQuery("#NextButton");//select the next button
 
-    let selector = (input === undefined) ? jQuery("input") : input;
+    let selector = (input == undefined) ? jQuery("input") : input;
     //define the selector for listener
+
+    console.log("nbs selector: ", selector);
 
     if (selector.val().replace(/,/g, "") > 0) {
         //use replace() to extract commas from cleave
+
+        console.log("nbs: details");
 
         // when filter is above 0 replace button text
         //with details question
@@ -1097,6 +1101,7 @@ var nextbuttonSwitch = function (detailsBtn, nextBtn, input) {
     }
 
     else {
+        console.log("nbs: Next");
         jQuery(nb).val(nextBtn);
     }
 };//basic
@@ -1216,6 +1221,7 @@ var keyupSwitch = function (buttons) {
                 var nextIndex = 1;
         }; */
 
+        //define conditional variables:
         let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
         console.log("Index: ", Index);
 
@@ -1227,7 +1233,10 @@ var keyupSwitch = function (buttons) {
         let nextIndex = (buttons.length > 2) ? 0 : 1;
         //set next index depending on the number of buttons provided
 
-        //arrays for comparison:
+        let switcher = (buttons.length > 2) ? "multiple" : "default";
+        console.log("switcher: ", switcher);
+
+        // define arrays for comparison:
         let first = i.filter(function () {
             return i.index(jQuery(this)) < Index
         });//inputs which appear before the current one
@@ -1238,21 +1247,63 @@ var keyupSwitch = function (buttons) {
             return jQuery(this).val().replace(/,/g, "") == 0 ||
                 jQuery(this).val().replace(/,/g, "") == ""
         });//blank inputs whic appear before the current one
-       
+
         console.log("firstBlanks : ", firstBlanks);
 
         console.log(I.val().replace(/,/g, ""));
 
-        if (Index > 0 && firstBlanks.length == first.length) {
-            //if all the previous inputs are blank 
-            console.log("2nd input")
-            nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
-            
-        } else if (Index == 0) {
-            //or if this is the first input
-            console.log("first input")
-            nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
+        let action = nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
+
+        //switch case of actions:
+        switch (switcher) {
+            case "multiple":
+                //with more than one input field on the the page
+
+                if (Index > 1 && firstBlanks.length == first.length) {
+                    //if this isn't the first input and all the previous inputs are blank 
+                    console.log("2nd input");
+                    action();
+
+                } else if (Index == 1) {
+                    //or if this is the first input
+                    console.log("first input");
+                    action();
+                };
+                break;
+            default:
+                //with only one input field on the page
+                
+                console.log("first input");
+                action();
         };
+
+        /* if (buttons.length > 2) {
+            //
+            if (Index > 1 && firstBlanks.length == first.length) {
+                //if this isn't the dirst input and all the previous inputs are blank 
+                console.log("2nd input");
+                action();
+
+            } else if (Index == 1) {
+                //or if this is the first input
+                console.log("first input");
+                action();
+            };
+        } else {
+            console.log("default");
+            action();
+        }
+
+        if (Index > 1 && firstBlanks.length == first.length) {
+            //if this isn't the dirst input and all the previous inputs are blank 
+            console.log("2nd input");
+            action();
+
+        } else if (Index <= 1) {
+            //or if this is the first input
+            console.log("first input");
+            action();
+        }; */
     })
 };
 
