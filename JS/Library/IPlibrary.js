@@ -1240,7 +1240,7 @@ var keyupSwitch = function (buttons) {
         let first = i.filter(function () {
             let actualIndex = (buttons.length> 2)? Index-1 : Index; 
             //undo index increase if more than 3 inputs
-            
+
             return i.index(jQuery(this)) < actualIndex
         });//inputs which appear before the current one
 
@@ -1255,7 +1255,9 @@ var keyupSwitch = function (buttons) {
 
         console.log(I.val().replace(/,/g, ""));
 
-        let action = nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
+        let action = function () {
+            nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
+        };
 
         //switch case of actions:
         switch (switcher) {
