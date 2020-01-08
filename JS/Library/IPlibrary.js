@@ -894,7 +894,7 @@ var checkAllNum = function (filters, breaker, skippers, action) {
             alert(alert);
             break;
         case "guidance":
-            jQuery(".check").text() += guidance + '</div>';
+            jQuery(".check").html() += guidance + '</div>';
             //add guidance txt to target div
             break;
     }
@@ -1325,7 +1325,9 @@ var keyupSwitch = function (buttons) {
                                 //indexof next non blank field
                                 console.log("next non blank value: ", InB.val())
                                 action(InB, nextIndex)
-                            };
+                            } else {
+                                action(Index, nextIndex);
+                            }
                             break;
                         default:
                             console.log("first is not blank");
