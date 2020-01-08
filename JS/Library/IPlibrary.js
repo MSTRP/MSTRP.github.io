@@ -1238,7 +1238,10 @@ var keyupSwitch = function (buttons) {
 
         // define arrays for comparison:
         let first = i.filter(function () {
-            return i.index(jQuery(this)) < Index
+            let actualIndex = (buttons.length> 2)? Index-1 : Index; 
+            //undo index increase if more than 3 inputs
+            
+            return i.index(jQuery(this)) < actualIndex
         });//inputs which appear before the current one
 
         console.log("first: ", first);
@@ -1272,7 +1275,7 @@ var keyupSwitch = function (buttons) {
                 break;
             default:
                 //with only one input field on the page
-                
+
                 console.log("first input");
                 action();
         };
