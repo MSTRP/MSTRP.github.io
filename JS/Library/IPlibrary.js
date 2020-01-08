@@ -334,7 +334,7 @@ var getNotBlank = function (array, exception) {
 //filter an array of inputs and return the fields otehr than the current field specifed
 var getOthers = function (array, currentItem) {
     let Others = array.filter(selector => selector != currentItem)
-    console.log("others: ", others);
+    console.log("others: ", Others);
     return Others
 };
 
