@@ -334,6 +334,7 @@ var getNotBlank = function (array, exception) {
 //filter an array of inputs and return the fields otehr than the current field specifed
 var getOthers = function (array, currentItem) {
     let Others = array.filter(selector => selector != currentItem)
+    console.log("others: ", others);
     return Others
 };
 
@@ -866,10 +867,38 @@ var formatWC = function (selectors) {
 //6) theme formatting and functionality:
 //check if input is blank or 0
 var checkNum = function (selector) {
-    let status = (selector.val().replace(/,/g, "") == 0 || selector.val().replace(/,/g, ""))
+    let status = (selector.val().replace(/,/g, "") == 0 || selector.val().replace(/,/g, "")== "")
         ? "B/0" : "Not B/0";
     return status
 };
+
+var checkAllNum = function (filters, breaker, skippers, action) {
+    var helper = "Please be aware the following sections need to be completed before you can submit:";
+    var alert = helper;
+    var guidance = '<div class="helpText" id="check-Guidance"> <br/>' + helper;
+
+    for (let [key, value] of Object.entries(filters)) {
+        if (key === breaker) {
+            break;
+        } else if (skippers.indexOf(key) > -1) {
+            continue
+        }
+        if (checkNum(value) === "B/0") {
+            alert = alert + "\n" + sections[key];
+            guidance = guidance + "<br/>" + sections[key];
+        }
+    }
+
+    switch (action) {
+        case "alert":
+            alert(alert);
+            break;
+        case "guidance":
+            jQuery(".check").text() += guidance + '</div>';
+            //add guidance txt to target div
+            break;
+    }
+}
 
 //menubar scroll shadow
 var menuScroll = function () {
@@ -1230,6 +1259,7 @@ var keyupSwitch = function (buttons) {
         let I = jQuery(this);
 
         let checkI = checkNum(I);
+        console.log("checkI: ", checkI)
 
         //define conditional variables:
         let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
@@ -1262,7 +1292,6 @@ var keyupSwitch = function (buttons) {
         console.log("firstBlanks : ", firstBlanks);
 
 
-
         let otherBlanks = filterBlanks2(getOthers(i, I));
 
         console.log("otherBlanks: ", otherBlanks);
@@ -1270,7 +1299,7 @@ var keyupSwitch = function (buttons) {
         console.log(I.val().replace(/,/g, ""));
 
         let action = function (next, details) {
-            nextbuttonSwitch(sections[Buttons[next]], sections[Buttons[details]], I);
+            nextbuttonSwitch(sections[Buttons[details]], sections[Buttons[next]], I);
         };
 
         //switch case of actions:
@@ -1291,7 +1320,8 @@ var keyupSwitch = function (buttons) {
                         case "B/0":
                             console.log("first is blank");
                             if (otherBlanks.length < getOthers(i, I)) {
-                                let InB = getOthers(i, I).indexOf(getNotBlank(i)[0]) + 1;
+                                let nB = getNotBlank(i);
+                                let InB = getOthers(i, I).indexOf(nB[0]) + 1;
                                 //indexof next non blank field
                                 console.log("next non blank value: ", InB.val())
                                 action(InB, nextIndex)
