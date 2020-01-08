@@ -1292,7 +1292,7 @@ var keyupSwitch = function (buttons) {
         console.log("firstBlanks : ", firstBlanks);
 
 
-        let otherBlanks = filterBlanks2(getOthers(i, i.eq(i.index(I))));
+        let otherBlanks = filterBlanks2(i.not(I));
 
         console.log("otherBlanks: ", otherBlanks);
 
