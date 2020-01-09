@@ -59,6 +59,30 @@ var sections = {
     End: "Submit report"
 };
 
+var filters = {
+    Three: "Section 3: Invention disclosures and new patent applications",
+    ThreeA: "Section 3: Invention disclosures and new patent applications",
+    ThreeB: "Section 3: Invention disclosures and new patent applications",
+    Four: "Section 4: Granted patents",
+    FourD: "Section 4: Granted patents",
+    Five: "Section 5: other material IP",
+    FiveD: "Section 5: other material IP",
+    Six: "Section 6: New transactions",
+    SixAD: "Section 6: New transactions",
+    SixBD: "Section 6: New transactions",
+    Seven: "Section 7: Other live agreements",
+    SevenD: "Section 7: Other live agreements",
+    Eight: "Section 8: Terminated agreements",
+    EightD: "Section 8: Terminated agreements",
+    Nine: "Section 9: Case studies",
+    NineD: "Section 9: Case studies",
+    Eleven: "Section 10: Revenue",
+    ElevenD: "Section 10: Revenue",
+    ElevenD2: "Section 11: Equity",
+    Twelve: "Section 11: Equity",
+    TwelveD: "Section 11: Equity",
+}
+
 //references for question with string filter values
 var stringfilters = ["SixBD", "Supporting"];
 
@@ -923,8 +947,8 @@ var checkAllNum = function (filters, action, skippers, breaker = "n/a") {
             continue
         }
         if (checkNum(value) === "B/0") {
-            alert = alert + "\n" + sections[key];
-            guidance = guidance + "<br/>" + sections[key];
+            alert = alert + "\n" + filters[key];
+            guidance = guidance + "<br/>" + filters[key];
         }
     }
 
@@ -1366,7 +1390,7 @@ var keyupSwitch = function (buttons) {
                             console.log("otherBlanks: ", otherBlanks);
                             if (otherBlanks.length < others.length) {
                                 let nB = getNotBlank2(i);
-                                let InB = others.indexOf(nB[0]) + 1;
+                                let InB = others.index(nB[0]) + 1;
                                 //indexof next non blank field
                                 console.log("next non blank value: ", InB.val())
                                 action(InB, nextIndex);
