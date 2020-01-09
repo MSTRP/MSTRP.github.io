@@ -1263,7 +1263,7 @@ var keyupSwitch = function (buttons) {
     let nextIndex = (buttons.length > 2) ? 0 : 1;
     //set next index depending on the number of buttons provided
     console.log("next index: ", nextIndex);
-    
+
     let switcher = (buttons.length > 2) ? "multiple" : "default";
     console.log("switcher: ", switcher);
 
@@ -1344,7 +1344,7 @@ var keyupSwitch = function (buttons) {
                 //with only one input field on the page
 
                 console.log("first input");
-                action();
+                action(Index, nextIndex);
         };
 
         /* if (buttons.length > 2) {
