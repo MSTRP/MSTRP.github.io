@@ -315,11 +315,14 @@ var getBlank = function (array, exception) {
 
 //filter an array of inpur and return an array with the blank fields
 var getNotBlank = function (array, exception) {
-    let nonBlanks = (exception != undefined) ?
-        array.filter(selector => selector.val().length > 0 || selector == exception)
-        : array.filter(selector => selector.val().length > 0);
-
-    return nonBlanks
+    switch (exception) {
+        case undefined:
+            let nonBlanks1 = array.filter(selector => selector.val().length > 0);
+            return nonBlanks1;
+        default:
+            let nonBlanks2 = array.filter(selector => selector.val().length > 0 || selector == exception)
+            return nonBlanks2;
+    }
 
     /* if (exception != undefined) {
         var nonBlanks = array.filter(selector => selector.val().length > 0
@@ -329,6 +332,21 @@ var getNotBlank = function (array, exception) {
         var nonBlanks = array.filter(selector => selector.val().length > 0)
         return nonBlanks
     } */
+};
+
+var getNotBlank2 = function (array, exception) {
+    switch (exception) {
+        case undefined:
+            let nonBlanks1 = array.filter(function () {
+                return checkNum(jQuery(this)) == "Not B/0"
+            });
+            return nonBlanks1;
+        default:
+            let nonBlanks2 = array.filter(function () {
+                return checkNum(jQuery(this)) == "Not B/0" || jQuery(this) == exception
+            });
+            return nonBlanks2;
+    }
 };
 
 //filter an array of inputs and return the fields otehr than the current field specifed
@@ -867,12 +885,34 @@ var formatWC = function (selectors) {
 //6) theme formatting and functionality:
 //check if input is blank or 0
 var checkNum = function (selector) {
+
     let status = (selector.val().replace(/,/g, "") == 0 || selector.val().replace(/,/g, "") == "")
         ? "B/0" : "Not B/0";
     return status
 };
 
-var checkAllNum = function (filters, breaker, skippers, action) {
+var checkBlank = function (value) {
+    let type = typeof value;
+
+    switch (type) {
+        case "string":
+            let status = (value.replace(/[^A-Z0-9]/ig, "").length === 0)
+                ? "Blank" : "Not Blank";
+            return status;
+
+
+        case "number":
+            let status = (value.replace(/,|£/g, ""))
+    }
+};
+
+
+var checkAllNum = function (filters, action, skippers = [], breaker = "n/a") {
+
+    let stopper = (typeof skippers == "string") ? skippers : breaker
+
+    //filters is an array with list of keys to check (see qFilters in headerJS)
+    //skippers 
     var helper = "Please be aware the following sections need to be completed before you can submit:";
     var alert = helper;
     var guidance = '<div class="helpText" id="check-Guidance"> <br/>' + helper;
@@ -1316,7 +1356,7 @@ var keyupSwitch = function (buttons) {
 
                     switch (checkI) {
                         case "B/0":
-                            console.log("first is blank"); 
+                            console.log("first is blank");
 
                             let i1 = i.eq(0);
                             let others = i.not(i1)
@@ -1326,11 +1366,11 @@ var keyupSwitch = function (buttons) {
 
                             console.log("otherBlanks: ", otherBlanks);
                             if (otherBlanks.length < others.length) {
-                                let nB = getNotBlank(i);
+                                let nB = getNotBlank2(i);
                                 let InB = others.indexOf(nB[0]) + 1;
                                 //indexof next non blank field
                                 console.log("next non blank value: ", InB.val())
-                                action(InB, nextIndex)
+                                action(InB, nextIndex);
                             } else {
                                 action(Index, nextIndex);
                             }
