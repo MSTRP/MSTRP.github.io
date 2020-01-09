@@ -1394,9 +1394,9 @@ var keyupSwitch = function (buttons) {
                             console.log("otherBlanks: ", otherBlanks);
                             if (otherBlanks.length < others.length) {
                                 let nB = getNotBlank2(i);
-                                let InB = others.index(nB[0]) + 1;
+                                let InB = others.index(nB.eq(0)) + 1;
                                 //indexof next non blank field
-                                console.log("next non blank value: ", InB.val())
+                                console.log("next non blank value: ", nB.eq(0).val());
                                 action(InB, nextIndex);
                             } else {
                                 action(Index, nextIndex);
