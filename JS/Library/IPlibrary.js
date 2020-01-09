@@ -1320,11 +1320,12 @@ var keyupSwitch = function (buttons) {
 
                             let i1 = i.eq(0);
                             let others = i.not(i1)
+                            console.log("others: ", others)
 
                             let otherBlanks = filterBlanks(others);
 
                             console.log("otherBlanks: ", otherBlanks);
-                            if (otherBlanks.length < others) {
+                            if (otherBlanks.length < others.length) {
                                 let nB = getNotBlank(i);
                                 let InB = others.indexOf(nB[0]) + 1;
                                 //indexof next non blank field
