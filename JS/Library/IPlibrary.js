@@ -923,30 +923,34 @@ var checkBlank = function (value) {
         case "string":
             status = (value.replace(/[^A-Z0-9]/ig, "").length === 0)
                 ? "Blank" : "Not Blank";
-            break;
+            return status;
         case "number":
-            status = (value.replace(/,|£/g, ""));
-            break;
+            status = (value.replace(/,|£/g, "").length === 0)
+                ? "Blank" : "Not Blank";
+            return status;
     };
 };
 
 
 var checkAllNum = function (filters, action, skippers, breaker = "n/a") {
- 
-    let skip = (typeof skippers == "object")? skippers: [];
+    let array = Object.entries(filters);
+    //skippers does not need to be provided:
+    let skip = (typeof skippers == "object") ? skippers : [];
     let stopper = (typeof skippers == "string") ? skippers : breaker;
 
-    var helper = "Please be aware the following sections need to be completed before you can submit:";
+    //help text:
+    var helper = "Please be aware the following sections are incomplete and need to be completed before you can submit:";
     var alert = helper;
-    var guidance = '<div class="helpText" id="check-Guidance"> <br/>' + helper;
+    var guidance = '<div class="helpText" id="check-Guidance"> <br/> ' + helper;//html
 
-    for (let [key, value] of Object.entries(filters)) {
-        if (key === stopper) {
+    for (let [key, value] of array) {
+        if (key === stopper || key === array[array.length - 1][0]) {
+            //if checking all filter questions the whole array breaker does not need to be provided
             break;
         } else if (skip.indexOf(key) > -1) {
             continue
         }
-        if (checkNum(value) === "B/0") {
+        if (checkBlank(value) === "Blank") {
             alert = alert + "\n" + filters[key];
             guidance = guidance + "<br/>" + filters[key];
         }
