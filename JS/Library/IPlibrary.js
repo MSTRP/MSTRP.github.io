@@ -867,7 +867,7 @@ var formatWC = function (selectors) {
 //6) theme formatting and functionality:
 //check if input is blank or 0
 var checkNum = function (selector) {
-    let status = (selector.val().replace(/,/g, "") == 0 || selector.val().replace(/,/g, "")== "")
+    let status = (selector.val().replace(/,/g, "") == 0 || selector.val().replace(/,/g, "") == "")
         ? "B/0" : "Not B/0";
     return status
 };
@@ -1257,6 +1257,7 @@ var keyupSwitch = function (buttons) {
     i.keyup(function () {
 
         let I = jQuery(this);
+        console.log("I: ", I)
 
         let checkI = checkNum(I);
         console.log("checkI: ", checkI)
@@ -1292,9 +1293,7 @@ var keyupSwitch = function (buttons) {
         console.log("firstBlanks : ", firstBlanks);
 
 
-        let otherBlanks = filterBlanks2(i.not(I));
 
-        console.log("otherBlanks: ", otherBlanks);
 
         console.log(I.val().replace(/,/g, ""));
 
@@ -1319,6 +1318,12 @@ var keyupSwitch = function (buttons) {
                     switch (checkI) {
                         case "B/0":
                             console.log("first is blank");
+                            console.log ("first input eq: ", i.eq(0));
+                            console.log("first input []: ", i[0]);
+
+                            let otherBlanks = filterBlanks(i.not(i.eq(0)));
+
+                            console.log("otherBlanks: ", otherBlanks);
                             if (otherBlanks.length < getOthers(i, I)) {
                                 let nB = getNotBlank(i);
                                 let InB = getOthers(i, I).indexOf(nB[0]) + 1;
