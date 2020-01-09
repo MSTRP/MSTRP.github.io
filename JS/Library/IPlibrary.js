@@ -898,7 +898,7 @@ var checkAllNum = function (filters, breaker, skippers, action) {
             //add guidance txt to target div
             break;
     }
-}
+};
 
 //menubar scroll shadow
 var menuScroll = function () {
@@ -1254,6 +1254,19 @@ var keyupSwitch = function (buttons) {
     //array of inputs on the page excluding the next buttons
     console.log("i: ", i);
 
+    //set array indecies for nextbuttonSwitch function:
+    let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
+    //if more than 2 inputs on page flip buttons array so that it 
+    //can still work with loadSwitch method syntax
+    console.log("Buttons: ", Buttons);
+
+    let nextIndex = (buttons.length > 2) ? 0 : 1;
+    //set next index depending on the number of buttons provided
+    console.log("next index: ", nextIndex);
+    
+    let switcher = (buttons.length > 2) ? "multiple" : "default";
+    console.log("switcher: ", switcher);
+
     i.keyup(function () {
 
         let I = jQuery(this);
@@ -1266,16 +1279,6 @@ var keyupSwitch = function (buttons) {
         let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
         console.log("Index: ", Index);
 
-        //set array indecies for nextbuttonSwitch function:
-        let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
-        //if more than 2 inputs on page flip buttons array so that it 
-        //can still work with loadSwitch method syntax
-
-        let nextIndex = (buttons.length > 2) ? 0 : 1;
-        //set next index depending on the number of buttons provided
-
-        let switcher = (buttons.length > 2) ? "multiple" : "default";
-        console.log("switcher: ", switcher);
 
         // define arrays for comparison:
         let first = i.filter(function () {
@@ -1287,13 +1290,9 @@ var keyupSwitch = function (buttons) {
 
         console.log("first: ", first);
 
-
         let firstBlanks = filterBlanks2(first);//blank inputs which appear before the current one
 
         console.log("firstBlanks : ", firstBlanks);
-
-
-
 
         console.log(I.val().replace(/,/g, ""));
 
@@ -1317,16 +1316,17 @@ var keyupSwitch = function (buttons) {
 
                     switch (checkI) {
                         case "B/0":
-                            console.log("first is blank");
-                            console.log ("first input eq: ", i.eq(0));
-                            console.log("first input []: ", i[0]);
+                            console.log("first is blank"); 
 
-                            let otherBlanks = filterBlanks(i.not(i.eq(0)));
+                            let i1 = i.eq(0);
+                            let others = i.not(i1)
+
+                            let otherBlanks = filterBlanks(others);
 
                             console.log("otherBlanks: ", otherBlanks);
-                            if (otherBlanks.length < getOthers(i, I)) {
+                            if (otherBlanks.length < others) {
                                 let nB = getNotBlank(i);
-                                let InB = getOthers(i, I).indexOf(nB[0]) + 1;
+                                let InB = others.indexOf(nB[0]) + 1;
                                 //indexof next non blank field
                                 console.log("next non blank value: ", InB.val())
                                 action(InB, nextIndex)
