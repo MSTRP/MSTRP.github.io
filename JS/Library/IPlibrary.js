@@ -893,34 +893,33 @@ var checkNum = function (selector) {
 
 var checkBlank = function (value) {
     let type = typeof value;
+    let status = "";
 
     switch (type) {
         case "string":
-            let status = (value.replace(/[^A-Z0-9]/ig, "").length === 0)
+            status = (value.replace(/[^A-Z0-9]/ig, "").length === 0)
                 ? "Blank" : "Not Blank";
-            return status;
-
-
+            break;
         case "number":
-            let status = (value.replace(/,|£/g, ""))
-    }
+            status = (value.replace(/,|£/g, ""));
+            break;
+    };
 };
 
 
-var checkAllNum = function (filters, action, skippers = [], breaker = "n/a") {
+var checkAllNum = function (filters, action, skippers, breaker = "n/a") {
+ 
+    let skip = (typeof skippers == "object")? skippers: [];
+    let stopper = (typeof skippers == "string") ? skippers : breaker;
 
-    let stopper = (typeof skippers == "string") ? skippers : breaker
-
-    //filters is an array with list of keys to check (see qFilters in headerJS)
-    //skippers 
     var helper = "Please be aware the following sections need to be completed before you can submit:";
     var alert = helper;
     var guidance = '<div class="helpText" id="check-Guidance"> <br/>' + helper;
 
     for (let [key, value] of Object.entries(filters)) {
-        if (key === breaker) {
+        if (key === stopper) {
             break;
-        } else if (skippers.indexOf(key) > -1) {
+        } else if (skip.indexOf(key) > -1) {
             continue
         }
         if (checkNum(value) === "B/0") {
