@@ -51,6 +51,7 @@ var sections = {
     Eleven: "Section 11: Revenue",
     ElevenD: "Revenue generating transaction details",
     ElevenD2: "Revenue Retention",
+    Ten: "Financial contact info",
     Twelve: "Section 12: Equity",
     TwelveD: "Equity obtained details",
     DecDown: "Download declaration form",
@@ -965,7 +966,8 @@ var checkAll = function (filters, action, skippers, breaker = "n/a") {
             alert(alert);
             break;
         case "guidance":
-            jQuery(".check").html() += guidance + '</div>';
+            let targetDiv = jQuery(".check");
+            targetDiv.html(targetDiv.html() + guidance + '</div>') ;
             //add guidance txt to target div
             break;
     };
