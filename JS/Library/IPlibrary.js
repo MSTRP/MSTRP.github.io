@@ -30,6 +30,7 @@ var theme = {
 
 //section headings
 var sections = {
+    Back: "←",
     Three: "Section 3: Invention disclosures",
     ThreeA: "Invention disclosure details",
     ThreeB: "Patent applications filed details",
