@@ -932,11 +932,14 @@ var checkBlank = function (value) {
 };
 
 
-var checkAllNum = function (filters, action, skippers, breaker = "n/a") {
+var checkAll = function (filters, action, skippers, breaker = "n/a") {
     let array = Object.entries(filters);
     //skippers does not need to be provided:
     let skip = (typeof skippers == "object") ? skippers : [];
+    console.log("skip: ", skip);
+
     let stopper = (typeof skippers == "string") ? skippers : breaker;
+    console.log("stopper: ", stopper);
 
     //help text:
     var helper = "Please be aware the following sections are incomplete and need to be completed before you can submit:";
@@ -1395,6 +1398,8 @@ var keyupSwitch = function (buttons) {
                             if (otherBlanks.length < others.length) {
                                 let nB = getNotBlank2(i);
                                 let InB = others.index(nB.eq(0)) + 1;
+                                console.log("InB: ", InB);
+                                console.log("button label: ", buttons[InB]);
                                 //indexof next non blank field
                                 console.log("next non blank value: ", nB.eq(0).val());
                                 action(InB, nextIndex);
