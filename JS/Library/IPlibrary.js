@@ -966,8 +966,8 @@ var checkAll = function (filters, action, skippers, breaker = "n/a") {
             alert(alert);
             break;
         case "guidance":
-            let targetDiv = jQuery(".check");
-            targetDiv.html(targetDiv.html() + guidance + '</div>');
+            guidance += '</div>';
+            jQuery(".check").append(guidance);
             //add guidance txt to target div
             break;
     };
@@ -2040,7 +2040,7 @@ var carry3b = function (answerlist) {
         let rowindex = jQuery(this).index();
 
         let header = jQuery(this).find("th strong");
-        
+
         //define values for row
         var aNo = awardNo[rowindex];
         //award No.
