@@ -938,10 +938,8 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
     let array = Object.entries(filterList);
     //skippers does not need to be provided:
     let skip = (typeof skippers == "object") ? skippers : [];
-    console.log("skip: ", skip);
 
     let stopper = (typeof skippers == "string") ? skippers : breaker;
-    console.log("stopper: ", stopper);
 
     //help text:
     var helper = "Please be aware the following sections are incomplete and need to be completed before you can submit:";
@@ -967,7 +965,6 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             break;
         case "guidance":
             guidance += '</div>';
-            console.log(guidance);
             jQuery(".check").append(guidance);
             //add guidance txt to target div
             break;
