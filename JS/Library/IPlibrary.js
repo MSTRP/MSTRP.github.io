@@ -2078,7 +2078,7 @@ var carry3b = function (answerlist) {
             //named inventors
         } else if (header.text().replace(/ /g,"") == "") {
             let rowNumber = rowindex + 1;
-            let header = '<span style="text-align: center;">' + rowNumber+ "</span>";
+            let header = "<strong>" + rowNumber+ "</strong>";
             thisRow.find(th).append(header);
         }
     });
