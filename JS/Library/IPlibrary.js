@@ -52,7 +52,6 @@ var sections = {
     Eleven: "Section 11: Revenue",
     ElevenD: "Revenue generating transaction details",
     ElevenD2: "Revenue Retention",
-    Ten: "Financial contact info",
     Twelve: "Section 12: Equity",
     TwelveD: "Equity obtained details",
     DecDown: "Download declaration form",
@@ -64,8 +63,8 @@ var sections = {
 
 var filterNames = {
     Three: "Section 3: Invention disclosures and new patent applications",
-    ThreeA: "Section 3: Invention disclosures and new patent applications",
-    ThreeB: "Section 3: Invention disclosures and new patent applications",
+    ThreeA: "Section 3: Invention disclosures",
+    ThreeB: "Section 3: New patent applications",
     Four: "Section 4: Granted patents",
     FourD: "Section 4: Granted patents",
     Five: "Section 5: other material IP",
@@ -947,7 +946,7 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
     //help text:
     var helper = "Please be aware the following sections are incomplete and need to be completed before you can submit:";
     var alert = helper;
-    var guidance = '<div class="helpText" id="check-Guidance"> <br/> ' + helper;//html
+    var guidance = '<div class="helpText" id="check-Guidance"> <br/> ' + "<strong>" + helper +"</strong>";//html
 
     for (let [key, value] of array) {
         if (key === stopper || key === array[array.length - 1][0]) {
@@ -958,7 +957,7 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
         };
         if (checkBlank(value) === "Blank") {
             alert = alert + "\n" + filterNames[key];
-            guidance = guidance + "<br/>" + filterNames[key];
+            guidance = guidance + "<br/>" + "-" + filterNames[key];
         };
     };
 
