@@ -2077,8 +2077,9 @@ var carry3b = function (answerlist) {
             inventorsIpt.val(nIn);
             autofillCSS(inventorsIpt);
             //named inventors
-        } else if (header.text() == "") {
-            let rowNumber = rowindex + 1
+        } else if (header.text().replace(/ /g,"") == "") {
+            console.log("row label is blank");
+            let rowNumber = rowindex + 1;
             header.text(rowNumber)
         }
     });
