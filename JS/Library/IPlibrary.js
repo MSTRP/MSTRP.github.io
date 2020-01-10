@@ -71,7 +71,7 @@ var filterNames = {
     FiveD: "Section 5: other material IP",
     Six: "Section 6: New transactions",
     SixAD: "Section 6: New transactions",
-    SixBD: "Section 6: New transactions",
+    SixBD: "Section 6: New transactions - Agreement uploads",
     Seven: "Section 7: Other live agreements",
     SevenD: "Section 7: Other live agreements",
     Eight: "Section 8: Terminated agreements",
@@ -955,7 +955,7 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
         };
         if (checkBlank(value) === "Blank") {
             alert = alert + "\n" + filterNames[key];
-            guidance = guidance + "<br/>" + "-" + filterNames[key];
+            guidance = guidance + "<br/>" + "- " + filterNames[key];
         };
     };
 
@@ -2035,7 +2035,7 @@ var carry3b = function (answerlist) {
     allRows.each(function () {
 
         let thisRow = jQuery(this);
-        let rowindex = jQuery(this).index();
+        let rowindex = thisRow.index();
 
         let header = jQuery(this).find("th strong");
         console.log("header text: ", header.text())
@@ -2080,7 +2080,8 @@ var carry3b = function (answerlist) {
         } else if (header.text().replace(/ /g,"") == "") {
             console.log("row label is blank");
             let rowNumber = rowindex + 1;
-            header.text(rowNumber)
+            console.log("rowNumber: ", rowNumber);
+            thisRow.find("th label span").text(rowNumber);
         }
     });
 };
