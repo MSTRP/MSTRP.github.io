@@ -47,12 +47,13 @@ var sections = {
     Nine: "Section 9: Case studies",
     NineD: "Case studies summary",
     Part2: "Part 2: Financial Reporting",
-    Ten: "Section 10: Revenue",
-    TenD: "Revenue generating transaction details",
-    TenD2: "Revenue Retention",
-    Eleven: "Section 11: Equity",
-    ElevenD: "Equity obtained details",
-    Twelve: "Section 12: Declaration download",
+    Ten: "Section 10: Financial contact details",
+    Eleven: "Section 11: Revenue",
+    ElevenD: "Revenue generating transaction details",
+    ElevenD2: "Revenue Retention",
+    Twelve: "Section 12: Equity",
+    TwelveD: "Equity obtained details",
+    DecDown: "Download declaration form",
     Supporting: "Upload Supporting Documents",
     Submit: "Completion Checklist",
     Submit2: "Summary of responses",
@@ -225,7 +226,7 @@ var columnNames = {
             "25": "Is there any industry involvement with this case?"
         }
     },
-    "10": {
+    "11": {
 
         input: {
             "4": "Wellcome grant/award number(s) (first 6 digits)",
@@ -244,7 +245,7 @@ var columnNames = {
             "28": "Justification of a lower percentage (if applicable, where 3.2 of Appendix 2 applies)"
         }
     },
-    "11": {
+    "12": {
 
         input: {
             "7": "Organisation Reference",
@@ -951,13 +952,13 @@ var checkAll = function (filters, action, skippers, breaker = "n/a") {
             //if checking all filter questions the whole array breaker does not need to be provided
             break;
         } else if (skip.indexOf(key) > -1) {
-            continue
-        }
+            continue;
+        };
         if (checkBlank(value) === "Blank") {
             alert = alert + "\n" + filters[key];
             guidance = guidance + "<br/>" + filters[key];
-        }
-    }
+        };
+    };
 
     switch (action) {
         case "alert":
@@ -967,7 +968,7 @@ var checkAll = function (filters, action, skippers, breaker = "n/a") {
             jQuery(".check").html() += guidance + '</div>';
             //add guidance txt to target div
             break;
-    }
+    };
 };
 
 //menubar scroll shadow
@@ -2647,9 +2648,8 @@ var revenueCalc = function (parentarray) {
                     Qualtrics.SurveyEngine.setEmbeddedData('tRevDisplay', grossrolling);
 
                     //next button switch
-                    let next = "11. Equity"
-                    let details = "Revenue Retention"
-
+                    let next = sections.TwelveD
+                    let details = sections.ElevenD2
 
                     nextbuttonDefault(next);
 
