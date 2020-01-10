@@ -967,7 +967,7 @@ var checkAll = function (filters, action, skippers, breaker = "n/a") {
             break;
         case "guidance":
             let targetDiv = jQuery(".check");
-            targetDiv.html(targetDiv.html() + guidance + '</div>') ;
+            targetDiv.html(targetDiv.html() + guidance + '</div>');
             //add guidance txt to target div
             break;
     };
@@ -2036,9 +2036,11 @@ var carry3b = function (answerlist) {
 
     allRows.each(function () {
 
-        thisRow = jQuery(this);
-        rowindex = jQuery(this).index();
+        let thisRow = jQuery(this);
+        let rowindex = jQuery(this).index();
 
+        let header = jQuery(this).find("th strong");
+        
         //define values for row
         var aNo = awardNo[rowindex];
         //award No.
@@ -2076,6 +2078,9 @@ var carry3b = function (answerlist) {
             inventorsIpt.val(nIn);
             autofillCSS(inventorsIpt);
             //named inventors
+        } else if (header.text() == "") {
+            let rowNumber = rowindex + 1
+            header.text(rowNumber)
         }
     });
 };
