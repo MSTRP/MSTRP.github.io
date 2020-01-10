@@ -2042,6 +2042,7 @@ var carry3b = function (answerlist) {
         let rowindex = jQuery(this).index();
 
         let header = jQuery(this).find("th strong");
+        console.log("header text: ", header.text())
 
         //define values for row
         var aNo = awardNo[rowindex];
