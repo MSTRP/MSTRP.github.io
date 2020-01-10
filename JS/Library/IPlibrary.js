@@ -2081,7 +2081,7 @@ var carry3b = function (answerlist) {
             console.log("row label is blank");
             let rowNumber = rowindex + 1;
             console.log("rowNumber: ", rowNumber);
-            thisRow.find("th label span").text(rowNumber);
+            header.append(rowNumber);
         }
     });
 };
