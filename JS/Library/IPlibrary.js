@@ -62,7 +62,7 @@ var sections = {
     End: "Submit report"
 };
 
-var filters = {
+var filterNames = {
     Three: "Section 3: Invention disclosures and new patent applications",
     ThreeA: "Section 3: Invention disclosures and new patent applications",
     ThreeB: "Section 3: Invention disclosures and new patent applications",
@@ -935,8 +935,8 @@ var checkBlank = function (value) {
 };
 
 
-var checkAll = function (filters, action, skippers, breaker = "n/a") {
-    let array = Object.entries(filters);
+var checkAll = function (filterList, action, skippers, breaker = "n/a") {
+    let array = Object.entries(filterList);
     //skippers does not need to be provided:
     let skip = (typeof skippers == "object") ? skippers : [];
     console.log("skip: ", skip);
@@ -957,8 +957,8 @@ var checkAll = function (filters, action, skippers, breaker = "n/a") {
             continue;
         };
         if (checkBlank(value) === "Blank") {
-            alert = alert + "\n" + filters[key];
-            guidance = guidance + "<br/>" + filters[key];
+            alert = alert + "\n" + filterNames[key];
+            guidance = guidance + "<br/>" + filterNames[key];
         };
     };
 
@@ -968,6 +968,7 @@ var checkAll = function (filters, action, skippers, breaker = "n/a") {
             break;
         case "guidance":
             guidance += '</div>';
+            console.log(guidance);
             jQuery(".check").append(guidance);
             //add guidance txt to target div
             break;
