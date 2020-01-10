@@ -1366,8 +1366,10 @@ var keyupSwitch = function (buttons) {
 
         console.log(I.val().replace(/,/g, ""));
 
-        let action = function (details, next) {
-            nextbuttonSwitch(sections[Buttons[details]], sections[Buttons[next]], I);
+        let action = function (details, next, field) {
+            let input = (field === undefined) ? I : field;
+            //if field is not specified use current input
+            nextbuttonSwitch(sections[Buttons[details]], sections[Buttons[next]], input);
         };
 
         //switch case of actions:
@@ -1388,21 +1390,30 @@ var keyupSwitch = function (buttons) {
                         case "B/0":
                             console.log("first is blank");
 
-                            let i1 = i.eq(0);
-                            let others = i.not(i1)
+                            let i1 = i.eq(0); //this field
+                            let others = i.not(i1); //all other fields
                             console.log("others: ", others)
 
-                            let otherBlanks = filterBlanks(others);
+                            let otherBlanks = filterBlanks(others); 
+                            //other non-blank/0 fields
 
                             console.log("otherBlanks: ", otherBlanks);
                             if (otherBlanks.length < others.length) {
-                                let nB = getNotBlank2(i);
-                                let InB = others.index(nB.eq(0)) + 1;
+                                //when one of the other fields is not blank/0
+                                
+                                //get the next non-blank field:
+                                let nB = getNotBlank2(i);//other non-blanks
+                                
+                                let InB = others.index(nB.eq(0)) + 2;
+                                //index of next non-blank field, adjusted to grab key 
+                                //from buttons array
+
                                 console.log("InB: ", InB);
                                 console.log("button label: ", buttons[InB]);
-                                //indexof next non blank field
+                                
                                 console.log("next non blank value: ", nB.eq(0).val());
-                                action(InB, nextIndex);
+                                action(InB, nextIndex, nB.eq(0));
+                                //run action on next blank field instead of this one
                             } else {
                                 action(Index, nextIndex);
                             }
