@@ -941,9 +941,12 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
     let stopper = (typeof skippers == "string") ? skippers : breaker;
 
     //help text:
-    var helper = "Please be aware the following sections are incomplete and need to be completed before you can submit:";
+    let helper = "Please be aware the following sections are incomplete and need to be completed before you can submit:";
     var alert = helper;
-    var guidance = '<div class="helpText" id="check-Guidance"> <br/> ' + "<strong>" + helper +"</strong>";//html
+
+    let guidanceHTMLA = '<div class="helpText" id="check-Guidance"> <br/> <strong>';
+    let guidanceHTMLB = "</strong>";
+    var guidance = guidanceHTMLA + helper + guidanceHTMLB;//html
 
     for (let [key, value] of array) {
         if (key === stopper || key === array[array.length - 1][0]) {
@@ -967,6 +970,10 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             jQuery(".check").append(guidance);
             //add guidance txt to target div
             break;
+        case "default":
+            guidance += guidance.replace(guidanceHTMLA, "");
+            guidance += guidance.replace(guidanceHTMLB, "");
+            return guidance
     };
 };
 
@@ -1405,6 +1412,31 @@ var keyupSwitch = function (buttons) {
         };
     })
 };
+
+//disable next
+var nextCheck = function (filterList, breaker, question, blockNext) {
+
+    let check = checkAll(filterList, "default", ["SixBD"], breaker);
+    //get all blank questions
+
+    let stopper = (blockNext === true) ? function () { question.disableNextButton() } : function () { };
+
+    if (check.length > 0) {
+        //if any questions are blank
+
+        stopper()// disable next button
+
+        jQuery("#NextButton").css("background-color", getColour(tertiary));
+        //make the button grey/lightest theme colour
+
+        jQuery("#NextButton").click(function () {
+            checkAll(filterList, "alert", ["sixBD"], breaker);
+
+        })
+    } else {
+        question.enableNextButton();
+    };
+}
 
 //---------------copy button
 var copyButton = function (buttonSelector, copySelector) {
@@ -2076,9 +2108,9 @@ var carry3b = function (answerlist) {
             inventorsIpt.val(nIn);
             autofillCSS(inventorsIpt);
             //named inventors
-        } else if (header.text().replace(/ /g,"") == "") {
+        } else if (header.text().replace(/ /g, "") == "") {
             let rowNumber = rowindex + 1;
-            let header = "<strong>" + rowNumber+ "</strong>";
+            let header = "<strong>" + rowNumber + "</strong>";
             thisRow.find(th).append(header);
         }
     });
