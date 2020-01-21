@@ -1414,7 +1414,7 @@ var keyupSwitch = function (buttons) {
 };
 
 //disable next
-var nextCheck = function (filterList, breaker, question, blockNext) {
+var nextCheck = function (filterList, question, blockNext, breaker) {
 
     let check = checkAll(filterList, "default", ["SixBD"], breaker);
     //get all blank questions
@@ -1426,7 +1426,7 @@ var nextCheck = function (filterList, breaker, question, blockNext) {
 
         stopper()// disable next button
 
-        jQuery("#NextButton").css("background-color", getColour(tertiary));
+        jQuery("#NextButton").css("background-color", getDefault(tertiary));
         //make the button grey/lightest theme colour
 
         jQuery("#NextButton").click(function () {
