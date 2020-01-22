@@ -1667,11 +1667,11 @@ var hotkeyNavigate = function (question) {
 
             //get direction as a string
             let direction =
-                (pressedKeys.indexOf(17) > -1 && pressedKeys.indexOf(18) > -1 && pressedKeys.indexOf(80) > -1 && pressedKeys.indexOf(78) === 0 && jQuery("#PreviousButton").length)
-                    //if CTRL + ALT + N are pressed and the next button is present:
+                (pressedKeys.indexOf(17) > -1 && pressedKeys.indexOf(18) > -1 && pressedKeys.indexOf(80) > -1 && pressedKeys.indexOf(78) === -1 && jQuery("#PreviousButton").length)
+                    //if CTRL + ALT + P are pressed and the next button is present:
                     ? "back"
                     : (pressedKeys.indexOf(17) > -1 && pressedKeys.indexOf(18) > -1 && pressedKeys.indexOf(78) > -1 && pressedKeys.indexOf(80) === -1 && jQuery("#NextButton").length)
-                        //if CTRL + ALT + P are pressed and the previous button is present:
+                        //if CTRL + ALT + N are pressed and the previous button is present:
                         ? "next" : "";
 
             if (all_inputs < matrixThreshold) {
