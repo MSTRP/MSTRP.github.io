@@ -943,7 +943,7 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
 
     //help text:
     let helper = "Please be aware the following sections are incomplete and need to be completed before you can submit:";
-    var alert = helper;
+    var alertText = helper;
 
     let guidanceHTMLA = '<div class="helpText" id="check-Guidance"> <br/> <strong>';
     let guidanceHTMLB = "</strong>";
@@ -957,14 +957,14 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             continue;
         };
         if (checkBlank(value) === "Blank") {
-            alert += "\n" + filterNames[key];
-            guidance += "<br/>" + "- " + filterNames[key];
+            alertText = alertText + "\n" + filterNames[key];
+            guidance =  guidance + "<br/>" + "- " + filterNames[key];
         };
     };
 
     switch (action) {
         case "alert":
-            alert(alert);
+            alert(alertText);
             break;
         case "guidance":
             guidance += '</div>';
@@ -972,10 +972,10 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             //add guidance txt to target div
             break;
         case "default":
-            //remove default help text:
-            guidance.replace(guidanceHTMLA, "");
-            guidance.replace(guidanceHTMLB, "");
-            return guidance
+        //remove default help text:
+        guidance.replace(guidanceHTMLA, "");
+        guidance.replace(guidanceHTMLB, "");
+         return guidance
     };
 };
 
