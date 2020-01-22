@@ -270,8 +270,8 @@ var columnNames = {
 
 //common alerts as JSON:
 var alerts = {
-    completeSection: alert("You will need to complete this section before you submit your report"),
-    contact: alert("our contact e-mail has been copied")
+    completeSection: function () { alert("You will need to complete this section before you submit your report") },
+    contact: function () { alert("our contact e-mail has been copied") }
 };
 
 //question columns with dates:
@@ -284,7 +284,7 @@ var dateColumnsAll = {
 };
 
 //maximum number of inputs on the filter pages:
-const matrixThreshold = 4;
+let matrixThreshold = 4;
 
 
 //1) embedded data methods:
@@ -1613,7 +1613,7 @@ var hotkeyNavigate = function (question) {
     let input_fields = jQuery(".ChoiceStructure input");
     //select input fields
 
-    const all_inputs = input_fields.length;
+    let all_inputs = input_fields.length;
     //number of inputs
 
 
@@ -1662,11 +1662,12 @@ var hotkeyNavigate = function (question) {
     let goBack = function () { question.clickPreviousButton(); }//move to previous question
 
 
-
     jQuery(document) //applies to whole page
         .keydown(function (e) {
             pressedKeys.push(e.keyCode);
             //add the pressed key to pressedKeys array
+
+            console.log( "allInputs: ", all_inputs);
 
             //get direction as a string
             let direction =
@@ -1696,11 +1697,11 @@ var hotkeyNavigate = function (question) {
                             break;
                     };
                 } else {
-                    //if there is only 1 question:
+                    //if there is 1 or less questions:
 
                     switch (direction) {
                         case "next":
-                            let test = input_fields.val().replace(/,/g, "");
+                            let test = input_fields.val();
                             //test the length of input string
 
                             switcher(test, "top");
@@ -1733,7 +1734,7 @@ var hotkeyNavigate = function (question) {
         .keyup(function () {
 
             pressedKeys = [];
-        })
+        });
 
     input_fields //applies to input fields
         .keyup(function (e) {
