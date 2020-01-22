@@ -1608,6 +1608,8 @@ var hotkeyNavigate = function (question) {
     let all_inputs = input_fields.length;
     //number of inputs
 
+    console.log("inputs on page : ", all_inputs);
+
     //maximum number of inputs on the filter pages:
     let matrixThreshold = 5;
 
