@@ -1443,7 +1443,7 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
 
         //add help text on hover:
         hoverTextAdd(
-            jQuery("div.#Buttons"),//buttons wrapper element
+            jQuery("#Buttons"),//buttons wrapper element
             "Please complete all sections of this report in order to continue"
             //help text
         );
