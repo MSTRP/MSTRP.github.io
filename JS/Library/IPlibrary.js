@@ -55,7 +55,7 @@ var sections = {
     Twelve: "Section 12: Equity",
     TwelveD: "Equity obtained details",
     DecDown: "Download declaration form",
-    DecUP: "Upload declaration form",
+    DecUp: "Upload declaration form",
     Supporting: "Upload Supporting Documents",
     Submit: "Completion Checklist",
     Submit2: "Summary of responses",
