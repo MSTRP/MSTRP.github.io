@@ -1426,15 +1426,15 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
 
         stopper();// disable next button
 
-        jQuery("#NextButton").attr("title", "Please complete all sections of this report in order to continue")
+        //alert on load:
+        checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
 
-        //jQuery("#NextButton").css("background-color", getColour("tertiary"));
-        //make the button grey/lightest theme colour
-
-        jQuery("#NextButton").click(function () {
-            checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
-
-        })
+        //add help text on hover:
+        hoverTextAdd(
+            jQuery("div.#Buttons"),//buttons wrapper element
+            "Please complete all sections of this report in order to continue"
+            //help text
+        );
     } else {
         question.enableNextButton();
     };
@@ -1760,6 +1760,29 @@ var loadDatePicker = function (question) {
 };
 
 //2) Hover text
+
+//basic hover text builder function:
+var hoverTextAdd = function (selector, helpText) {
+    selector.hover(function () {
+        // Hover over code
+        jQuery('<p class="tooltip"></p>')
+            .text(helpText)
+            .appendTo('body')
+            .fadeIn('slow');
+
+    }, function () {
+        // Hover out code
+        jQuery('.tooltip').remove();
+
+    }).mousemove(function (e) {
+        var mousex = e.pageX + 5; //Get X coordinates
+        var mousey = e.pageY + 2; //Get Y coordinates
+        jQuery('.tooltip')
+            .css({ top: mousey, left: mousex })
+    });
+};
+
+//set hover text on matrix tables:
 var setHoverText = function (question, filterlist) {
     //define the master arrays for each question type if present
     let labelarray = columnNames[question];
@@ -1776,29 +1799,9 @@ var setHoverText = function (question, filterlist) {
         var allSelects = Object.entries(labelarray["select"])
     };//<select>
 
-    //define hover text builder function:
-    function hoverTextAdd(input, helpText) {
-        input.hover(function () {
-            // Hover over code
-            jQuery('<p class="tooltip"></p>')
-                .text(helpText)
-                .appendTo('body')
-                .fadeIn('slow');
-
-        }, function () {
-            // Hover out code
-            jQuery('.tooltip').remove();
-
-        }).mousemove(function (e) {
-            var mousex = e.pageX + 5; //Get X coordinates
-            var mousey = e.pageY + 2; //Get Y coordinates
-            jQuery('.tooltip')
-                .css({ top: mousey, left: mousex })
-        });
-    };
 
     //function to set hovertext and build selector
-    function setHoverText(column_nth_index, hover_text, row) {
+    let setHoverText = function (column_nth_index, hover_text, row) {
 
         //define selector
         let thisColumn = columnSelect(column_nth_index);
