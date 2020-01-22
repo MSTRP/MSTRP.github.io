@@ -1628,6 +1628,8 @@ var hotkeyNavigate = function (question) {
 
         switch (alertCase) {
             case "top": //when testing string length of value
+
+            console.log( "top");
                 switch (doTest) {
                     case 0: //when blank
                         alertNext();
@@ -1641,6 +1643,7 @@ var hotkeyNavigate = function (question) {
                 break;
 
             case "btm": //testing nummberof blanks in array
+            console.log( "bottom");
                 switch (doTest) {
                     case 0: //when not blank
 
