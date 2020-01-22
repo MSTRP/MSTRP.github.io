@@ -1682,7 +1682,7 @@ var hotkeyNavigate = function (question) {
 
                     switch (direction) {
                         case "next":
-                            let test = filterBlanks(input_fields)
+                            let test = filterBlanks(input_fields);
                             //test the number of blanks
                             switcher(test, "btm");
                             break;
@@ -1697,7 +1697,7 @@ var hotkeyNavigate = function (question) {
 
                     switch (direction) {
                         case "next":
-                            let test = filterBlanks(input_fields)
+                            let test = filterBlanks(input_fields);
                             //test the length of input string
 
                             switcher(test, "btm");
@@ -1709,7 +1709,6 @@ var hotkeyNavigate = function (question) {
                             //move to previous question
                             break;
                     };
-
                 };
             } else {
                 //otherwise if there are more than 4 questions on the page:
