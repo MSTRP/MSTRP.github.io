@@ -268,11 +268,6 @@ var columnNames = {
     }
 };
 
-//common alerts as JSON:
-var alerts = {
-    completeSection: function () { alert("You will need to complete this section before you submit your report") },
-    contact: function () { alert("our contact e-mail has been copied") }
-};
 
 //question columns with dates:
 var dateColumnsAll = {
@@ -284,7 +279,7 @@ var dateColumnsAll = {
 };
 
 //maximum number of inputs on the filter pages:
-let matrixThreshold = 4;
+var matrixThreshold = 4;
 
 
 //1) embedded data methods:
@@ -1466,7 +1461,7 @@ var copyButton = function (buttonSelector, copySelector) {
 
         document.execCommand("copy");
 
-        alerts.contact();
+        alert("our contact e-mail has been copied");
 
         console.log(copyText.value);
     })
@@ -1626,7 +1621,10 @@ var hotkeyNavigate = function (question) {
     //determine which next case to give the alert, depending on test result:
     let switcher = function (test, alertCase) {
         let doTest = test.length;
-        let alertNext = function () { goNext(); alerts.completeSection(); };
+        let alertNext = function () {
+            goNext();
+            alert("You will need to complete this section before you submit your report");
+        };
 
         switch (alertCase) {
             case "top":
@@ -1667,7 +1665,7 @@ var hotkeyNavigate = function (question) {
             pressedKeys.push(e.keyCode);
             //add the pressed key to pressedKeys array
 
-            console.log( "allInputs: ", all_inputs);
+            console.log("allInputs: ", all_inputs);
 
             //get direction as a string
             let direction =
