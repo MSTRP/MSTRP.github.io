@@ -1609,7 +1609,7 @@ var hotkeyNavigate = function (question) {
     //number of inputs
 
     //maximum number of inputs on the filter pages:
-    let matrixThreshold = 4;
+    let matrixThreshold = 5;
 
     //navigation functions:
     //next
@@ -1663,7 +1663,7 @@ var hotkeyNavigate = function (question) {
             pressedKeys.push(e.keyCode);
             //add the pressed key to pressedKeys array
 
-            console.log("allInputs: ", all_inputs);
+            //console.log("allInputs: ", all_inputs);
 
             //get direction as a string
             let direction =
@@ -1674,7 +1674,7 @@ var hotkeyNavigate = function (question) {
                         //if CTRL + ALT + P are pressed and the previous button is present:
                         ? "next" : "";
 
-            if (all_inputs <= matrixThreshold) {
+            if (all_inputs < matrixThreshold) {
                 //when there are under 5 inputs on the page:
 
                 if (all_inputs > 1) {
@@ -1736,17 +1736,18 @@ var hotkeyNavigate = function (question) {
             if (e.keyCode === 13) {
                 //when enter is pressed
 
-                if (all_inputs > 1 && all_inputs <= matrixThreshold) {
+                if (all_inputs > 1 && all_inputs < matrixThreshold) {
                     //when there is one to four inputs on the page and Enter is pressed
 
                     let test = filterBlanks(input_fields);
                     //get the number of blank inputs
 
                     switcher(test, "btm");
-                } else {
+                } else if (all_inputs === 1) {
+                    //or when there is only one input
+                    
                     let test = input_fields.val().replace(/,/g, "");
                     switcher(test, "top");
-
                 };
 
             };
