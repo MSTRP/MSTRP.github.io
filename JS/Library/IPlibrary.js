@@ -957,8 +957,8 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             continue;
         };
         if (checkBlank(value) === "Blank") {
-            alert = alert + "\n" + filterNames[key];
-            guidance = guidance + "<br/>" + "- " + filterNames[key];
+            alert += "\n" + filterNames[key];
+            guidance += "<br/>" + "- " + filterNames[key];
         };
     };
 
@@ -972,8 +972,9 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             //add guidance txt to target div
             break;
         case "default":
-            guidance += guidance.replace(guidanceHTMLA, "");
-            guidance += guidance.replace(guidanceHTMLB, "");
+            //remove default help text:
+            guidance.replace(guidanceHTMLA, "");
+            guidance.replace(guidanceHTMLB, "");
             return guidance
     };
 };
