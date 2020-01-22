@@ -278,9 +278,6 @@ var dateColumnsAll = {
     terminated: "13",
 };
 
-//maximum number of inputs on the filter pages:
-var matrixThreshold = 4;
-
 
 //1) embedded data methods:
 
@@ -1611,7 +1608,8 @@ var hotkeyNavigate = function (question) {
     let all_inputs = input_fields.length;
     //number of inputs
 
-
+    //maximum number of inputs on the filter pages:
+    let matrixThreshold = 4;
 
     //navigation functions:
     //next
@@ -1699,10 +1697,10 @@ var hotkeyNavigate = function (question) {
 
                     switch (direction) {
                         case "next":
-                            let test = input_fields.val();
+                            let test = filterBlanks(input_fields)
                             //test the length of input string
 
-                            switcher(test, "top");
+                            switcher(test, "btm");
 
                             break;
 
@@ -1712,7 +1710,7 @@ var hotkeyNavigate = function (question) {
                             break;
                     };
 
-                }
+                };
             } else {
                 //otherwise if there are more than 4 questions on the page:
 
