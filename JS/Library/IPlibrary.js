@@ -964,7 +964,7 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
 
     switch (action) {
         case "alert":
-            alert(alert);
+            displayErrorMessage(alert);//Qualtrics method for alert();
             break;
         case "guidance":
             guidance += '</div>';
