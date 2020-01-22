@@ -1426,11 +1426,11 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
 
         stopper()// disable next button
 
-        jQuery("#NextButton").css("background-color", getDefault(tertiary));
+        jQuery("#NextButton").css("background-color", getColour(tertiary));
         //make the button grey/lightest theme colour
 
         jQuery("#NextButton").click(function () {
-            checkAll(filterList, "alert", ["sixBD"], breaker);
+            checkAll(filterList, "alert", ["SixBD"], breaker);
 
         })
     } else {
