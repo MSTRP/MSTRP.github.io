@@ -78,11 +78,11 @@ var filterNames = {
     EightD: "Section 8: Terminated agreements",
     Nine: "Section 9: Case studies",
     NineD: "Section 9: Case studies",
-    Eleven: "Section 10: Revenue",
-    ElevenD: "Section 10: Revenue",
-    ElevenD2: "Section 11: Equity",
-    Twelve: "Section 11: Equity",
-    TwelveD: "Section 11: Equity",
+    Eleven: "Section 11: Revenue",
+    ElevenD: "Section 11: Revenue",
+    ElevenD2: "Section 11: Revenue retention",
+    Twelve: "Section 12: Equity",
+    TwelveD: "Section 12: Equity",
 }
 
 //references for question with string filter values
@@ -1424,13 +1424,15 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
     if (check.length > 0) {
         //if any questions are blank
 
-        stopper()// disable next button
+        stopper();// disable next button
 
-        jQuery("#NextButton").css("background-color", getColour(tertiary));
+        jQuery("#NextButton").attr("title", "Please complete all sections of this report in order to continue")
+
+        //jQuery("#NextButton").css("background-color", getColour("tertiary"));
         //make the button grey/lightest theme colour
 
         jQuery("#NextButton").click(function () {
-            checkAll(filterList, "alert", ["SixBD"], breaker);
+            checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
 
         })
     } else {
