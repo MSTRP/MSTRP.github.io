@@ -84,7 +84,7 @@ var filterNames = {
     ElevenD2: "Section 11: Revenue retention",
     Twelve: "Section 12: Equity",
     TwelveD: "Section 12: Equity",
-}
+};
 
 //references for question with string filter values
 var stringfilters = ["SixBD", "Supporting"];
@@ -268,6 +268,12 @@ var columnNames = {
     }
 };
 
+//common alerts as JSON:
+var alerts = {
+    completeSection: alert("You will need to complete this section before you submit your report"),
+    contact: alert("our contact e-mail has been copied")
+};
+
 //question columns with dates:
 var dateColumnsAll = {
     filedPatents: "19",
@@ -276,6 +282,10 @@ var dateColumnsAll = {
     liveAgreements: "24",
     terminated: "13",
 };
+
+//maximum number of inputs on the filter pages:
+const matrixThreshold = 4;
+
 
 //1) embedded data methods:
 
@@ -958,7 +968,7 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
         };
         if (checkBlank(value) === "Blank") {
             alertText = alertText + "\n" + filterNames[key];
-            guidance =  guidance + "<br/>" + "- " + filterNames[key];
+            guidance = guidance + "<br/>" + "- " + filterNames[key];
         };
     };
 
@@ -972,10 +982,10 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             //add guidance txt to target div
             break;
         case "default":
-        //remove default help text:
-        guidance.replace(guidanceHTMLA, "");
-        guidance.replace(guidanceHTMLB, "");
-         return guidance
+            //remove default help text:
+            guidance.replace(guidanceHTMLA, "");
+            guidance.replace(guidanceHTMLB, "");
+            return guidance
     };
 };
 
@@ -1321,7 +1331,7 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
 
 var keyupSwitch = function (buttons) {
     //on page load:
-    let i = filterButtons();
+    let i = jQuery(".ChoiceStructure input");
     //array of inputs on the page excluding the next buttons
 
     //set array indecies for nextbuttonSwitch function:
@@ -1456,9 +1466,9 @@ var copyButton = function (buttonSelector, copySelector) {
 
         document.execCommand("copy");
 
-        alert("our contact e-mail has been copied")
+        alerts.contact();
 
-        console.log(copyText.value)
+        console.log(copyText.value);
     })
 };
 
@@ -1597,72 +1607,127 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
 var hotkeyNavigate = function (question) {
 
     //define key variales
-    var pressedKeys = [];
+    let pressedKeys = [];
     //array to track pressed keys (and order pressed)
 
-    var input_fields = jQuery(".ChoiceStructure input");
+    let input_fields = jQuery(".ChoiceStructure input");
     //select input fields
 
     const all_inputs = input_fields.length;
     //number of inputs
+
+
+
+    //navigation functions:
+    //next
+    let goNext = function () { question.clickNextButton() };//move to next question
+    //move to next question with completion alert
+
+    //determine which next case to give the alert, depending on test result:
+    let switcher = function (test, alertCase) {
+        let doTest = test.length;
+        let alertNext = function () { goNext(); alerts.completeSection(); };
+
+        switch (alertCase) {
+            case "top":
+                switch (doTest) {
+                    case 0: //when blank
+                        alertNext();
+                        break;
+
+                    default:
+                        goNext();
+                        //move to next question
+                        break;
+                };
+                break;
+
+            case "btm":
+                switch (doTest) {
+                    case 0: //when not blank
+
+                        goNext();
+                        break;
+
+                    default:
+                        alertNext();
+                        //move to next question
+                        break;
+                };
+                break;
+        };
+    };
+
+    //back:
+    let goBack = function () { question.clickPreviousButton(); }//move to previous question
+
+
 
     jQuery(document) //applies to whole page
         .keydown(function (e) {
             pressedKeys.push(e.keyCode);
             //add the pressed key to pressedKeys array
 
-            if (all_inputs < 5) {
+            //get direction as a string
+            let direction =
+                (pressedKeys.indexOf(17) > -1 && pressedKeys.indexOf(18) > -1 && pressedKeys.indexOf(80) > -1 && pressedKeys.indexOf(78) === 0 && jQuery("#PreviousButton").length)
+                    //if CTRL + ALT + N are pressed and the next button is present:
+                    ? "back"
+                    : (pressedKeys.indexOf(17) > -1 && pressedKeys.indexOf(18) > -1 && pressedKeys.indexOf(78) > -1 && pressedKeys.indexOf(80) === -1 && jQuery("#NextButton").length)
+                        //if CTRL + ALT + P are pressed and the previous button is present:
+                        ? "next" : "";
+
+            if (all_inputs <= matrixThreshold) {
                 //when there are under 5 inputs on the page:
 
                 if (all_inputs > 1) {
-                    //if there is 1-4 inputs:
+                    //if there is 2-4 inputs:
 
-                    var blank_inputs = filterBlanks(input_fields).length
-                    //get the number of blanks as a variable
+                    switch (direction) {
+                        case "next":
+                            let test = filterBlanks(input_fields)
+                            //test the number of blanks
+                            switcher(test, "btm");
+                            break;
 
-                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && blank_inputs == 0 && jQuery("#NextButton").length) {
-                        //if CTRL + ALT + N are pressed in sequence and there are no blank questions & the next button is present:
-
-                        question.clickNextButton()
-                        //move to next question
-
-                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && blank_inputs == 0 && jQuery("#PreviousButton").length) {
-                        //if CTRL + ALT + P are pressed in sequence and there are no blank questions & the previous is present:
-                        question.clickPreviousButton()
-                        //move to previous question
-                    }
-
+                        case "back":
+                            goBack();
+                            //move to previous question
+                            break;
+                    };
                 } else {
                     //if there is only 1 question:
 
-                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && input_fields.val() != "" && jQuery("#NextButton").length) {
-                        //if CTRL + ALT + N are pressed in sequence and thequestions is not blank & the next button is present:
+                    switch (direction) {
+                        case "next":
+                            let test = input_fields.val().replace(/,/g, "");
+                            //test the length of input string
 
-                        question.clickNextButton()
-                        //move to next question
+                            switcher(test, "top");
 
-                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && input_fields.val() != "" && jQuery("#PreviousButton").length) {
-                        //if CTRL + ALT + P are pressed in sequence and there are no blank questions & the previous is present:
+                            break;
 
-                        question.clickPreviousButton()
-                        //move to previous question
-                    }
+                        case "back":
+                            goBack();
+                            //move to previous question
+                            break;
+                    };
 
                 }
             } else {
                 //otherwise if there are more than 4 questions on the page:
-                if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
-                    //if CTRL + ALT + N are pressed in sequence & the next button is present:
 
-                    question.clickNextButton()
-                    //move to next question
-                } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
-                    //if CTRL + ALT + P are pressed in sequence  & the previous is present:
+                switch (direction) {
+                    case "next":
+                        goNext();
+                        break;
 
-                    question.clickPreviousButton()
-                    //move to previous question
+                    case "back":
+                        goBack();
+                        break;
                 }
-            }
+
+            };
 
         })
         .keyup(function () {
@@ -1672,32 +1737,23 @@ var hotkeyNavigate = function (question) {
 
     input_fields //applies to input fields
         .keyup(function (e) {
+            if (e.keyCode === 13) {
+                //when enter is pressed
 
-            if (all_inputs > 1 && all_inputs < 5) {
-                //hwen there is more than one input on the page
+                if (all_inputs > 1 && all_inputs <= matrixThreshold) {
+                    //when there is one to four inputs on the page and Enter is pressed
 
-                var blank_inputs = filterBlanks(input_fields).length
-                //get the number of blank inouts 
+                    let test = filterBlanks(input_fields);
+                    //get the number of blank inputs
 
-                if (e.keyCode == 13 && blank_inputs == 0) {
-                    //if Enter is pressed and all fields have completed
+                    switcher(test, "btm");
+                } else {
+                    let test = input_fields.val().replace(/,/g, "");
+                    switcher(test, "top");
 
-                    question.clickNextButton()
-                    //got to next question
-                } else if (e.keyCode == 13 && blank_inputs > 1) {
-                    alert("please complete all questions on this page")
-                }
+                };
 
-            } else {
-                //if just one input on the page:
-                if (e.keyCode == 13 && input_fields.val() != "") {
-                    //when enter is pressed and the input field is completed
-                    question.clickNextButton()
-                    //go to next question
-                } else if (e.keyCode == 13 && input_fields.val() == "") {
-                    alert("please complete this question before moving on")
-                }
-            }
+            };
         })
 };
 
