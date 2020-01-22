@@ -1435,7 +1435,7 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
 
         //add help text on hover:
         hoverTextAdd(
-            jQuery("#Buttons"),//buttons wrapper element
+            jQuery("#Buttons").not("#PreviousButton"),//buttons wrapper element
             "Please complete all sections of this report in order to continue"
             //help text
         );
@@ -1745,7 +1745,7 @@ var hotkeyNavigate = function (question) {
                     switcher(test, "btm");
                 } else if (all_inputs === 1) {
                     //or when there is only one input
-                    
+
                     let test = input_fields.val().replace(/,/g, "");
                     switcher(test, "top");
                 };
