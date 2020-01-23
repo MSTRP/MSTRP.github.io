@@ -1256,23 +1256,14 @@ var clickSwitch = function (buttons, wrapperID, optionindex) {
 
 var loadSwitch = function (direction, buttoninfo, filterArray) {
 
-    //define the function to run depending on direction
-    switch (direction) {
-        case 'next':
-            var action = nextbuttonDefault;
-            break;
-        case 'back':
-            var action = prevbuttonDefault;
-            break;
-    };
-
+   
     /* if (direction == "next") {
         action = nextbuttonDefault
     } else if (direction == "back") {
         action = prevbuttonDefault
     }; */
     //function to set filter logical
-    let setfilter = function (index) {
+    let setFilter = function (index) {
 
         if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] != "Supporting") {
             //if the current  button reference is in stringfilters
@@ -1291,32 +1282,45 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
         return filter
     };
 
+    //define the actio and order to check the 
+    //button info to run depending on direction
+    switch (direction) {
+        case 'next':
+            var action = nextbuttonDefault;
+            var checkOrder = (buttoninfo.length === 3)? [1,0,2] : [0,1];
+            break;
+        case 'back':
+            var action = prevbuttonDefault;
+            var checkOrder = (buttoninfo.length === 3)? [0,1,2] : [0,1];
+            break;
+    };
+
     if (buttoninfo.length == 2) {
         //if 2 button values have been provided
-        if (setfilter(0)) {
+        if (setFilter(checkOrder[0])) {
             //if filter value/length is greater than 0,
 
-            action(sections[buttoninfo[0]])
+            action(sections[buttoninfo[checkOrder[0]]]);
             // use the button text for the first reference
         } else {
             //otherwise
 
-            action(sections[buttoninfo[1]])
+            action(sections[buttoninfo[checkOrder[1]]]);
             //use the button text for teh second reference
         };
     } else if (buttoninfo.length == 3) {
-        if (setfilter(0)) {
+        if (setFilter(checkOrder[0])) {
             //if filter 1 value/length is greater than 0,
 
-            action(sections[buttoninfo[0]])
+            action(sections[buttoninfo[checkOrder[0]]])
             // use the button text for the first reference
-        } else if (setfilter(1)) {
+        } else if (setFilter(checkOrder[1])) {
             //otherwise if filter 2 value/length is greater than 0,
 
-            action(sections[buttoninfo[1]])
+            action(sections[buttoninfo[checkOrder[1]]])
             //use the button text for the third reference
         } else {
-            action(sections[buttoninfo[2]])
+            action(sections[buttoninfo[checkOrder[2]]])
         }
     }
 };
@@ -1629,7 +1633,7 @@ var hotkeyNavigate = function (question) {
         switch (alertCase) {
             case "top": //when testing string length of value
 
-            console.log( "top");
+                console.log("top");
                 switch (doTest) {
                     case 0: //when blank
                         alertNext();
@@ -1643,7 +1647,7 @@ var hotkeyNavigate = function (question) {
                 break;
 
             case "btm": //testing nummberof blanks in array
-            console.log( "bottom");
+                console.log("bottom");
                 switch (doTest) {
                     case 0: //when not blank
 
