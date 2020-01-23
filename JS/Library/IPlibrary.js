@@ -1424,41 +1424,47 @@ var keyupSwitch = function (buttons) {
 //disable next
 var nextCheck = function (filterList, question, blockNext, breaker) {
 
-    let check = checkAll(filterList, "default", ["SixBD", "ElevenD2"], breaker);
-    //get all blank questions
-    //set stoper actions:
+    if (jQuery("#EndOfSurvey").length < 1) {
+        //when not the end of survey summary page
 
-    let stopOrGo = (blockNext === true && check.length > 0)
-        ? function () {
-            Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
-            console.log("hotKeyNav: ", listeners.hotkeyNavigate)
-            question.disableNextButton();
-        }
-        : function () {
-            Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
-            console.log("hotKeyNav: ", listeners.hotkeyNavigate)
-            question.enableNextButton();
+        let check = checkAll(filterList, "default", ["SixBD", "ElevenD2"], breaker);
+        //get all blank questions
+        //set stoper actions:
+
+        let stopOrGo = (blockNext === true && check.length > 0)
+            ? function () {
+                Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
+                console.log("hotKeyNav: ", listeners.hotkeyNavigate)
+                question.disableNextButton();
+            }
+            : function () {
+                Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+                console.log("hotKeyNav: ", listeners.hotkeyNavigate)
+                question.enableNextButton();
+            };
+        //if the parameter is true and 
+
+        if (check.length > 0) {
+            //if any questions are blank
+
+
+            stopOrGo();// disable next button
+
+            //alert on load:
+            checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
+
+            //add help text on hover:
+            hoverTextAdd(
+                jQuery("#Buttons").not("#PreviousButton"),//buttons wrapper element
+                "Please complete all sections of this report in order to continue"
+                //help text
+            );
+        } else {
+            stopOrGo();// disable next button
         };
-    //if the parameter is true and 
-
-    if (check.length > 0) {
-        //if any questions are blank
-
-
-        stopOrGo();// disable next button
-
-        //alert on load:
-        checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
-
-        //add help text on hover:
-        hoverTextAdd(
-            jQuery("#Buttons").not("#PreviousButton"),//buttons wrapper element
-            "Please complete all sections of this report in order to continue"
-            //help text
-        );
     } else {
-        stopOrGo();// disable next button
-    };
+        Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+    }
 }
 
 //---------------copy button
