@@ -1256,7 +1256,7 @@ var clickSwitch = function (buttons, wrapperID, optionindex) {
 
 var loadSwitch = function (direction, buttoninfo, filterArray) {
 
-   
+
     /* if (direction == "next") {
         action = nextbuttonDefault
     } else if (direction == "back") {
@@ -1287,11 +1287,11 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
     switch (direction) {
         case 'next':
             var action = nextbuttonDefault;
-            var checkOrder = (buttoninfo.length === 3)? [1,0,2] : [0,1];
+            var checkOrder = (buttoninfo.length === 3) ? [1, 0, 2] : [0, 1];
             break;
         case 'back':
             var action = prevbuttonDefault;
-            var checkOrder = (buttoninfo.length === 3)? [0,1,2] : [0,1];
+            var checkOrder = (buttoninfo.length === 3) ? [0, 1, 2] : [0, 1];
             break;
     };
 
@@ -1625,6 +1625,8 @@ var hotkeyNavigate = function (question) {
     //determine which next case to give the alert, depending on test result:
     let switcher = function (test, alertCase) {
         let doTest = test.length;
+        console.log("doTest: ", doTest);
+
         let alertNext = function () {
             goNext();
             alert("You will need to complete this section before you submit your report");
