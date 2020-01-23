@@ -233,18 +233,18 @@ var columnNames = {
         input: {
             "4": "Wellcome grant/award number(s) (first 6 digits)",
             "7": "Organisation Reference",
-            "16": "Gross income (£)",
-            "19": "Direct Costs (£)",
-            "22": "Net income (£ - auto-calculation)",
-            "25": "Wellcome Contribution/WC (%)",
-            "31": "Wellcome Revenue Share/WR (%)",
-            "34": "Revenue Attributable to Wellcome (auto-calculation)",
-            "37": "Purchase order/invoice number (if applicable)"
+            "13": "Gross income (£)",
+            "16": "Direct Costs (£)",
+            "19": "Net income (£ - auto-calculation)",
+            "22": "Wellcome Contribution/WC (%)",
+            "28": "Wellcome Revenue Share/WR (%)",
+            "31": "Revenue Attributable to Wellcome (auto-calculation)",
+            "34": "Purchase order/invoice number (if applicable)"
         },
         textarea: {
             "10": "Grant/award title",
-            "13": "Counterparty(s) (avoid acronyms)",
-            "28": "Justification of a lower percentage (if applicable, where 3.2 of Appendix 2 applies)"
+            "10": "Counterparty(s) (avoid acronyms)",
+            "25": "Justification of a lower percentage (if applicable, where 3.2 of Appendix 2 applies)"
         }
     },
     "12": {
