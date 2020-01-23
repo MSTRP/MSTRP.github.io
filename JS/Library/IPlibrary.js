@@ -1635,6 +1635,11 @@ var hotkeyNavigate = function (question) {
 
     let alertCounter = 0;
     //limit number of alerts to 1
+    let goNext = function () {
+        if (listeners.hotkeyNavigate == "Go") {
+            question.clickNextButton()
+        };
+    };
 
     //determine which next case to give the alert, depending on test result:
     let switcher = function (test, alertCase) {
@@ -1721,12 +1726,6 @@ var hotkeyNavigate = function (question) {
                         ? "next" : "";
 
             //determine go next function
-
-            if (listeners.hotkeyNavigate == "Go") {
-                var goNext = function () { question.clickNextButton(); };
-            } else {
-                var goNext = function () { };
-            };
 
             //move to next question:
             //move to next question with completion alert
