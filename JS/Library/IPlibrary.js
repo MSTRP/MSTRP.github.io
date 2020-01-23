@@ -1424,15 +1424,26 @@ var keyupSwitch = function (buttons) {
 //disable next
 var nextCheck = function (filterList, question, blockNext, breaker) {
 
-    let check = checkAll(filterList, "default", ["SixBD"], breaker);
+    let check = checkAll(filterList, "default", ["SixBD", "ElevenD2"], breaker);
     //get all blank questions
+    //set stoper actions:
 
-    let stopper = (blockNext === true) ? function () { question.disableNextButton() } : function () { };
+    let stopOrGo = (blockNext === true && check.length > 0)
+        ? function () {
+            Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
+            question.disableNextButton();
+        }
+        : function () {
+            Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+            question.enableNextButton();
+        };
+    //if the parameter is true and 
 
     if (check.length > 0) {
         //if any questions are blank
 
-        stopper();// disable next button
+
+        stopOrGo();// disable next button
 
         //alert on load:
         checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
@@ -1444,7 +1455,7 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
             //help text
         );
     } else {
-        question.enableNextButton();
+        stopOrGo();// disable next button
     };
 }
 
@@ -1619,7 +1630,8 @@ var hotkeyNavigate = function (question) {
 
     //navigation functions:
     //next
-    let goNext = function () { question.clickNextButton() };//move to next question
+    let goNext = (listeners.hotkeyNavigate === "Go") ? function () { question.clickNextButton() }
+        : function () { };//move to next question
     //move to next question with completion alert
 
     //determine which next case to give the alert, depending on test result:
