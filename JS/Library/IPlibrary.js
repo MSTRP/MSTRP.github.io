@@ -1431,10 +1431,12 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
     let stopOrGo = (blockNext === true && check.length > 0)
         ? function () {
             Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
+            console.log("hotKeyNav: ", listeners.hotkeyNavigate)
             question.disableNextButton();
         }
         : function () {
             Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+            console.log("hotKeyNav: ", listeners.hotkeyNavigate)
             question.enableNextButton();
         };
     //if the parameter is true and 
@@ -1630,56 +1632,6 @@ var hotkeyNavigate = function (question) {
 
     //navigation functions:
     //next
-    let goNext = (listeners.hotkeyNavigate === "Go") ? function () { question.clickNextButton() }
-        : function () { };//move to next question
-    //move to next question with completion alert
-
-    //determine which next case to give the alert, depending on test result:
-    let switcher = function (test, alertCase) {
-        let doTest = test.length;
-        console.log("doTest: ", doTest);
-
-        let alertNext = function () {
-            goNext();
-            alert("You will need to complete this section before you submit your report");
-        };
-
-        switch (alertCase) {
-            case "top": //when testing string length of value
-
-                console.log("top");
-                switch (doTest) {
-                    case 0: //when blank
-                        alertNext();
-                        break;
-
-                    default:
-                        goNext();
-                        //move to next question
-                        break;
-                };
-                break;
-
-            case "btm": //testing nummberof blanks in array
-                console.log("bottom");
-                switch (doTest) {
-                    case 0: //when not blank
-
-                        goNext();
-                        break;
-
-                    default:
-                        alertNext();
-                        //move to next question
-                        break;
-                };
-                break;
-        };
-    };
-
-    //back:
-    let goBack = function () { question.clickPreviousButton(); }//move to previous question
-
 
     jQuery(document).on({
         keydown: function (e) {
@@ -1696,6 +1648,56 @@ var hotkeyNavigate = function (question) {
                     : (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length)
                         //if CTRL + ALT + N are pressed  in order and the previous button is present:
                         ? "next" : "";
+
+            let goNext = (listeners.hotkeyNavigate === "Go") ? function () { question.clickNextButton() }
+                : function () { };//move to next question
+            //move to next question with completion alert
+
+            //determine which next case to give the alert, depending on test result:
+            let switcher = function (test, alertCase) {
+                let doTest = test.length;
+                console.log("doTest: ", doTest);
+
+                let alertNext = function () {
+                    goNext();
+                    alert("You will need to complete this section before you submit your report");
+                };
+
+                switch (alertCase) {
+                    case "top": //when testing string length of value
+
+                        console.log("top");
+                        switch (doTest) {
+                            case 0: //when blank
+                                alertNext();
+                                break;
+
+                            default:
+                                goNext();
+                                //move to next question
+                                break;
+                        };
+                        break;
+
+                    case "btm": //testing nummberof blanks in array
+                        console.log("bottom");
+                        switch (doTest) {
+                            case 0: //when not blank
+
+                                goNext();
+                                break;
+
+                            default:
+                                alertNext();
+                                //move to next question
+                                break;
+                        };
+                        break;
+                };
+            };
+
+            //back:
+            let goBack = function () { question.clickPreviousButton(); }//move to previous question
 
             if (all_inputs < matrixThreshold) {
                 //when there are under 5 inputs on the page:
