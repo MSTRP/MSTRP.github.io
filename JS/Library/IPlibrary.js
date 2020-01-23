@@ -1681,8 +1681,8 @@ var hotkeyNavigate = function (question) {
     let goBack = function () { question.clickPreviousButton(); }//move to previous question
 
 
-    jQuery(document) //applies to whole page
-        .keydown(function (e) {
+    jQuery(document).on({
+        keydown: function (e) {
             pressedKeys.push(e.keyCode);
             //add the pressed key to pressedKeys array
 
@@ -1747,12 +1747,16 @@ var hotkeyNavigate = function (question) {
                 }
 
             };
-
-        })
-        .keyup(function () {
+            //clear the pressed keys array
+            if (direction === "next" || direction === "back") {
+                pressedKeys = [];
+            }
+        },
+        keyup: function () {
 
             pressedKeys = [];
-        });
+        }
+    }) //applies to whole page
 
     input_fields //applies to input fields
         .keyup(function (e) {
