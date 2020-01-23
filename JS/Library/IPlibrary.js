@@ -1636,6 +1636,71 @@ var hotkeyNavigate = function (question) {
     let alertCounter = 0;
     //limit number of alerts to 1
 
+    //determine which next case to give the alert, depending on test result:
+    let switcher = function (test, alertCase) {
+        let doTest = test.length;
+        console.log("doTest: ", doTest);
+        let alertNext = function () {
+            goNext();
+            console.log(": ", alertCounter);
+            if (alertCounter === 0) {
+                alert("You will need to complete this section, \n or any sections highlighted below before you submit your report");
+                alertCounter += 1;
+            };
+
+
+        };
+
+        switch (alertCase) {
+            case "value": //when testing string length of value
+
+                console.log("value");
+
+                if (doTest > 0) {
+                    //when the value is blank
+                    goNext();
+                } else {
+                    //when blank
+                    alertNext();
+                };
+            /*  switch (doTest) {
+               case 0: 
+ 
+                   break;
+ 
+               default:
+ 
+                   //move to next question
+                   break;
+           };
+           break;*/
+
+            case "array": //testing nummberof blanks in array
+                console.log("array");
+                if (doTest > 0) {
+                    //when there are no blanks
+                    alertNext();
+                } else {
+                    //when there are blanks
+                    goNext();
+
+                };
+
+            /*   switch (doTest) {
+                  case 0: //when not blank
+
+                      goNext();
+                      break;
+
+                  default:
+                      alertNext();
+                      //move to next question
+                      break;
+              };
+              break; */
+        };
+    };
+
     //navigation functions:
     //next
 
@@ -1666,52 +1731,7 @@ var hotkeyNavigate = function (question) {
             //move to next question:
             //move to next question with completion alert
 
-            //determine which next case to give the alert, depending on test result:
-            let switcher = function (test, alertCase) {
-                let doTest = test.length;
-                console.log("doTest: ", doTest);
-                let alertNext = function () {
-                    goNext();
-                    if (alertCounter === 0) {
-                        alert("You will need to complete this section, \n or any sections highlighted below before you submit your report");
-                        alertCounter += 1;
-                    };
 
-
-                };
-
-                switch (alertCase) {
-                    case "top": //when testing string length of value
-
-                        console.log("top");
-                        switch (doTest) {
-                            case 0: //when blank
-                                alertNext();
-                                break;
-
-                            default:
-                                goNext();
-                                //move to next question
-                                break;
-                        };
-                        break;
-
-                    case "btm": //testing nummberof blanks in array
-                        console.log("bottom");
-                        switch (doTest) {
-                            case 0: //when not blank
-
-                                goNext();
-                                break;
-
-                            default:
-                                alertNext();
-                                //move to next question
-                                break;
-                        };
-                        break;
-                };
-            };
 
             //back:
             let goBack = function () { question.clickPreviousButton(); }//move to previous question
@@ -1727,7 +1747,7 @@ var hotkeyNavigate = function (question) {
                             let test = filterBlanks(input_fields);
                             console.log(test);
                             //test the number of blanks
-                            switcher(test, "btm");
+                            switcher(test, "array");
                             break;
 
                         case "back":
@@ -1740,11 +1760,12 @@ var hotkeyNavigate = function (question) {
 
                     switch (direction) {
                         case "next":
+                            console.log(input_fields);
                             let test = filterBlanks(input_fields);
                             console.log(test);
                             //test the length of input string
 
-                            switcher(test, "btm");
+                            switcher(test, "array");
 
                             break;
 
@@ -1789,12 +1810,12 @@ var hotkeyNavigate = function (question) {
                     let test = filterBlanks(input_fields);
                     //get the number of blank inputs
 
-                    switcher(test, "btm");
+                    switcher(test, "array");
                 } else {
                     //or when there is only one input
 
                     let test = input_fields.val().replace(/,/g, "");
-                    switcher(test, "top");
+                    switcher(test, "value");
                 };
 
             };
