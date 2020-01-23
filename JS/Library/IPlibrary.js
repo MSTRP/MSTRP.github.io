@@ -1660,7 +1660,7 @@ var hotkeyNavigate = function (question) {
 
                 let alertNext = function () {
                     goNext();
-                    alert("You will need to complete this section before you submit your report");
+                    alert("You will need to complete this section, \n or any sections highlighted below before you submit your report");
                 };
 
                 switch (alertCase) {
