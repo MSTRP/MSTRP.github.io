@@ -1625,6 +1625,7 @@ var hotkeyNavigate = function (question) {
     //array to track pressed keys (and order pressed)
 
     let input_fields = filterButtons();
+    console.log(input_fields);
     //select input fields
 
     let all_inputs = input_fields.length;
@@ -1715,15 +1716,14 @@ var hotkeyNavigate = function (question) {
             //back:
             let goBack = function () { question.clickPreviousButton(); }//move to previous question
 
-            if (all_inputs < matrixThreshold) {
-                //when there are under 5 inputs on the page:
+            if (jQuery(".ChoiceStructure tbody").length < 1) {
+                //when there are no tables on the page on the page:
 
                 if (all_inputs > 1) {
                     //if there is 2-4 inputs:
 
                     switch (direction) {
                         case "next":
-                            console.log(input_fields);
                             let test = filterBlanks(input_fields);
                             console.log(test);
                             //test the number of blanks
