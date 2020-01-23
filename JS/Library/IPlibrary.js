@@ -1658,8 +1658,19 @@ var hotkeyNavigate = function (question) {
                         //if CTRL + ALT + N are pressed  in order and the previous button is present:
                         ? "next" : "";
 
-            let goNext = (listeners.hotkeyNavigate === "Go") ? function () { question.clickNextButton(); input_fields = ""; }
-                : function () { input_fields = ""; };//move to next question
+            //determine go next function
+
+            if (listeners.hotkeyNavigate == "Go"){
+                var goNext = function () {
+                    question.clickNextButton(); input_fields = "";
+                };
+            } else {
+                var goNext = function () {
+                    input_fields = "";
+                };
+            };
+        
+            //move to next question:
             //move to next question with completion alert
 
             //determine which next case to give the alert, depending on test result:
