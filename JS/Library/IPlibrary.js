@@ -1632,9 +1632,6 @@ var hotkeyNavigate = function (question) {
 
     console.log("inputs on page : ", all_inputs);
 
-    //maximum number of inputs on the filter pages:
-    let matrixThreshold = 5;
-
     let alertCounter = 0;
     //limit number of alerts to 1
 
@@ -1783,17 +1780,17 @@ var hotkeyNavigate = function (question) {
 
     input_fields //applies to input fields
         .keyup(function (e) {
-            if (e.keyCode === 13) {
-                //when enter is pressed
+            if (e.keyCode === 13 && jQuery(".ChoiceStructure tbody").length < 1) {
+                //when enter is pressed and there are no tables on the page
 
-                if (all_inputs > 1 && all_inputs < matrixThreshold) {
+                if (all_inputs > 1) {
                     //when there is one to four inputs on the page and Enter is pressed
 
                     let test = filterBlanks(input_fields);
                     //get the number of blank inputs
 
                     switcher(test, "btm");
-                } else if (all_inputs === 1) {
+                } else {
                     //or when there is only one input
 
                     let test = input_fields.val().replace(/,/g, "");
