@@ -2176,7 +2176,7 @@ var carry3b = function (answerlist) {
         } else if (header.text().replace(/ /g, "") == "") {
             let rowNumber = rowindex + 1;
             let header = "<strong>" + rowNumber + "</strong>";
-            thisRow.find(th).append(header);
+            thisRow.find("th").append(header);
         }
     });
 };
