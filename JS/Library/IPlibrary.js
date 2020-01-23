@@ -1713,7 +1713,7 @@ var hotkeyNavigate = function (question) {
             };
 
             //back:
-            let goBack = function () { question.clickPreviousButton(); input_fields = ""; }//move to previous question
+            let goBack = function () { question.clickPreviousButton(); }//move to previous question
 
             if (all_inputs < matrixThreshold) {
                 //when there are under 5 inputs on the page:
