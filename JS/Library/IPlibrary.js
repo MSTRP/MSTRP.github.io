@@ -242,7 +242,6 @@ var columnNames = {
             "34": "Purchase order/invoice number (if applicable)"
         },
         textarea: {
-            "10": "Grant/award title",
             "10": "Counterparty(s) (avoid acronyms)",
             "25": "Justification of a lower percentage (if applicable, where 3.2 of Appendix 2 applies)"
         }
