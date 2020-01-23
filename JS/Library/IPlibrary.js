@@ -976,6 +976,7 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             //remove default help text:
             guidance.replace(guidanceHTMLA, "");
             guidance.replace(guidanceHTMLB, "");
+            console.log("guidance text is: ", guidance);
             return guidance
     };
 };
