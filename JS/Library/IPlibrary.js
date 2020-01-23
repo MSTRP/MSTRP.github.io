@@ -303,8 +303,7 @@ var getFilters = function (question, filters) {
 //2) array and object methods:
 var filterBlanks = function (selector) {
     return selector.filter(function () {
-        return jQuery(this).val().length === 1 && jQuery(this).val().charAt(0) === "£"
-            || jQuery(this).val().length === 0
+        return checkBlank(jQuery(this).val()) === "Blank"
     })
 };//get array of blank values from selector
 
