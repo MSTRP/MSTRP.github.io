@@ -1659,16 +1659,12 @@ var hotkeyNavigate = function (question) {
 
             //determine go next function
 
-            if (listeners.hotkeyNavigate == "Go"){
-                var goNext = function () {
-                    question.clickNextButton(); input_fields = "";
-                };
+            if (listeners.hotkeyNavigate == "Go") {
+                var goNext = function () { question.clickNextButton(); };
             } else {
-                var goNext = function () {
-                    input_fields = "";
-                };
+                var goNext = function () { };
             };
-        
+
             //move to next question:
             //move to next question with completion alert
 
@@ -1730,6 +1726,7 @@ var hotkeyNavigate = function (question) {
 
                     switch (direction) {
                         case "next":
+                            console.log(input_fields);
                             let test = filterBlanks(input_fields);
                             console.log(test);
                             //test the number of blanks
@@ -1780,7 +1777,6 @@ var hotkeyNavigate = function (question) {
             };
         },
         keyup: function () {
-
             pressedKeys = [];
         }
     }) //applies to whole page
