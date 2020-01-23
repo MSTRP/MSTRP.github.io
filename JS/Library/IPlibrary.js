@@ -974,8 +974,8 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             break;
         case "default":
             //remove default help text:
-            guidance = guidance.replace(guidanceHTMLA, "");
-            guidance = guidance.replace(guidanceHTMLB, "");
+
+            guidance = guidance.replace(guidanceHTMLA, "").replace(helper, "").replace(guidanceHTMLB, "");
             console.log("guidance text is: ", guidance);
             return guidance
     };
