@@ -303,8 +303,8 @@ var getFilters = function (question, filters) {
 //2) array and object methods:
 var filterBlanks = function (selector) {
     return selector.filter(function () {
-        return jQuery(this).val().length == 1 && jQuery(this).val().charAt(0) == "£"
-            || jQuery(this).val().length == 0
+        return jQuery(this).val().length === 1 && jQuery(this).val().charAt(0) === "£"
+            || jQuery(this).val().length === 0
     })
 };//get array of blank values from selector
 
@@ -1630,6 +1630,9 @@ var hotkeyNavigate = function (question) {
     //maximum number of inputs on the filter pages:
     let matrixThreshold = 5;
 
+    let alertCounter = 0;
+    //limit number of alerts to 1
+
     //navigation functions:
     //next
 
@@ -1649,18 +1652,22 @@ var hotkeyNavigate = function (question) {
                         //if CTRL + ALT + N are pressed  in order and the previous button is present:
                         ? "next" : "";
 
-            let goNext = (listeners.hotkeyNavigate === "Go") ? function () { question.clickNextButton() }
-                : function () { };//move to next question
+            let goNext = (listeners.hotkeyNavigate === "Go") ? function () { question.clickNextButton(); input_fields = ""; }
+                : function () { input_fields = ""; };//move to next question
             //move to next question with completion alert
 
             //determine which next case to give the alert, depending on test result:
             let switcher = function (test, alertCase) {
                 let doTest = test.length;
                 console.log("doTest: ", doTest);
-
                 let alertNext = function () {
                     goNext();
-                    alert("You will need to complete this section, \n or any sections highlighted below before you submit your report");
+                    if (alertCounter === 0) {
+                        alert("You will need to complete this section, \n or any sections highlighted below before you submit your report");
+                        alertCounter += 1;
+                    };
+
+
                 };
 
                 switch (alertCase) {
@@ -1697,7 +1704,7 @@ var hotkeyNavigate = function (question) {
             };
 
             //back:
-            let goBack = function () { question.clickPreviousButton(); }//move to previous question
+            let goBack = function () { question.clickPreviousButton(); input_fields = ""; }//move to previous question
 
             if (all_inputs < matrixThreshold) {
                 //when there are under 5 inputs on the page:
@@ -1708,7 +1715,7 @@ var hotkeyNavigate = function (question) {
                     switch (direction) {
                         case "next":
                             let test = filterBlanks(input_fields);
-                            console.log (test);
+                            console.log(test);
                             //test the number of blanks
                             switcher(test, "btm");
                             break;
@@ -1724,7 +1731,7 @@ var hotkeyNavigate = function (question) {
                     switch (direction) {
                         case "next":
                             let test = filterBlanks(input_fields);
-                            console.log (test);
+                            console.log(test);
                             //test the length of input string
 
                             switcher(test, "btm");
@@ -1754,7 +1761,7 @@ var hotkeyNavigate = function (question) {
             //clear the pressed keys array
             if (direction === "next" || direction === "back") {
                 pressedKeys = [];
-            }
+            };
         },
         keyup: function () {
 
