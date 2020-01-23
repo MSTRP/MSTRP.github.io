@@ -1619,7 +1619,7 @@ var hotkeyNavigate = function (question) {
     let pressedKeys = [];
     //array to track pressed keys (and order pressed)
 
-    let input_fields = jQuery(".ChoiceStructure input");
+    let input_fields = filterButtons();
     //select input fields
 
     let all_inputs = input_fields.length;
@@ -1708,6 +1708,7 @@ var hotkeyNavigate = function (question) {
                     switch (direction) {
                         case "next":
                             let test = filterBlanks(input_fields);
+                            console.log (test);
                             //test the number of blanks
                             switcher(test, "btm");
                             break;
@@ -1723,6 +1724,7 @@ var hotkeyNavigate = function (question) {
                     switch (direction) {
                         case "next":
                             let test = filterBlanks(input_fields);
+                            console.log (test);
                             //test the length of input string
 
                             switcher(test, "btm");
