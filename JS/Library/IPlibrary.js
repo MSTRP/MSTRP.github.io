@@ -1735,7 +1735,7 @@ var hotkeyNavigate = function (question) {
             //back:
             let goBack = function () { question.clickPreviousButton(); }//move to previous question
 
-            if (jQuery(".ChoiceStructure tbody").length < 1) {
+            if (jQuery(".matrixQText").length < 1) {
                 //when there are no tables on the page on the page:
 
                 if (all_inputs > 1) {
@@ -1800,7 +1800,7 @@ var hotkeyNavigate = function (question) {
 
     input_fields //applies to input fields
         .keyup(function (e) {
-            if (e.keyCode === 13 && jQuery(".ChoiceStructure tbody").length < 1) {
+            if (e.keyCode === 13 && jQuery(".matrixQText").length < 1) {
                 //when enter is pressed and there are no tables on the page
 
                 if (all_inputs > 1) {
