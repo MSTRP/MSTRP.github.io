@@ -1489,7 +1489,7 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
 
             let hovertext = "Please complete all sections of this report in order to continue";
             //add help text on hover:
-            hoverTextAdd(jQuery("#Buttons"), hovertext, jQuery("#PreviousButton"));
+            hoverTextAdd(jQuery("#Buttons"), hovertext, [jQuery("#PreviousButton")]);
         } else {
 
             if (listeners.hotkeyNavigate == "Stop") {
@@ -1749,7 +1749,9 @@ var hotkeyNavigate = function (question) {
         goBack();
     });//CTRL+ALT+P
 
-    let input = document.querySelector(".ChoiceStructure input");
+    //let input = document.querySelector(".ChoiceStructure input");
+    //let input = document.getElementsByTagName(".ChoiceStructure input");
+    let input = jQuery(".ChoiceStructure input");
 
     Mousetrap(input).bind('enter', function () {
         if (jQuery(".matrixQText").length < 1) {
@@ -1770,25 +1772,6 @@ var hotkeyNavigate = function (question) {
         }
     });//ENTER to submit
 
-
-    /* 
-        //define key variales
-        let pressedKeys = [];
-        //array to track pressed keys (and order pressed)
-    
-    
-        console.log("inputs on page : ", all_inputs);
-    
-        let alertCounter = 0; */
-    //limit number of alerts to 1
-
-
-    //determine which next case to give the alert, depending on test result:
-
-
-    //navigation functions:
-    //next
-
     jQuery("#NextButton").click(function () {
         //run alert when next button is clicked if necessary
 
@@ -1803,48 +1786,6 @@ var hotkeyNavigate = function (question) {
             switcher(test, "value", false);
         };
     });
-
-    /* jQuery(document).keydown(function (e) {
-        pressedKeys.push(e.keyCode);
-        //add the pressed key to pressedKeys array
-        if (pressedKeys.length > 3) {
-            //when more than 3 keys are captured  reset the array
-            pressedKeys.length = 0
-        };
-    }); //applies to whole page */
-
-    /*   //get direction as a string
-      let direction =
-          (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80 && jQuery("#PreviousButton").length)
-              //if CTRL + ALT + P are pressed in order and the next button is present:
-              ? "back"
-              : (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length)
-                  //if CTRL + ALT + N are pressed  in order and the previous button is present:
-                  ? "next" : ""; */
-
-
-
-    /*   input_fields //applies to input fields
-          .keyup(function (e) {
-              if (e.keyCode === 13 && jQuery(".matrixQText").length < 1) {
-                  //when enter is pressed and there are no tables on the page
-  
-                  if (all_inputs > 1) {
-                      //when there is one to four inputs on the page and Enter is pressed
-  
-                      let test = filterBlanks(input_fields);
-                      //get the number of blank inputs
-  
-                      switcher(test, "array");
-                  } else {
-                      //or when there is only one input
-  
-                      let test = jQuery("input").val().replace(/,/g, "");
-                      switcher(test, "value");
-                  };
-  
-              };
-          }) */
 };
 
 //enable hotkey navigate
