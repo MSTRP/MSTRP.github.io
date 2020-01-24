@@ -397,19 +397,19 @@ var columnSelect = function (columnRef, parentarray) {
 // "input" constructor basedon on column select
 var inputSelect = function (selector) {
 
-    let thisinput = selector.find("input");
-    return thisinput
+    let thisInput = selector.find("input");
+    return thisInput
 };
 
 var selectSelect = function (selector) {
 
-    let thisinput = selector.find("select");
-    return thisinput
+    let thisInput = selector.find("select");
+    return thisInput
 };
 
 var textareaselect = function (selector) {
-    let thisinput = selector.find("textarea");
-    return thisinput
+    let thisInput = selector.find("textarea");
+    return thisInput
 };
 
 //theme getters
@@ -909,6 +909,24 @@ var formatWC = function (selectors) {
 };
 
 //6) theme formatting and functionality:
+//set organisation name if blank:
+var setOrgName = function (){
+    jQuery(".ChoiceStructure tbody tr").each( function (){
+        //basic selectors:
+        let row = jQuery(this);
+
+        let rowLabel = row.find(columnSelect(1));//label column
+        let rowInput = row.find(columnSelect(2));//input column
+        let rowInputValue = rowInput.find("input").val();//get the text from input field
+        let rowLabelText = rowLabel.find("label span span").text();//get the text of the label
+
+        if(listeners.organisation == "" && rowLabelText.search(/organisation/i)> -1 ){
+            Qualtrics.SurveyEngine.setEmbeddedData('organisation', rowInputValue);
+        };
+    })
+}
+
+
 //check if input is blank or 0
 var checkNum = function (selector) {
 
