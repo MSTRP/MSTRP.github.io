@@ -1770,7 +1770,7 @@ var hotkeyNavigate = function (question) {
     });//CTRL+ALT+P
 
     let questions = document.querySelector(".ChoiceStructure");
-    let input = questions.querySelectorAll("input";)
+    let input = questions.querySelectorAll("input");
 
     Mousetrap(input).bind('enter', function () {
         if (jQuery(".matrixQText").length < 1) {
