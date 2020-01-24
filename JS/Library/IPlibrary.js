@@ -1481,7 +1481,7 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
 
 
             Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
-            console.log("hotKeyNav: ", listeners.hotkeyNavigate)
+            console.log("nav off: ", listeners.hotkeyNavigate)
             question.disableNextButton();
 
             //alert on load:
