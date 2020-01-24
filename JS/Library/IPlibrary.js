@@ -1693,7 +1693,7 @@ var hotkeyNavigate = function (question) {
 
             goNext(click);
 
-            console.log(": ", alertCounter);
+            //console.log(": ", alertCounter);
             if (/* alertCounter === 0 &&  */jQuery(".guidancePage").length < 1) {
                 alert("You will need to complete this section, or any sections highlighted below before you submit your report");
                 // alertCounter += 1;
