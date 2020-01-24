@@ -911,16 +911,17 @@ var formatWC = function (selectors) {
 //6) theme formatting and functionality:
 //set organisation name if blank:
 var setOrgName = function () {
-    jQuery(".ChoiceStructure tbody tr").each(function () {
-        //basic selectors:
-        let row = jQuery(this);      
 
-        if (listeners.organisation == "" && row.text().search(/organisation/i) > -1) {
-            console.log("label: ", row.text(), " input: ", row.find("input").val());
-            Qualtrics.SurveyEngine.setEmbeddedData('organisation', row.find("input").val());
-        };
-    })
+    if (listeners.organisation.length === 0 && listeners.organisationName.length > 0 
+        || listeners.organisation != listeners.organisationName & listeners.organisationName.length > 0) {
+        //when the organisation contact list value is blank the organisation contact field in question has been answered
+        //or if the contact field has been answered and it is different to the one in the contact list
+        
+        Qualtrics.SurveyEngine.setEmbeddedData('organisation', listeners.organisationName);
+        //set the value in the input field as the embedded data value
+    };
 }
+
 
 
 //check if input is blank or 0
@@ -1834,7 +1835,7 @@ var hotkeyNavigate = function (question) {
 };
 
 //enable hotkey navigate
-var navReset = function(){
+var navReset = function () {
     Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
 };
 
