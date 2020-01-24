@@ -913,17 +913,11 @@ var formatWC = function (selectors) {
 var setOrgName = function () {
     jQuery(".ChoiceStructure tbody tr").each(function () {
         //basic selectors:
-        let row = jQuery(this);
+        let row = jQuery(this);      
 
-        let rowLabel = row.find(columnSelect(1));//label column
-        let rowInput = row.find(columnSelect(2));//input column
-        let rowInputValue = rowInput.find("input").val();//get the text from input field
-        let rowLabelText = rowLabel.find("label span span").text();//get the text of the label
-
-        console.log("label: ", rowLabelText, " input: ", rowInputValue)
-
-        if (listeners.organisation == "" && rowLabelText.search(/organisation/i) > -1) {
-            Qualtrics.SurveyEngine.setEmbeddedData('organisation', rowInputValue);
+        if (listeners.organisation == "" && row.text().search(/organisation/i) > -1) {
+            console.log("label: ", row.text(), " input: ", row.find("input").val());
+            Qualtrics.SurveyEngine.setEmbeddedData('organisation', row.find("input").val());
         };
     })
 }
