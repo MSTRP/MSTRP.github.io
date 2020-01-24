@@ -1451,6 +1451,42 @@ var keyupSwitch = function (buttons) {
     })
 };
 
+var checkOnly = function () {
+
+    jQuery("#NextButton").click(function () {
+        
+        if (jQuery("#EndOfSurvey").length < 1) {
+            //when not the end of survey summary page
+    
+            let check = checkAll(filterList, "default", ["SixBD", "ElevenD2"]);
+            //get all blank questions
+    
+            if (check.length > 0 ) {
+                //if any questions are blank
+    
+    
+                Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
+                console.log("nav off: ", listeners.hotkeyNavigate)
+                question.disableNextButton();
+    
+                //alert on load:
+                checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
+    
+                let hovertext = "Please complete all sections of this report in order to continue";
+                //add help text on hover:
+                hoverTextAdd(jQuery("#Buttons"), hovertext, [jQuery("#PreviousButton")]);
+            } else {
+    
+                if (listeners.hotkeyNavigate == "Stop") {
+                    Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+                };      
+            };
+        } else {
+            Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+        };
+    })
+};
+
 //disable next
 var nextCheck = function (filterList, question, blockNext, breaker) {
 
@@ -1459,22 +1495,6 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
 
         let check = checkAll(filterList, "default", ["SixBD", "ElevenD2"], breaker);
         //get all blank questions
-        //set stoper actions:
-
-
-
-        /*  let stopOrGo = (blockNext === true && check.length > 0)
-             ? function () {
-                 Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
-                 console.log("hotKeyNav: ", listeners.hotkeyNavigate)
-                 question.disableNextButton();
-             }
-             : function () {
-                 Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
-                 console.log("hotKeyNav: ", listeners.hotkeyNavigate)
-                 question.enableNextButton();
-             };
-         //if the parameter is true and  */
 
         if (check.length > 0 && blockNext === true) {
             //if any questions are blank
@@ -1503,7 +1523,7 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
         Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
     };
 
-    jQuery("#PreviousButton, #NextButton").click(function () {
+    jQuery("#PreviousButton").click(function () {
         console.log("butotn clicked set to go")
         Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
     });
@@ -1749,9 +1769,8 @@ var hotkeyNavigate = function (question) {
         goBack();
     });//CTRL+ALT+P
 
-    //let input = document.querySelector(".ChoiceStructure input");
-    //let input = document.getElementsByTagName(".ChoiceStructure input");
-    let input = jQuery(".ChoiceStructure input");
+    let questions = document.querySelector(".ChoiceStructure");
+    let input = questions.querySelectorAll("input";)
 
     Mousetrap(input).bind('enter', function () {
         if (jQuery(".matrixQText").length < 1) {
