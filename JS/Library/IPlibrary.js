@@ -910,8 +910,8 @@ var formatWC = function (selectors) {
 
 //6) theme formatting and functionality:
 //set organisation name if blank:
-var setOrgName = function (){
-    jQuery(".ChoiceStructure tbody tr").each( function (){
+var setOrgName = function () {
+    jQuery(".ChoiceStructure tbody tr").each(function () {
         //basic selectors:
         let row = jQuery(this);
 
@@ -920,7 +920,7 @@ var setOrgName = function (){
         let rowInputValue = rowInput.find("input").val();//get the text from input field
         let rowLabelText = rowLabel.find("label span span").text();//get the text of the label
 
-        if(listeners.organisation == "" && rowLabelText.search(/organisation/i)> -1 ){
+        if (listeners.organisation == "" && rowLabelText.search(/organisation/i) > -1) {
             Qualtrics.SurveyEngine.setEmbeddedData('organisation', rowInputValue);
         };
     })
@@ -1666,12 +1666,10 @@ var hotkeyNavigate = function (question) {
         let alertNext = function () {
             goNext();
             console.log(": ", alertCounter);
-            if (alertCounter === 0) {
+            if (alertCounter === 0 && jQuery(".guidancePage").length < 1) {
                 alert("You will need to complete this section, \n or any sections highlighted below before you submit your report");
                 alertCounter += 1;
             };
-
-
         };
 
         switch (alertCase) {
