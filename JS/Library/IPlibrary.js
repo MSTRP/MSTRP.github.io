@@ -1645,7 +1645,7 @@ var hotkeyNavigate = function (question) {
     let pressedKeys = [];
     //array to track pressed keys (and order pressed)
 
-    let input_fields = filterButtons();
+    let input_fields = (jQuery(".ChoiceStructure input"));
     console.log(input_fields);
     //select input fields
 
@@ -1687,9 +1687,11 @@ var hotkeyNavigate = function (question) {
 
                 if (doTest > 0) {
                     //when the value isn't blank
+                    pressedKeys.length = 0;
                     goNext(click);
                 } else {
                     //when blank
+                    pressedKeys.length = 0;
                     alertNext();
                 };
 
@@ -1697,9 +1699,11 @@ var hotkeyNavigate = function (question) {
                 console.log("array");
                 if (doTest > 0) {
                     //when there are no blanks
+                    pressedKeys.length = 0;
                     alertNext();
                 } else {
                     //when there are blanks
+                    pressedKeys.length = 0;
                     goNext(click);
 
                 };
@@ -1721,7 +1725,7 @@ var hotkeyNavigate = function (question) {
         } else {
             let test = input_fields.val().replace(/,/g, "");
             switcher(test, "value", false);
-        }
+        };
     });
 
     jQuery(document).on({
@@ -1739,7 +1743,7 @@ var hotkeyNavigate = function (question) {
                         ? "next" : "";
 
             //back:
-            let goBack = function () { question.clickPreviousButton(); }//move to previous question
+            let goBack = function () { pressedKeys.length = 0; question.clickPreviousButton(); }//move to previous question
 
             if (jQuery(".matrixQText").length < 1) {
                 //when there are no tables on the page on the page:
@@ -1825,7 +1829,9 @@ var hotkeyNavigate = function (question) {
 
 //enable hotkey navigate
 var navReset = function () {
+    console.log("reset complete")
     Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+    console.log("nav state: ", listeners.hotkeyNavigate)
 };
 
 //skip last check reminder - declaration download page
