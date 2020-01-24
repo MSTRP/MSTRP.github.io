@@ -1661,11 +1661,6 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
 //3) nav & shortcuts:
 //navigation hot keys
 var hotkeyNavigate = function (question) {
-
-    //define key variales
-    let pressedKeys = [];
-    //array to track pressed keys (and order pressed)
-
     let input_fields = (jQuery(".ChoiceStructure input"));
     console.log(input_fields);
     //select input fields
@@ -1673,19 +1668,22 @@ var hotkeyNavigate = function (question) {
     let all_inputs = input_fields.length;
     //number of inputs
 
-    console.log("inputs on page : ", all_inputs);
-
-    let alertCounter = 0;
-    //limit number of alerts to 1
+    //basic nav functions:
     let goNext = function (doClick) {
         if (doClick === undefined || doClick !== false) {
             if (listeners.hotkeyNavigate == "Go") {
                 question.clickNextButton()
             };
         };
-    };
+    };//foward
 
-    //determine which next case to give the alert, depending on test result:
+
+    let goBack = function () {
+        //pressedKeys.length = 0;
+        question.clickPreviousButton();
+    }//back
+
+    //forward with alert:
     let switcher = function (test, alertCase, click = true) {
         let doTest = test.length;
         console.log("doTest: ", doTest);
@@ -1695,9 +1693,9 @@ var hotkeyNavigate = function (question) {
             goNext(click);
 
             console.log(": ", alertCounter);
-            if (alertCounter === 0 && jQuery(".guidancePage").length < 1) {
-                alert("You will need to complete this section, \n or any sections highlighted below before you submit your report");
-                alertCounter += 1;
+            if (/* alertCounter === 0 &&  */jQuery(".guidancePage").length < 1) {
+                alert("You will need to complete this section, or any sections highlighted below before you submit your report");
+                // alertCounter += 1;
             };
         };
 
@@ -1708,11 +1706,9 @@ var hotkeyNavigate = function (question) {
 
                 if (doTest > 0) {
                     //when the value isn't blank
-                    pressedKeys.length = 0;
                     goNext(click);
                 } else {
                     //when blank
-                    pressedKeys.length = 0;
                     alertNext();
                 };
 
@@ -1724,12 +1720,70 @@ var hotkeyNavigate = function (question) {
                     alertNext();
                 } else {
                     //when there are blanks
-                    pressedKeys.length = 0;
                     goNext(click);
 
                 };
         };
     };
+
+    //shortcuts:
+    Mousetrap.bind('ctrl+alt+n', function () {
+        if (jQuery(".matrixQText").length < 1) {
+            //when there are no tables on the page on the page:
+
+            let test = filterBlanks(input_fields);
+            console.log(test);
+            //test the number of blanks
+            switcher(test, "array");
+
+        } else {
+            //otherwise if there are more than 4 questions on the page:
+            goNext();
+
+        };
+
+    });//CTRL+ALT+N
+
+    Mousetrap.bind('ctrl+alt+p', function () {
+        goBack();
+    });//CTRL+ALT+P
+
+    let input = document.querySelector(".ChoiceStructure input");
+
+    Mousetrap(input).bind('enter', function () {
+        if (jQuery(".matrixQText").length < 1) {
+            //when there are no tables on the page on the page:
+            if (all_inputs > 1) {
+                //when there are multiple inputs on the page and Enter is pressed
+
+                let test = filterBlanks(input_fields);
+                //get the number of blank inputs
+
+                switcher(test, "array");
+            } else {
+                //or when there is only one input
+
+                let test = jQuery(".ChoiceStructure input").val().replace(/,/g, "");
+                switcher(test, "value");
+            };
+        }
+    });//ENTER to submit
+
+
+    /* 
+        //define key variales
+        let pressedKeys = [];
+        //array to track pressed keys (and order pressed)
+    
+    
+        console.log("inputs on page : ", all_inputs);
+    
+        let alertCounter = 0; */
+    //limit number of alerts to 1
+
+
+    //determine which next case to give the alert, depending on test result:
+
 
     //navigation functions:
     //next
@@ -1749,103 +1803,47 @@ var hotkeyNavigate = function (question) {
         };
     });
 
-    jQuery(document).on({
-        keydown: function (e) {
-            pressedKeys.push(e.keyCode);
-            //add the pressed key to pressedKeys array
+    /* jQuery(document).keydown(function (e) {
+        pressedKeys.push(e.keyCode);
+        //add the pressed key to pressedKeys array
+        if (pressedKeys.length > 3) {
+            //when more than 3 keys are captured  reset the array
+            pressedKeys.length = 0
+        };
+    }); //applies to whole page */
 
-            //get direction as a string
-            let direction =
-                (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80 && jQuery("#PreviousButton").length)
-                    //if CTRL + ALT + P are pressed in order and the next button is present:
-                    ? "back"
-                    : (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length)
-                        //if CTRL + ALT + N are pressed  in order and the previous button is present:
-                        ? "next" : "";
+    /*   //get direction as a string
+      let direction =
+          (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80 && jQuery("#PreviousButton").length)
+              //if CTRL + ALT + P are pressed in order and the next button is present:
+              ? "back"
+              : (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length)
+                  //if CTRL + ALT + N are pressed  in order and the previous button is present:
+                  ? "next" : ""; */
 
-            //back:
-            let goBack = function () { pressedKeys.length = 0; question.clickPreviousButton(); }//move to previous question
 
-            if (jQuery(".matrixQText").length < 1) {
-                //when there are no tables on the page on the page:
 
-                // if (all_inputs > 1) {
-                //if there is 2-4 inputs:
-
-                switch (direction) {
-                    case "next":
-                        let test = filterBlanks(input_fields);
-                        console.log(test);
-                        //test the number of blanks
-                        switcher(test, "array");
-                        break;
-
-                    case "back":
-                        goBack();
-                        //move to previous question
-                        break;
-                };
-                /*           } else {
-                              //if there is 1 or less questions:
-          
-                              switch (direction) {
-                                  case "next":
-                                      console.log(input_fields);
-                                      let test = input_fields.val().replace(/,/g, "");
-                                      console.log(test);
-                                      //test the length of input string
-          
-                                      switcher(test, "value");
-          
-                                      break;
-          
-                                  case "back":
-                                      goBack();
-                                      //move to previous question
-                                      break;
-                              };
-                          }; */
-            } else {
-                //otherwise if there are more than 4 questions on the page:
-
-                switch (direction) {
-                    case "next":
-                        goNext();
-                        break;
-
-                    case "back":
-                        goBack();
-                        break;
-                }
-
-            };
-        },
-        keyup: function () {
-            pressedKeys.length = 0;
-        }
-    }) //applies to whole page
-
-    input_fields //applies to input fields
-        .keyup(function (e) {
-            if (e.keyCode === 13 && jQuery(".matrixQText").length < 1) {
-                //when enter is pressed and there are no tables on the page
-
-                if (all_inputs > 1) {
-                    //when there is one to four inputs on the page and Enter is pressed
-
-                    let test = filterBlanks(input_fields);
-                    //get the number of blank inputs
-
-                    switcher(test, "array");
-                } else {
-                    //or when there is only one input
-
-                    let test = input_fields.val().replace(/,/g, "");
-                    switcher(test, "value");
-                };
-
-            };
-        })
+    /*   input_fields //applies to input fields
+          .keyup(function (e) {
+              if (e.keyCode === 13 && jQuery(".matrixQText").length < 1) {
+                  //when enter is pressed and there are no tables on the page
+  
+                  if (all_inputs > 1) {
+                      //when there is one to four inputs on the page and Enter is pressed
+  
+                      let test = filterBlanks(input_fields);
+                      //get the number of blank inputs
+  
+                      switcher(test, "array");
+                  } else {
+                      //or when there is only one input
+  
+                      let test = jQuery("input").val().replace(/,/g, "");
+                      switcher(test, "value");
+                  };
+  
+              };
+          }) */
 };
 
 //enable hotkey navigate
