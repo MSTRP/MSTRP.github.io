@@ -988,9 +988,9 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             alert(alertText);
             break;
         case "guidance":
-            let lastItem = (breaker == "n/a") ? object.values(filterList)[object.values(filterList).length - 1] : breaker;
-            if (object.values(filterList).filter(entry => checkBlank(entry) == "Blank"
-                && object.values(filterList).indexOf(entry) < object.values(filterList).indexOf(lastItem)).length > 0) {
+            let lastItem = (breaker == "n/a") ? Object.values(filterList)[Object.values(filterList).length - 1] : breaker;
+            if (Object.values(filterList).filter(entry => checkBlank(entry) == "Blank"
+                && Object.values(filterList).indexOf(entry) < Object.values(filterList).indexOf(lastItem)).length > 0) {
                 //if any value in the list before the breaker is blank
 
                 guidance += '</div>';
