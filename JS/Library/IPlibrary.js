@@ -1719,7 +1719,7 @@ var hotkeyNavigate = function (question) {
                 console.log("array");
                 if (doTest > 0) {
                     //when there are no blanks
-                    pressedKeys.length = 0;
+                    //pressedKeys.length = 0;
                     alertNext();
                 } else {
                     //when there are blanks
