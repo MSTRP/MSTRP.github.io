@@ -1782,7 +1782,7 @@ var hotkeyNavigate = function (question) {
                 switcher(test, "array", false);
             }
         } else {
-            let test = input_fields.val().replace(/,/g, "");
+            let test = jQuery(".ChoiceStructure input").val().replace(/,/g, "");
             switcher(test, "value", false);
         };
     });
