@@ -920,6 +920,8 @@ var setOrgName = function () {
         let rowInputValue = rowInput.find("input").val();//get the text from input field
         let rowLabelText = rowLabel.find("label span span").text();//get the text of the label
 
+        console.log("label: ", rowLabelText, " input: ", rowInputValue)
+
         if (listeners.organisation == "" && rowLabelText.search(/organisation/i) > -1) {
             Qualtrics.SurveyEngine.setEmbeddedData('organisation', rowInputValue);
         };
