@@ -1771,25 +1771,27 @@ var hotkeyNavigate = function (question) {
 
     let questions = document.querySelector(".ChoiceStructure");
     let input = questions.querySelectorAll("input");
-
-    Mousetrap(input).bind('enter', function () {
-        if (jQuery(".matrixQText").length < 1) {
-            //when there are no tables on the page on the page:
-            if (all_inputs > 1) {
-                //when there are multiple inputs on the page and Enter is pressed
-
-                let test = filterBlanks(input_fields);
-                //get the number of blank inputs
-
-                switcher(test, "array");
-            } else {
-                //or when there is only one input
-
-                let test = jQuery(".ChoiceStructure input").val().replace(/,/g, "");
-                switcher(test, "value");
-            };
-        }
-    });//ENTER to submit
+    input.forEach(function (item) {
+        Mousetrap(item).bind('enter', function () {
+            if (jQuery(".matrixQText").length < 1) {
+                //when there are no tables on the page on the page:
+                if (all_inputs > 1) {
+                    //when there are multiple inputs on the page and Enter is pressed
+    
+                    let test = filterBlanks(input_fields);
+                    //get the number of blank inputs
+    
+                    switcher(test, "array");
+                } else {
+                    //or when there is only one input
+    
+                    let test = jQuery(".ChoiceStructure input").val().replace(/,/g, "");
+                    switcher(test, "value");
+                };
+            }
+        });//ENTER to submit
+    });
+    
 
     jQuery("#NextButton").click(function () {
         //run alert when next button is clicked if necessary
