@@ -1487,12 +1487,9 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
             //alert on load:
             checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
 
+            let hovertext = "Please complete all sections of this report in order to continue";
             //add help text on hover:
-            hoverTextAdd(
-                jQuery("#Buttons").not("#PreviousButton"),//buttons wrapper element
-                "Please complete all sections of this report in order to continue"
-                //help text
-            );
+            hoverTextAdd(jQuery("#Buttons"), hovertext, jQuery("#PreviousButton"));
         } else {
 
             if (listeners.hotkeyNavigate == "Stop") {
@@ -1507,6 +1504,7 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
     };
 
     jQuery("#PreviousButton, #NextButton").click(function () {
+        console.log("butotn clicked set to go")
         Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
     });
 }
@@ -1919,7 +1917,7 @@ var loadDatePicker = function (question) {
 //2) Hover text
 
 //basic hover text builder function:
-var hoverTextAdd = function (selector, helpText) {
+var hoverTextAdd = function (selector, helpText, hiders = false) {
     selector.hover(function () {
         // Hover over code
         jQuery('<p class="tooltip"></p>')
@@ -1937,6 +1935,14 @@ var hoverTextAdd = function (selector, helpText) {
         jQuery('.tooltip')
             .css({ top: mousey, left: mousex })
     });
+
+    if (hiders !== false) {
+        for (let hider of hiders) {
+            hider.hover(function () {
+                jQuery('.tooltip').remove();
+            })
+        }
+    };
 };
 
 //set hover text on matrix tables:
