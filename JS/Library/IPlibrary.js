@@ -1837,6 +1837,11 @@ var hotkeyNavigate = function (question) {
         })
 };
 
+//enable hotkey navigate
+var navReset = function(){
+    Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+};
+
 //skip last check reminder - declaration download page
 var checkSkip1 = function (direction, directioncode) {
     if (direction > 0) {
