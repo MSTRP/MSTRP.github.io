@@ -909,7 +909,7 @@ var formatWC = function (selectors) {
 };
 
 //6) theme formatting and functionality:
-//set organisation name if blank:
+//set organisation name if blank or updated:
 var setOrgName = function () {
 
     if (listeners.organisation.length === 0 && listeners.organisationName.length > 0 
@@ -919,6 +919,12 @@ var setOrgName = function () {
         
         Qualtrics.SurveyEngine.setEmbeddedData('organisation', listeners.organisationName);
         //set the value in the input field as the embedded data value
+    } else if(listeners.organisationName.length ==0 && listeners.organisation == 0){
+        let placeholder = "your organisation"; //placeholder text
+        Qualtrics.SurveyEngine.setEmbeddedData('organisation', placeholder);
+
+        let defaultTitle = jQuery("#reportTitle").text().replace(placeholder, "");
+        jQuery("#reportTitle").text(defaultTitle);
     };
 }
 
