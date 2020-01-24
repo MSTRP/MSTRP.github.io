@@ -988,9 +988,16 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             alert(alertText);
             break;
         case "guidance":
-            guidance += '</div>';
-            jQuery(".check").append(guidance);
-            //add guidance txt to target div
+            let lastItem = (breaker == "n/a") ? object.values(filterList)[object.values(filterList).length - 1] : breaker;
+            if (object.values(filterList).filter(entry => checkBlank(entry) == "Blank"
+                && object.values(filterList).indexOf(entry) < object.values(filterList).indexOf(lastItem)).length > 0) {
+                //if any value in the list before the breaker is blank
+
+                guidance += '</div>';
+                jQuery(".check").append(guidance);
+                //add guidance txt to target div
+            };
+
             break;
         case "default":
             //remove default help text:
@@ -1451,24 +1458,28 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
         //get all blank questions
         //set stoper actions:
 
-        let stopOrGo = (blockNext === true && check.length > 0)
-            ? function () {
-                Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
-                console.log("hotKeyNav: ", listeners.hotkeyNavigate)
-                question.disableNextButton();
-            }
-            : function () {
-                Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
-                console.log("hotKeyNav: ", listeners.hotkeyNavigate)
-                question.enableNextButton();
-            };
-        //if the parameter is true and 
 
-        if (check.length > 0) {
+
+        /*  let stopOrGo = (blockNext === true && check.length > 0)
+             ? function () {
+                 Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
+                 console.log("hotKeyNav: ", listeners.hotkeyNavigate)
+                 question.disableNextButton();
+             }
+             : function () {
+                 Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+                 console.log("hotKeyNav: ", listeners.hotkeyNavigate)
+                 question.enableNextButton();
+             };
+         //if the parameter is true and  */
+
+        if (check.length > 0 && blockNext === true) {
             //if any questions are blank
 
 
-            stopOrGo();// disable next button
+            Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
+            console.log("hotKeyNav: ", listeners.hotkeyNavigate)
+            question.disableNextButton();
 
             //alert on load:
             checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
@@ -1480,11 +1491,21 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
                 //help text
             );
         } else {
-            stopOrGo();// disable next button
+
+            if (listeners.hotkeyNavigate == "Stop") {
+                Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+            };
+
+            console.log("hotKeyNav: ", listeners.hotkeyNavigate);
+            question.enableNextButton();
         };
     } else {
         Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
-    }
+    };
+
+    jQuery("#PreviousButton, #NextButton").click(function () {
+        Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+    });
 }
 
 //---------------copy button
