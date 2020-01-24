@@ -988,15 +988,18 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             alert(alertText);
             break;
         case "guidance":
-            let lastItem = (breaker == "n/a") ? Object.values(filterList)[Object.values(filterList).length - 1] : breaker;
-            if (Object.values(filterList).filter(entry => checkBlank(entry) == "Blank"
-                && Object.values(filterList).indexOf(entry) < Object.values(filterList).indexOf(lastItem)).length > 0) {
-                //if any value in the list before the breaker is blank
+            if (jQuery("#EndOfSurvey").length < 1) {
+                let lastItem = (breaker == "n/a") ? Object.values(filterList)[Object.values(filterList).length - 1] : breaker;
+                if (Object.values(filterList).filter(entry => checkBlank(entry) == "Blank"
+                    && Object.values(filterList).indexOf(entry) < Object.values(filterList).indexOf(lastItem)).length > 0) {
+                    //if any value in the list before the breaker is blank
 
-                guidance += '</div>';
-                jQuery(".check").append(guidance);
-                //add guidance txt to target div
-            };
+                    guidance += '</div>';
+                    jQuery(".check").append(guidance);
+                    //add guidance txt to target div
+                };
+            }
+
 
             break;
         case "default":
