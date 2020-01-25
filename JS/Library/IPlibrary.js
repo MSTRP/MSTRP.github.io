@@ -1839,7 +1839,7 @@ var hotkeyNavigate = function (question) {
                 case 0:
                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
-                        if (blank_inputs > 0) {
+                        if (blank_inputs > 0 && jQuery(".guidancePage").length < 1) {
                             alert(warning);//give completion warning
                         };
                         goNext();
@@ -1874,7 +1874,7 @@ var hotkeyNavigate = function (question) {
                 //get the number of blank inputs 
                 if (e.keyCode == 13) {
                     //when Enter is pressed 
-                    if (blank_inputs > 0) {
+                    if (blank_inputs > 0 && jQuery(".guidancePage").length < 1) {
                         alert(warning);//give completion warning
                     };
                     question.clickNextButton()
@@ -1888,7 +1888,7 @@ var hotkeyNavigate = function (question) {
         switch (jQuery(".matrixQText").length) {
             case 0: //for non-detail questions
                 let blank_inputs = filterBlanks(input_fields).length
-                if (blank_inputs > 0) {       
+                if (blank_inputs > 0 && jQuery(".guidancePage").length < 1) {       
                     alert(warning);//give completion warning
                 };
                 break;
