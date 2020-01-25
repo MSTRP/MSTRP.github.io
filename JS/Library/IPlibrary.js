@@ -1827,7 +1827,7 @@ var hotkeyNavigate = function (question) {
     let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
     //alert text
 
-    //navigation shortcuts:
+/*     //navigation shortcuts:
     jQuery(document) //applies to whole page
         .keydown(function (e) {
             pressedKeys.push(e.keyCode);
@@ -1865,7 +1865,60 @@ var hotkeyNavigate = function (question) {
         })
         .keyup(function () {
             pressedKeys.length = 0;
-        });
+        }); */
+
+          //navigation shortcuts:
+    let shortcuts = function () {
+        let blank_inputs = 0;
+        let next = 0;
+
+        jQuery(document) //applies to whole page
+            .keydown(function (e) {
+                pressedKeys.push(e.keyCode);
+                //add the pressed key to pressedKeys array
+                switch (jQuery(".matrixQText").length) { //for non-detail questions
+                    case 0:
+                        if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
+                            //if CTRL + ALT + N are pressed in sequence and the next button is present:
+                            next += 1;
+                            //move to next question
+                        } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && blank_inputs == 0 && jQuery("#PreviousButton").length) {
+                            //if CTRL + ALT + P are pressed in sequence and the previous button is present:    
+                            question.clickPreviousButton()
+                            //move to previous question
+                        };
+                        break;
+
+                    default:
+                        if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
+                            //if CTRL + ALT + N are pressed in sequence and the next button is present:
+                            question.clickNextButton()
+                            //move to next question
+                        } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
+                            //if CTRL + ALT + P are pressed in sequence and the previous button is present: 
+                            question.clickPreviousButton()
+                            //move to previous question
+                        };
+                }
+            })
+            .keyup(function () {
+                pressedKeys.length = 0;
+
+            });
+        //tigger alert outside of keydown
+        if (next > 0) {
+            pressedKeys.length = 0;
+            next = 0;
+            if (blank_inputs > 0) {
+                alert(warning);//give completion warning
+            };
+            goNext();
+        };
+
+        pressedKeys.length = 0;
+    };
+    //apply shortcuts
+    shortcuts();
     //press enter to submit on filter questions:
     input_fields.keyup(function (e) {
         switch (jQuery(".matrixQText").length) {
