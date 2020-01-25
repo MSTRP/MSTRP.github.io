@@ -1749,7 +1749,7 @@ var hotkeyNavigate = function (question) {
         goBack();
     });//CTRL+ALT+P
 
-    if (jQuery(".ChoiceStructure").length > 0) {
+    if (jQuery(".ChoiceStructure input").length > 0) {
         let questions = document.querySelector(".ChoiceStructure");
         let input = questions.querySelectorAll("input");
 
