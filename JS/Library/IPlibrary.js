@@ -1881,6 +1881,7 @@ var hotkeyNavigate = function (question) {
                         if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
                             //if CTRL + ALT + N are pressed in sequence and the next button is present:
                             next += 1;
+                            console.log("next: ", next);
                             //move to next question
                         } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && blank_inputs == 0 && jQuery("#PreviousButton").length) {
                             //if CTRL + ALT + P are pressed in sequence and the previous button is present:    
@@ -1908,11 +1909,12 @@ var hotkeyNavigate = function (question) {
         //tigger alert outside of keydown
         if (next > 0) {
             pressedKeys.length = 0;
-            next = 0;
+            
             if (blank_inputs > 0) {
                 alert(warning);//give completion warning
             };
             goNext();
+            next = 0;
         };
 
         pressedKeys.length = 0;
