@@ -1870,7 +1870,7 @@ var hotkeyNavigate = function (question) {
     //navigation shortcuts:
 
     //alert when next button is clicked:
-    jQuery("#NextButton").click(function () {
+    jQuery("#NextButton").one("click", function () {
         switch (jQuery(".matrixQText").length) {
             case 0: //for non-detail questions
                 let blank_inputs = filterBlanks(input_fields).length;
@@ -1878,45 +1878,42 @@ var hotkeyNavigate = function (question) {
                     alert(warning);//give completion warning
                 };
                 break;
-        }
+        };
     });
     /*     let shortcuts = function () { */
     /* let blank_inputs = 0;
     let next = 0; */
-    
+
     jQuery(document) //applies to whole page
         .keydown(function (e) {
             pressedKeys.push(e.keyCode);
             //add the pressed key to pressedKeys array
-            /*  switch (jQuery(".matrixQText").length) { //for non-detail questions
-                 case 0:
-                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
-                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
-                         next += 1;
-                         console.log("next: ", next);
-                         //move to next question
-                     } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && blank_inputs == 0 && jQuery("#PreviousButton").length) {
-                         //if CTRL + ALT + P are pressed in sequence and the previous button is present:    
-                         question.clickPreviousButton()
-                         //move to previous question
-                     };
-                     break;
+            switch (jQuery(".matrixQText").length) { //for non-detail questions
+                case 0:
+                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
+                        //if CTRL + ALT + N are pressed in sequence and the next button is present:
+                        jQuery("#NextButton").trigger("click");// click the next button
+                        //move to next question
+                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
+                        //if CTRL + ALT + P are pressed in sequence and the previous button is present:    
+                        question.clickPreviousButton()
+                        //move to previous question
+                    };
+                    break;
 
-                 default:
-                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
-                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
-                         question.clickNextButton()
-                         //move to next question
-                     } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
-                         //if CTRL + ALT + P are pressed in sequence and the previous button is present: 
-                         question.clickPreviousButton()
-                         //move to previous question
-                     };
-             } */
-
-
+                default:
+                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
+                        //if CTRL + ALT + N are pressed in sequence and the next button is present:
+                        question.clickNextButton()
+                        //move to next question
+                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
+                        //if CTRL + ALT + P are pressed in sequence and the previous button is present: 
+                        question.clickPreviousButton()
+                        //move to previous question
+                    };
+            }
         })
-        .one("keydown", function () {
+        /* .one("keydown", function () {
 
             console.log("shortcut triggerd")
             switch (jQuery(".matrixQText").length) { //for non-detail questions
@@ -1924,13 +1921,13 @@ var hotkeyNavigate = function (question) {
                     let blank_inputs = filterBlanks(input_fields).length;
                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
-                        /* next += 1;
-                        console.log("next: ", next); */
+                        next += 1;
+                        console.log("next: ", next);
 
                         if (blank_inputs > 0) {
                             alert(warning);//give completion warning
                         };
-                        /* goNext(); */
+                        goNext();
                         jQuery("#NextButton").trigger("click");
                         //move to next question
                     } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && blank_inputs == 0 && jQuery("#PreviousButton").length) {
@@ -1952,7 +1949,7 @@ var hotkeyNavigate = function (question) {
                     };
             }
 
-        })
+        }) */
         .keyup(function () {
             pressedKeys.length = 0;
 
@@ -1973,21 +1970,11 @@ var hotkeyNavigate = function (question) {
      //apply shortcuts
      shortcuts(); */
     //press enter to submit on filter questions:
-    input_fields.one("keyup", function (e) {
-        switch (jQuery(".matrixQText").length) {
-            case 0: //for non-detail questions
-                let blank_inputs = filterBlanks(input_fields).length
-                //get the number of blank inputs 
-                if (e.keyCode == 13) {
-                    //when Enter is pressed 
-                    if (blank_inputs > 0 && jQuery(".guidancePage").length < 1) {
-                        alert(warning);//give completion warning
-                    };
-                    question.clickNextButton()
-                    //got to next question
-                };
-                break;
-        }
+    input_fields.keyup(function (e) {
+        if (jQuery(".matrixQText").length && e.keyCode == 13) {
+            //if there is not matrix question and ENTER is oressed
+            jQuery("#NextButton").trigger("click");//click the next button
+        };
     });
 };
 
