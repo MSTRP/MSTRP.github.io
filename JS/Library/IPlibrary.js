@@ -1725,7 +1725,7 @@ var hotkeyNavigate = function (question) {
 
         goNext(click);
     };
-
+/* 
     //shortcuts:
     Mousetrap.bind('ctrl+alt+n', function () {
         if (jQuery(".matrixQText").length < 1) {
@@ -1748,7 +1748,7 @@ var hotkeyNavigate = function (question) {
     Mousetrap.bind('ctrl+alt+p', function () {
         goBack();
     });//CTRL+ALT+P
-
+ */
     if (jQuery(".ChoiceStructure input").length > 0) {
         let questions = document.querySelector(".ChoiceStructure");
         let input = questions.querySelectorAll("input");
