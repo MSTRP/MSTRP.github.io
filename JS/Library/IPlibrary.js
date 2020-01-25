@@ -1691,7 +1691,7 @@ var hotkeyNavigate = function (question) {
 
     //basic nav functions:
     let goNext = function (doClick) {
-        if (doClick === undefined || doClick !== false) {
+        if (doClick === undefined || doClick === true) {
             if (listeners.hotkeyNavigate == "Go") {
                 question.clickNextButton()
             };
@@ -1705,8 +1705,9 @@ var hotkeyNavigate = function (question) {
     }//back
 
     //forward with alert:
-    let switcher = function (test, click = true) {
+    let switcher = function (test, click) {
         let doTest = test.length;
+        let doClick = (click!== undefined)? click : true;
         let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
         /* let alertNext = function () {
             if ( alertCounter === 0 &&  jQuery(".guidancePage").length < 1) {
@@ -1723,7 +1724,7 @@ var hotkeyNavigate = function (question) {
             alert(warning);
         };
 
-        goNext(click);
+        goNext(doClick);
     };
 /* 
     //shortcuts:
