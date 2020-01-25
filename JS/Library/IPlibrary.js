@@ -1454,32 +1454,32 @@ var keyupSwitch = function (buttons) {
 var checkOnly = function () {
 
     jQuery("#NextButton").click(function () {
-        
+
         if (jQuery("#EndOfSurvey").length < 1) {
             //when not the end of survey summary page
-    
+
             let check = checkAll(filterList, "default", ["SixBD", "ElevenD2"]);
             //get all blank questions
-    
-            if (check.length > 0 ) {
+
+            if (check.length > 0) {
                 //if any questions are blank
-    
-    
+
+
                 Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
                 console.log("nav off: ", listeners.hotkeyNavigate)
                 question.disableNextButton();
-    
+
                 //alert on load:
                 checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
-    
+
                 let hovertext = "Please complete all sections of this report in order to continue";
                 //add help text on hover:
                 hoverTextAdd(jQuery("#Buttons"), hovertext, [jQuery("#PreviousButton")]);
             } else {
-    
+
                 if (listeners.hotkeyNavigate == "Stop") {
                     Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
-                };      
+                };
             };
         } else {
             Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
@@ -1705,46 +1705,25 @@ var hotkeyNavigate = function (question) {
     }//back
 
     //forward with alert:
-    let switcher = function (test, alertCase, click = true) {
+    let switcher = function (test, click = true) {
         let doTest = test.length;
-        console.log("doTest: ", doTest);
-
-        let alertNext = function () {
-
-            goNext(click);
-
-            //console.log(": ", alertCounter);
-            if (/* alertCounter === 0 &&  */jQuery(".guidancePage").length < 1) {
+        let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
+        /* let alertNext = function () {
+            if ( alertCounter === 0 &&  jQuery(".guidancePage").length < 1) {
                 alert("You will need to complete this section, or any sections highlighted below before you submit your report");
                 // alertCounter += 1;
             };
+            //console.log(": ", alertCounter);
+        }; */
+
+
+        if (doTest > 0 && jQuery(".guidancePage").length < 1) {
+            //when there are no blanks
+            //pressedKeys.length = 0;
+            alert(warning);
         };
 
-        switch (alertCase) {
-            case "value": //when testing string length of value
-
-                console.log("value");
-
-                if (doTest > 0) {
-                    //when the value isn't blank
-                    goNext(click);
-                } else {
-                    //when blank
-                    alertNext();
-                };
-
-            case "array": //testing nummberof blanks in array
-                console.log("array");
-                if (doTest > 0) {
-                    //when there are no blanks
-                    //pressedKeys.length = 0;
-                    alertNext();
-                } else {
-                    //when there are blanks
-                    goNext(click);
-
-                };
-        };
+        goNext(click);
     };
 
     //shortcuts:
@@ -1752,15 +1731,16 @@ var hotkeyNavigate = function (question) {
         if (jQuery(".matrixQText").length < 1) {
             //when there are no tables on the page on the page:
 
-            let test = filterBlanks(input_fields);
+            let test = input_fields.filter(function () {
+                return jQuery(this).val().replace(/£|,/g, "").length > 0
+            });
             console.log(test);
             //test the number of blanks
-            switcher(test, "array");
+            switcher(test);
 
         } else {
             //otherwise if there are more than 4 questions on the page:
             goNext();
-
         };
 
     });//CTRL+ALT+N
@@ -1769,42 +1749,60 @@ var hotkeyNavigate = function (question) {
         goBack();
     });//CTRL+ALT+P
 
-    let questions = document.querySelector(".ChoiceStructure");
-    let input = questions.querySelectorAll("input");
-    input.forEach(function (item) {
-        Mousetrap(item).bind('enter', function () {
-            if (jQuery(".matrixQText").length < 1) {
-                //when there are no tables on the page on the page:
-                if (all_inputs > 1) {
-                    //when there are multiple inputs on the page and Enter is pressed
-    
-                    let test = filterBlanks(input_fields);
-                    //get the number of blank inputs
-    
-                    switcher(test, "array");
-                } else {
-                    //or when there is only one input
-    
-                    let test = jQuery(".ChoiceStructure input").val().replace(/,/g, "");
-                    switcher(test, "value");
-                };
-            }
-        });//ENTER to submit
-    });
-    
+    if (jQuery(".ChoiceStructure").length > 0) {
+        let questions = document.querySelector(".ChoiceStructure");
+        let input = questions.querySelectorAll("input");
+
+
+
+
+
+
+        if (jQuery(".matrixQText").length < 1) {
+            //when there are no tables on the page on the page:
+            Mousetrap.stopCallback = function () {
+                return false
+            };
+
+            if (all_inputs > 1) {
+                //when there are multiple inputs on the page and Enter is pressed
+                let test = input_fields.filter(function () {
+                    return jQuery(this).val().replace(/£|,/g, "").length > 0
+                });
+
+                input.forEach(function (item) {
+                    Mousetrap(item).bind('enter', function () {
+                        switcher(test);
+                    })
+                });
+
+                //get the number of blank inputs
+
+
+            } else {
+                //or when there is only one input
+
+                let test = jQuery(".ChoiceStructure input").val().replace(/,/g, "");
+                switcher(test);
+            };
+        }
+
+    };//ENTER to submit
 
     jQuery("#NextButton").click(function () {
         //run alert when next button is clicked if necessary
 
         if (jQuery(".matrixQText").length < 1) {
             if (all_inputs > 1) {
-                let test = filterBlanks(input_fields);
+                let test = input_fields.filter(function () {
+                    return jQuery(this).val().replace(/£|,/g, "").length > 0
+                });
                 //test the number of blanks
-                switcher(test, "array", false);
+                switcher(test, false);
             }
         } else {
             let test = jQuery(".ChoiceStructure input").val().replace(/,/g, "");
-            switcher(test, "value", false);
+            switcher(test, false);
         };
     });
 };
