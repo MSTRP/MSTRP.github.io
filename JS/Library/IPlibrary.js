@@ -1681,7 +1681,7 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
 
 //3) nav & shortcuts:
 //navigation hot keys
-var hotkeyNavigate = function (question) {
+/* var hotkeyNavigate = function (question) {
     let input_fields = (jQuery(".ChoiceStructure input"));
     console.log(input_fields);
     //select input fields
@@ -1707,7 +1707,7 @@ var hotkeyNavigate = function (question) {
     //forward with alert:
     let switcher = function (test, click) {
         let doTest = test.length;
-        let doClick = (click!== undefined)? click : true;
+        let doClick = (click !== undefined) ? click : true;
         let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
         /* let alertNext = function () {
             if ( alertCounter === 0 &&  jQuery(".guidancePage").length < 1) {
@@ -1715,7 +1715,7 @@ var hotkeyNavigate = function (question) {
                 // alertCounter += 1;
             };
             //console.log(": ", alertCounter);
-        }; */
+        }; 
 
 
         if (doTest > 0 && jQuery(".guidancePage").length < 1) {
@@ -1726,33 +1726,33 @@ var hotkeyNavigate = function (question) {
 
         goNext(doClick);
     };
-/* 
-    //shortcuts:
-    Mousetrap.bind('ctrl+alt+n', function () {
-        if (jQuery(".matrixQText").length < 1) {
-            //when there are no tables on the page on the page:
+    
+        //shortcuts:
+        Mousetrap.bind('ctrl+alt+n', function () {
+            if (jQuery(".matrixQText").length < 1) {
+                //when there are no tables on the page on the page:
+    
+                let test = input_fields.filter(function () {
+                    return jQuery(this).val().replace(/£|,/g, "").length > 0
+                });
+                console.log(test);
+                //test the number of blanks
+                switcher(test);
+    
+            } else {
+                //otherwise if there are more than 4 questions on the page:
+                goNext();
+            };
+    
+        });//CTRL+ALT+N
+    
+        Mousetrap.bind('ctrl+alt+p', function () {
+            goBack();
+        });//CTRL+ALT+P
 
-            let test = input_fields.filter(function () {
-                return jQuery(this).val().replace(/£|,/g, "").length > 0
-            });
-            console.log(test);
-            //test the number of blanks
-            switcher(test);
-
-        } else {
-            //otherwise if there are more than 4 questions on the page:
-            goNext();
-        };
-
-    });//CTRL+ALT+N
-
-    Mousetrap.bind('ctrl+alt+p', function () {
-        goBack();
-    });//CTRL+ALT+P
- */
     if (jQuery(".ChoiceStructure input").length > 0) {
-        let questions = document.querySelector(".ChoiceStructure");
-        let input = questions.querySelectorAll("input");
+        //let questions = document.querySelector(".ChoiceStructure");
+        let input = document.querySelectorAll(".ChoiceStructure input");
 
 
 
@@ -1806,7 +1806,96 @@ var hotkeyNavigate = function (question) {
             switcher(test, false);
         };
     });
+}; */
+var hotkeyNavigate = function (question) {
+
+    let pressedKeys = [];
+    //array to track pressed keys (and order pressed)
+
+    let input_fields = jQuery(".ChoiceStructure input");
+    //select input fields
+
+    /* const all_inputs = input_fields.length;
+    //number of inputs */
+
+    let goNext = function (doClick) {
+        if (doClick === undefined || doClick === true && listeners.hotkeyNavigate == "Go") {
+            question.clickNextButton()
+        };
+    };//foward with off switch ("Go")
+
+    let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
+    //alert text
+
+    //navigation shortcuts:
+    jQuery(document) //applies to whole page
+        .keydown(function (e) {
+            pressedKeys.push(e.keyCode);
+            //add the pressed key to pressedKeys array
+            let blank_inputs = filterBlanks(input_fields).length
+            //get the number of blanks as a variable
+
+            switch (jQuery(".matrixQText").length) { //for non-detail questions
+                case 0:
+                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
+                        //if CTRL + ALT + N are pressed in sequence and the next button is present:
+                        if (blank_inputs > 0) {
+                            alert(warning);//give completion warning
+                        };
+                        goNext();
+                        //move to next question
+                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && blank_inputs == 0 && jQuery("#PreviousButton").length) {
+                        //if CTRL + ALT + P are pressed in sequence and the previous button is present:    
+                        question.clickPreviousButton()
+                        //move to previous question
+                    };
+                    break;
+
+                default:
+                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
+                        //if CTRL + ALT + N are pressed in sequence and the next button is present:
+                        question.clickNextButton()
+                        //move to next question
+                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
+                        //if CTRL + ALT + P are pressed in sequence and the previous button is present: 
+                        question.clickPreviousButton()
+                        //move to previous question
+                    }
+            }
+        })
+        .keyup(function () {
+            pressedKeys.length = 0;
+        });
+    //press enter to submit on filter questions:
+    input_fields.keyup(function (e) {
+        switch (jQuery(".matrixQText").length) {
+            case 0: //for non-detail questions
+                let blank_inputs = filterBlanks(input_fields).length
+                //get the number of blank inputs 
+                if (e.keyCode == 13) {
+                    //when Enter is pressed 
+                    if (blank_inputs > 0) {
+                        alert(warning);//give completion warning
+                    };
+                    question.clickNextButton()
+                    //got to next question
+                };
+                break;
+        }
+    });
+    //alert when next button is clicked:
+    jQuery("#NextButton").click(function () {
+        switch (jQuery(".matrixQText").length) {
+            case 0: //for non-detail questions
+                let blank_inputs = filterBlanks(input_fields).length
+                if (blank_inputs > 0) {       
+                    alert(warning);//give completion warning
+                };
+                break;
+        }
+    });
 };
+
 
 //enable hotkey navigate
 var navReset = function () {
