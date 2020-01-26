@@ -1832,7 +1832,7 @@ var hotkeyNavigate = function (question) {
             case 0: //for non-detail questions
                 let blank_inputs = filterBlanks(input_fields).length;
                 if (blank_inputs > 0 && jQuery(".guidancePage").length < 1) {
-                    pressedKeys.length = 0;
+                    pressedKeys = [];
                     alert(warning);//give completion warning
                 };
                 break;
@@ -1862,27 +1862,27 @@ var hotkeyNavigate = function (question) {
                 default:
                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
-                        pressedKeys.length = 0;
+                        pressedKeys = [];
                         console.log("click next button api method")
                         question.clickNextButton();
                         //move to next question
                     } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
                         //if CTRL + ALT + P are pressed in sequence and the previous button is present: 
-                        pressedKeys.length = 0;
+                        pressedKeys = [];
                         question.clickPreviousButton();
                         //move to previous question
                     };
             }
         })
         .keyup(function () {
-            pressedKeys.length = 0;
+            pressedKeys = [];
             console.log("pressed: ", pressedKeys.length)
         });
     //press enter to submit on filter questions:
     input_fields.keyup(function (e) {
         if (jQuery(".matrixQText").length <1 && e.keyCode == 13) {
             //if there is not matrix question and ENTER is oressed
-            pressedKeys.length = 0;
+            pressedKeys = [];
             jQuery("#NextButton").trigger("click");//click the next button
         };
     });
