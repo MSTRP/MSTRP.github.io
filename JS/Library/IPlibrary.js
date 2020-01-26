@@ -2522,10 +2522,11 @@ var buttons6a = function (next, details) {
 };
 //4) 6 new transactions upload carry forward
 var carry6 = function (answerlist) {
-    //define array within object as a variable for each answer field
-    var uniqueID = answerlist["uniqueID"];
-    var counterParty = answerlist["counterParty"];
-    var effectiveDate = answerlist["effectiveDate"];
+    //define array within object as a variable for each answer field,
+    //replace any line breaks with a space
+    var uniqueID = answerlist["uniqueID"].replace(/\r?\n|\r/g, "");
+    var counterParty = answerlist["counterParty"].replace(/\r?\n|\r/g, "");
+    var effectiveDate = answerlist["effectiveDate"].replace(/\r?\n|\r/g, "");
 
     //define the Question IDs as an array - to be used with string.find() 
     var questionIDs = answerlist["questionIDs"];
