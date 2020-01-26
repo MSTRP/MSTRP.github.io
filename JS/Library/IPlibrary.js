@@ -989,10 +989,9 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             break;
         case "guidance":
             if (jQuery("#EndOfSurvey").length < 1) {
-                let lastItem = (breaker == "n/a") ? Object.values(filterList)[Object.values(filterList).length - 1] : breaker;
-                if (Object.values(filterList).filter(entry => checkBlank(entry) == "Blank"
-                    && Object.values(filterList).indexOf(entry) < Object.values(filterList).indexOf(lastItem)).length > 0) {
-                    //if any value in the list before the breaker is blank
+                let items = guidance.replace(guidanceHTMLA, "").replace(helper, "").replace(guidanceHTMLB, "");;
+                if (items.length > 0) {
+                    //if any values have bee added to the list
 
                     guidance += '</div>';
                     jQuery(".check").append(guidance);
@@ -2515,7 +2514,7 @@ var carry6 = function (answerlist) {
 
                 //append the piped text value from the map to target <span>:
                 thisRef.append(uniqueID[ID].replace(/\r?\n|\r/g, "") + "'"); //Organsation reference
-                thisParty.append(counterParty[ID].replace(/\r?\n|\r/g, "") + "'"); //Counterparty
+                thisParty.append(counterParty[ID].replace(/(\r\n|\n|\r)/gm, "") + "'"); //Counterparty
                 thisDate.append(effectiveDate[ID].replace(/\r?\n|\r/g, "") + ")"); //effective date
             }
         }
