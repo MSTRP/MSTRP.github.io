@@ -1849,11 +1849,13 @@ var hotkeyNavigate = function (question) {
                 case 0:
                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
-                        console.log("next button triggered")
+                        console.log("next button triggered");
+                        pressedKeys = [];
                         jQuery("#NextButton").trigger("click");// click the next button
                         //move to next question
                     } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
                         //if CTRL + ALT + P are pressed in sequence and the previous button is present:    
+                        pressedKeys = [];
                         question.clickPreviousButton();
                         //move to previous question
                     };
