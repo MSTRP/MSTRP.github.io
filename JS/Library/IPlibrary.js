@@ -1826,6 +1826,8 @@ var hotkeyNavigate = function (question) {
 
     //alert when next button is clicked:
     jQuery("#NextButton").one("click", function () {
+        console.log("next button clicked");
+
         switch (jQuery(".matrixQText").length) {
             case 0: //for non-detail questions
                 let blank_inputs = filterBlanks(input_fields).length;
@@ -1842,10 +1844,12 @@ var hotkeyNavigate = function (question) {
         .keydown(function (e) {
             pressedKeys.push(e.keyCode);
             //add the pressed key to pressedKeys array
+            console.log(pressedKeys);
             switch (jQuery(".matrixQText").length) { //for non-detail questions
                 case 0:
                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
+                        console.log("next button triggered")
                         jQuery("#NextButton").trigger("click");// click the next button
                         //move to next question
                     } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
@@ -1859,6 +1863,7 @@ var hotkeyNavigate = function (question) {
                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
                         pressedKeys.length = 0;
+                        console.log("click next button api method")
                         question.clickNextButton();
                         //move to next question
                     } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
@@ -1875,7 +1880,7 @@ var hotkeyNavigate = function (question) {
         });
     //press enter to submit on filter questions:
     input_fields.keyup(function (e) {
-        if (jQuery(".matrixQText").length && e.keyCode == 13) {
+        if (jQuery(".matrixQText").length <1 && e.keyCode == 13) {
             //if there is not matrix question and ENTER is oressed
             pressedKeys.length = 0;
             jQuery("#NextButton").trigger("click");//click the next button
