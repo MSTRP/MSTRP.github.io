@@ -1846,7 +1846,7 @@ var hotkeyNavigate = function (question) {
             console.log(pressedKeys);
             switch (jQuery(".matrixQText").length) { //for non-detail questions
                 case 0:
-                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
+                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length && listeners.hotkeyNavigate == "Go") {
                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
                         console.log("next button triggered");
                         pressedKeys = [];
