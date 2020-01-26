@@ -1882,7 +1882,7 @@ var hotkeyNavigate = function (question) {
         });
     //press enter to submit on filter questions:
     input_fields.keyup(function (e) {
-        if (jQuery(".matrixQText").length <1 && e.keyCode == 13) {
+        if (jQuery(".matrixQText").length < 1 && e.keyCode == 13) {
             //if there is not matrix question and ENTER is oressed
             pressedKeys = [];
             jQuery("#NextButton").trigger("click");//click the next button
@@ -2006,19 +2006,15 @@ var setHoverText = function (question, filterlist) {
         var allSelects = Object.entries(labelarray["select"])
     };//<select>
 
-
     //function to set hovertext and build selector
     let setHoverText = function (column_nth_index, hover_text, row) {
-
         //define selector
         let thisColumn = columnSelect(column_nth_index);
         let thisInput = row.find(thisColumn);
         //select current child using nth key
 
         //get the hover text
-
         hoverTextAdd(thisInput, hover_text);
-        //apply the function
     };
 
     //select the rows
@@ -2026,46 +2022,33 @@ var setHoverText = function (question, filterlist) {
 
     //apply hover text 
     getTRow.each(function () {
-
-
         var thisHrow = jQuery(this);
 
-
         let filter = getFilters(question, filterlist);
-
 
         if (thisHrow.index() > 2 && filter > 3) {
             //show for rows 3 and over
 
             if (allInputs !== undefined) {
-
                 //set hover text for each question type using keys
                 for (let [key, value] of allInputs) {
-
-                    setHoverText(key, value, thisHrow)
+                    setHoverText(key, value, thisHrow);
                     //run for inputs
                 };
-            };
-            //inputs
+            };//inputs
             if (allSelects !== undefined) {
-
                 for (let [key, value] of allSelects) {
-
-                    setHoverText(key, value, thisHrow)
+                    setHoverText(key, value, thisHrow);
                     //run for selects
                 };
-            }
-            //selects
-
+            };//selects
             if (allTextareas !== undefined) {
 
                 for (let [key, value] of allTextareas) {
-
-                    setHoverText(key, value, thisHrow)
+                    setHoverText(key, value, thisHrow);
                     //run for textareas
-                }
-            }
-            //textareas
+                };
+            };//textareas
         }
     });
 };
@@ -2080,37 +2063,30 @@ var loadMenu = function (progressBartracker) {
     var menu = jQuery("#navOuter");
     var menuList = jQuery(".navTable");
     //elements to be blurred as array:
-    var blurElements = [
+    let blurElements = [
         jQuery("#SkinContent"),//page
         jQuery("#reportTitle"),//title
         menuButton//logo
     ];
 
     //functions to open and close the menu:
-
     let showMenu = function () {
-
         //blur logo, page and title:
         for (let element of blurElements) {
             element.css("filter", "blur(3px)");
         };
-
-        //show menu animations
+        //show menu animations:
         menu.css("display", "inline-block").fadeIn("100");//make menu visible
         menu.animate({ height: '321px', display: 'inline-block' }, 250);//open menu container
         menuList.show(200);//show menu items
-
-
         menuSwitch = "on";//set switch status to on
     };
-
     let hideMenu = function () {
 
         //remove blur from logo, page and title:
         for (let element of blurElements) {
             element.css("filter", "none");
         };
-
         //close menu animations:
         menuList.hide();//hide menu items
         menu.animate({ height: '0px' }, 100);//close menu container
@@ -2121,7 +2097,8 @@ var loadMenu = function (progressBartracker) {
     menuButton.on({
         click: function () {
 
-            if (menuSwitch == "off" && jQuery("#EndOfSurvey").length == 0 & jQuery(".ResponseSummary").length == 0) {
+            if (menuSwitch == "off" && jQuery("#EndOfSurvey").length == 0
+                && jQuery(".ResponseSummary").length == 0) {
                 //doesn't load on response summary and end of survey pages
 
                 showMenu();//load the menu
@@ -2170,12 +2147,12 @@ var loadMenu = function (progressBartracker) {
     };
 
     let onPosition = function () {
-        //make toggle track dark green
-        toggleArea.css("background-color", getColour("secondary"))
+        //make toggle track dark green 
+        toggleArea.css("background-color", getColour("secondary"));
 
         //move toggle switcher to left
         toggleSwitch.css("background-color", getColour("secondary"));
-        toggleSwitch.css("left", "16px")
+        toggleSwitch.css("left", "16px");
     };
 
 
@@ -2183,7 +2160,7 @@ var loadMenu = function (progressBartracker) {
     if (pbIO == "on") {
         //if progress bar was last set to visible
 
-        progressBar.show()//show the progressbar
+        progressBar.show();//show the progressbar
         onPosition(); //set toggle to "on" position
 
     } else if (pbIO == "off") {
@@ -2194,35 +2171,23 @@ var loadMenu = function (progressBartracker) {
     };
 
     //on click
-    ptoggle.on({
-
-        click: function () {
-
-            if (pbIO == "on") {
-
-                progressBar.hide(100);
-                //hide the progress bar
-
-                offPosition();//set toggle to "off" position
-
-                pbIO = "off";
-                Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
-                //send value to embedded data 
-
-            } else if (pbIO == "off") {
-
-                progressBar.show(200);
-                //show the progress bar
-
-                onPosition(); //set toggle to "on" position
-
-                pbIO = "on";
-                Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
-                //send value to embedded data 
-            }
+    ptoggle.click(function () {
+        if (pbIO == "on") {
+            progressBar.hide(100);
+            //hide the progress bar
+            offPosition();//set toggle to "off" position
+            pbIO = "off";
+            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
+            //send value to embedded data 
+        } else if (pbIO == "off") {
+            progressBar.show(200);
+            //show the progress bar
+            onPosition(); //set toggle to "on" position
+            pbIO = "on";
+            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
+            //send value to embedded data 
         }
     });
-
 };
 
 //--------------------Section X: Question specific
@@ -2243,11 +2208,11 @@ var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
             if (npfSelect.val() == 2) {
                 //if F is selected add 1 to thr olling tally
 
-                var fTally = 1
+                var fTally = 1;
             } else {
                 //otherwise add nothing
 
-                var fTally = 0
+                var fTally = 0;
             };
             //rolling calcs:
             fCount += fTally,
@@ -2256,11 +2221,11 @@ var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
             if (fRolling > 0) {
                 //if 1 or more Fs are selected
 
-                nextbuttonDefault(sections[detailsRef])
+                nextbuttonDefault(sections[detailsRef]);
                 //set button text to "details"
             } else {
                 //otherwise keep as "next"
-                nextbuttonDefault(sections[nextRef])
+                nextbuttonDefault(sections[nextRef]);
             }
         })
     });
@@ -2300,7 +2265,7 @@ var carry3b = function (answerlist) {
 
             //define the fields + input selector
             var awardN = thisRow.find("td:nth-child(4)");
-            var awardNoIpt = awardN.find("textarea")
+            var awardNoIpt = awardN.find("textarea");
 
             var uniqueI = thisRow.find("td:nth-child(7)");
             var uniqueIDIpt = uniqueI.find("input");
@@ -2353,7 +2318,7 @@ var format6 = function (formatting_columnRefs) {
         //selet label for higlighting
 
         //comments box textarea:
-        var more_detail = inputs6.find(columnSelect("moreInfo", formatting_columnRefs))
+        var more_detail = inputs6.find(columnSelect("moreInfo", formatting_columnRefs));
         //table column
         var mdTE = textareaselect(more_detail);
         //textareas
@@ -2369,7 +2334,7 @@ var format6 = function (formatting_columnRefs) {
                 if (mdTE.val().length === 0) {
                     //when the comments box is also blank
 
-                    highLight(chL, mdTE)
+                    highLight(chL, mdTE);
                     //highlight fields
 
                 } else {
@@ -2420,7 +2385,7 @@ var format6 = function (formatting_columnRefs) {
                 if (noInfobox.val().length === 0) {
                     //when the comments box is also blank
 
-                    highLight(hasAgreement, noInfobox)
+                    highLight(hasAgreement, noInfobox);
                     //highlight fields
 
                 } else {
@@ -2444,7 +2409,7 @@ var format6 = function (formatting_columnRefs) {
         };
 
         //formatting on load:
-        formathasAgreement()//helpers
+        formathasAgreement();//helpers
         clearFormatHA();//resetter
 
         //DO you have the executed agreement? dropdown:
@@ -2493,12 +2458,12 @@ var buttons6a = function (next, details) {
             if (aSelect.val() == 1) {
                 //if yes is selected
 
-                var yTally = 1
+                var yTally = 1;
                 //add 1 to the rollling count
             } else {
                 //otherwise
 
-                var yTally = 0
+                var yTally = 0;
                 //add nothing
             };
 
@@ -2509,7 +2474,7 @@ var buttons6a = function (next, details) {
             if (yesRolling > 0) {
                 //if yes is selected 1 or more times
 
-                nextbuttonDefault(sections[details])
+                nextbuttonDefault(sections[details]);
                 //next button changes to "upload supporting documents"
             } else {
                 //otherwise
@@ -2524,9 +2489,9 @@ var buttons6a = function (next, details) {
 var carry6 = function (answerlist) {
     //define array within object as a variable for each answer field,
     //replace any line breaks with a space
-    var uniqueID = answerlist["uniqueID"].replace(/\r?\n|\r/g, "");
-    var counterParty = answerlist["counterParty"].replace(/\r?\n|\r/g, "");
-    var effectiveDate = answerlist["effectiveDate"].replace(/\r?\n|\r/g, "");
+    var uniqueID = answerlist["uniqueID"];
+    var counterParty = answerlist["counterParty"];
+    var effectiveDate = answerlist["effectiveDate"];
 
     //define the Question IDs as an array - to be used with string.find() 
     var questionIDs = answerlist["questionIDs"];
@@ -2549,9 +2514,9 @@ var carry6 = function (answerlist) {
                 var thisDate = thisQContainer.find(".effectiveDate"); //effective date
 
                 //append the piped text value from the map to target <span>:
-                thisRef.append(uniqueID[ID] + "'"); //Organsation reference
-                thisParty.append(counterParty[ID] + "'"); //Counterparty
-                thisDate.append(effectiveDate[ID] + ")"); //effective date
+                thisRef.append(uniqueID[ID].replace(/\r?\n|\r/g, "") + "'"); //Organsation reference
+                thisParty.append(counterParty[ID].replace(/\r?\n|\r/g, "") + "'"); //Counterparty
+                thisDate.append(effectiveDate[ID].replace(/\r?\n|\r/g, "") + ")"); //effective date
             }
         }
     })
