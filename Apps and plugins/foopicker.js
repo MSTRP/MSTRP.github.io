@@ -36,11 +36,12 @@ var FooPicker = (function () {
       if (pickerField) {
         var datepicker = pickerField.getBoundingClientRect();
         var left = datepicker.left;
-        var top = datepicker.bottom + datepicker.height + 5; /* + 20; */
+        var top = datepicker.bottom + datepicker.height ; /* + 20; */
         console.log("top: ", top );
         if (pickerDiv) {
           pickerDiv.style.position = 'fixed';
           pickerDiv.style.bottom = top  + 'px';
+          console.log("field bottom: ", datepicker.bottom, "foo bottom: ", top);
           pickerDiv.style.left = left + 'px';
           pickerDiv.style.zIndex = '99999';
         }
