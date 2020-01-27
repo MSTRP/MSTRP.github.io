@@ -40,7 +40,7 @@ var FooPicker = (function () {
         console.log("top: ", top );
         if (pickerDiv) {
           pickerDiv.style.position = 'fixed';
-          pickerDiv.style.bottom = top + 'px';
+          pickerDiv.style.bottom = top /* + 'px' */;
           pickerDiv.style.left = left + 'px';
           pickerDiv.style.zIndex = '99999';
         }
