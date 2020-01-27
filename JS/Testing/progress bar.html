@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        :root {
+            --pageWidth: calc(100% - 15px);
+            --primaryColour: #000000;
+            --primaryTransparency: #0000009e;
+            --secondaryColour: #848282;
+            --secondaryTransparency: #84828294;
+            --tertiaryColour: #e0e0e0;
+            --helpText: #0000FF;
+        }
+
+        /* Completion Tracker */
+        .completion-tracker {
+            --tracker_section--height: 30px;
+            height: var(--tracker_section--height);
+            background-color: white;
+        }
+
+        .completion-tracker_Boxes {
+            width: var(--pageWidth);
+            display: table;
+
+        }
+
+        .completion-tracker_section {
+            background-color: white;
+            display: inline-block;
+            width: calc(var(--pageWidth)/12);
+        }
+
+        #section1 .completion-tracker_progress {
+            width: calc(inherit - 2px);
+            margin-left: 2px;
+
+        }
+
+        #section12 .completion-tracker_progress {
+            width: calc(inherit - 2px);
+            margin-right: 2px;
+        }
+
+        .completion-tracker_progress {
+            --tracker_progress--height: calc(var(--tracker_section--height)*0.4);
+            height: var(--tracker_progress--height);
+            background-color: #e0e0e0;
+            margin: 2px 0px;
+            background-image: linear-gradient(var(--tertiaryColour), white);
+            box-shadow: inset 0 -1px 1px 0 rgba(0, 0, 0, 0.12), inset 0px 1px 1px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        #section1 .completion-tracker_progress {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        #section12 .completion-tracker_progress {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .completion-tracker_label {
+            height: calc(var(--tracker_section--height)*0.6);
+            font-size: 16px;
+            text-align: center;
+            color: black;
+            font-weight: bold;
+            background-color: white;
+        }
+
+        .completion-tracker_label--detail {
+            display: none;
+            text-align: center;
+            font-style: italic;
+            position: absolute;
+            font-size: 14px;
+            z-index: 2000;
+            padding: 4px 2px;
+        }
+
+        .completion-tracker_section:hover {
+            filter: brightness(100%);
+            background-color: var(--primaryColour);
+            cursor: default;
+        }
+
+        .completion-tracker_section:hover .completion-tracker_label,
+        .completion-tracker_section:hover .completion-tracker_label--detail {
+            background-color: var(--primaryColour);
+            color: white;
+        }
+
+        .completion-tracker_section:hover .completion-tracker_label--detail {
+            animation-name: show-detail;
+            -moz-animation-duration: 500ms;
+            animation-duration: 500ms;
+            display: table-cell;
+            width: 100%;
+            width: -moz-available;
+            width: -webkit-fill-available;
+            width: fill-available;
+            height: fit-content;
+            box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.2), 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes show-detail {
+            from {
+                display: none;
+            }
+
+            to {
+                display: table-cell;
+                height: fit-content;
+            }
+        }
+
+        .completion-tracker_section:hover .completion-tracker_progress {
+            box-shadow: inset -1px -1px 1px 0 rgba(0, 0, 0, 0.12), inset 1px 1px 1px 0 rgba(0, 0, 0, 0.12);
+            filter: brightness(85%);
+        }
+
+        .completion-tracker_section:hover #section1 {
+            box-shadow: inset -1px -1px 1px 0 rgba(0, 0, 0, 0.12), inset 0px 1px 1px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        .completion-tracker_section:hover #section12 {
+            box-shadow: inset 0px -1px 1px 0 rgba(0, 0, 0, 0.12), inset 1px 1px 1px 0 rgba(0, 0, 0, 0.12);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="completion-tracker">
+        <div class="completion-tracker_Boxes">
+            <div class="completion-tracker_section" id="section1">
+                <div class="completion-tracker_progress" title="Section 1: Key IP contact details"></div>
+                <div class="completion-tracker_label">Section 1</div>
+                <div class="completion-tracker_label--detail">IP and commercialisation contact details</div>
+            </div>
+            <div class="completion-tracker_section" id="section2" title="Section 2: Summary">
+                <div class="completion-tracker_progress"></div>
+                <div class="completion-tracker_label">Section 2</div>
+                <div class="completion-tracker_label--detail">Summary</div>
+            </div>
+            <div class="completion-tracker_section" id="section3">
+                <div class="completion-tracker_progress"
+                    title="Section 3: Invention disclosures and new patent applications"></div>
+                <div class="completion-tracker_label">Section 3</div>
+                <div class="completion-tracker_label--detail">Invention disclosures and new patent applications</div>
+            </div>
+            <div class="completion-tracker_section" id="section4">
+                <div class="completion-tracker_progress" title="Section 4: Granted patents"></div>
+                <div class="completion-tracker_label">Section 4</div>
+                <div class="completion-tracker_label--detail">Granted patents</div>
+            </div>
+            <div class="completion-tracker_section" id="section5">
+                <div class="completion-tracker_progress" title="Section 5: Other material Wellcome funded IP"></div>
+                <div class="completion-tracker_label">Section 5</div>
+                <div class="completion-tracker_label--detail">Other material Wellcome funded IP</div>
+            </div>
+            <div class="completion-tracker_section" id="section6">
+                <div class="completion-tracker_progress" title="Section 6: New transactions"></div>
+                <div class="completion-tracker_label">Section 6</div>
+                <div class="completion-tracker_label--detail">New transactions</div>
+            </div>
+            <div class="completion-tracker_section" id="section7">
+                <div class="completion-tracker_progress" title="Section 7: Other live agreements"></div>
+                <div class="completion-tracker_label">Section 7</div>
+                <div class="completion-tracker_label--detail">Other live agreements</div>
+            </div>
+            <div class="completion-tracker_section" id="section8">
+                <div class="completion-tracker_progress" title="Section 8: Abandoned agreements"></div>
+                <div class="completion-tracker_label">Section 8</div>
+                <div class="completion-tracker_label--detail">Abandoned, expired or terminated agreements</div>
+            </div>
+            <div class="completion-tracker_section" id="section9">
+                <div class="completion-tracker_progress" title="Section 9: Case studies"></div>
+                <div class="completion-tracker_label">Section 9</div>
+                <div class="completion-tracker_label--detail">Summary of active cases</div>
+            </div>
+            <div class="completion-tracker_section" id="section10">
+                <div class="completion-tracker_progress" title="Section 10: Financial contact details"></div>
+                <div class="completion-tracker_label">Section 10</div>
+                <div class="completion-tracker_label--detail">Financial contact details</div>
+            </div>
+            <div class="completion-tracker_section" id="section11">
+                <div class="completion-tracker_progress" title="Section 11: Revenue"></div>
+                <div class="completion-tracker_label">Section 11</div>
+                <div class="completion-tracker_label--detail">Revenue (and revenue retention if applicable)</div>
+            </div>
+            <div class="completion-tracker_section" id="section12">
+                <div class="completion-tracker_progress" title="Section 12: Equity"></div>
+                <div class="completion-tracker_label">Section 12</div>
+                <div class="completion-tracker_label--detail">Equity</div>
+            </div>
+        </div>
+
+</body>
+
+</html>
