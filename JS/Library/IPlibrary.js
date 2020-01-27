@@ -1680,148 +1680,13 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
 
 //3) nav & shortcuts:
 //navigation hot keys
-/* var hotkeyNavigate = function (question) {
-    let input_fields = (jQuery(".ChoiceStructure input"));
-    console.log(input_fields);
-    //select input fields
 
-    let all_inputs = input_fields.length;
-    //number of inputs
-
-    //basic nav functions:
-    let goNext = function (doClick) {
-        if (doClick === undefined || doClick === true) {
-            if (listeners.hotkeyNavigate == "Go") {
-                question.clickNextButton()
-            };
-        };
-    };//foward
-
-
-    let goBack = function () {
-        //pressedKeys.length = 0;
-        question.clickPreviousButton();
-    }//back
-
-    //forward with alert:
-    let switcher = function (test, click) {
-        let doTest = test.length;
-        let doClick = (click !== undefined) ? click : true;
-        let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
-        /* let alertNext = function () {
-            if ( alertCounter === 0 &&  jQuery(".guidancePage").length < 1) {
-                alert("You will need to complete this section, or any sections highlighted below before you submit your report");
-                // alertCounter += 1;
-            };
-            //console.log(": ", alertCounter);
-        }; 
-
-
-        if (doTest > 0 && jQuery(".guidancePage").length < 1) {
-            //when there are no blanks
-            //pressedKeys.length = 0;
-            alert(warning);
-        };
-
-        goNext(doClick);
-    };
-    
-        //shortcuts:
-        Mousetrap.bind('ctrl+alt+n', function () {
-            if (jQuery(".matrixQText").length < 1) {
-                //when there are no tables on the page on the page:
-    
-                let test = input_fields.filter(function () {
-                    return jQuery(this).val().replace(/£|,/g, "").length > 0
-                });
-                console.log(test);
-                //test the number of blanks
-                switcher(test);
-    
-            } else {
-                //otherwise if there are more than 4 questions on the page:
-                goNext();
-            };
-    
-        });//CTRL+ALT+N
-    
-        Mousetrap.bind('ctrl+alt+p', function () {
-            goBack();
-        });//CTRL+ALT+P
-
-    if (jQuery(".ChoiceStructure input").length > 0) {
-        //let questions = document.querySelector(".ChoiceStructure");
-        let input = document.querySelectorAll(".ChoiceStructure input");
-
-
-
-
-
-
-        if (jQuery(".matrixQText").length < 1) {
-            //when there are no tables on the page on the page:
-            Mousetrap.stopCallback = function () {
-                return false
-            };
-
-            if (all_inputs > 1) {
-                //when there are multiple inputs on the page and Enter is pressed
-                let test = input_fields.filter(function () {
-                    return jQuery(this).val().replace(/£|,/g, "").length > 0
-                });
-
-                input.forEach(function (item) {
-                    Mousetrap(item).bind('enter', function () {
-                        switcher(test);
-                    })
-                });
-
-                //get the number of blank inputs
-
-
-            } else {
-                //or when there is only one input
-
-                let test = jQuery(".ChoiceStructure input").val().replace(/,/g, "");
-                switcher(test);
-            };
-        }
-
-    };//ENTER to submit
-
-    jQuery("#NextButton").click(function () {
-        //run alert when next button is clicked if necessary
-
-        if (jQuery(".matrixQText").length < 1) {
-            if (all_inputs > 1) {
-                let test = input_fields.filter(function () {
-                    return jQuery(this).val().replace(/£|,/g, "").length > 0
-                });
-                //test the number of blanks
-                switcher(test, false);
-            }
-        } else {
-            let test = jQuery(".ChoiceStructure input").val().replace(/,/g, "");
-            switcher(test, false);
-        };
-    });
-}; */
 var hotkeyNavigate = function (question) {
-
-    let pressedKeys = [];
-    //array to track pressed keys (and order pressed)
-
-    let input_fields = jQuery(".ChoiceStructure input");
-    //select input fields
-
-    let goNext = function (doClick) {
-        if (doClick === undefined || doClick === true && listeners.hotkeyNavigate == "Go") {
-            question.clickNextButton()
-        };
-    };//foward with off switch ("Go")
-
+    //question = this
+    let pressedKeys = [];//track pressed keys (and order pressed)
+    let input_fields = jQuery(".ChoiceStructure input");//select input fields
+    //alert text:
     let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
-    //alert text
 
     //alert when next button is clicked:
     jQuery("#NextButton").one("click", function () {
@@ -1837,7 +1702,6 @@ var hotkeyNavigate = function (question) {
                 break;
         };
     });
-
     //shortcuts:
     jQuery(document) //applies to whole page
         .keydown(function (e) {
@@ -1888,7 +1752,6 @@ var hotkeyNavigate = function (question) {
         };
     });
 };
-
 
 //enable hotkey navigate
 var navReset = function () {
