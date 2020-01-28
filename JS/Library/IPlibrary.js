@@ -30,6 +30,7 @@ var theme = {
 
 //section headings
 var sections = {
+    Back: "←",
     Three: "Section 3: Invention disclosures",
     ThreeA: "Invention disclosure details",
     ThreeB: "Patent applications filed details",
@@ -47,16 +48,44 @@ var sections = {
     Nine: "Section 9: Case studies",
     NineD: "Case studies summary",
     Part2: "Part 2: Financial Reporting",
-    Ten: "Section 10: Revenue",
-    TenD: "Revenue generating transaction details",
-    TenD2: "Revenue Retention",
-    Eleven: "Section 11: Equity",
-    ElevenD: "Equity obtained details",
-    Twelve: "Section 12: Declaration download",
+    Ten: "Section 10: Financial contact details",
+    Eleven: "Section 11: Revenue",
+    ElevenD: "Revenue generating transaction details",
+    ElevenD2: "Revenue Retention",
+    Twelve: "Section 12: Equity",
+    TwelveD: "Equity obtained details",
+    DecDown: "Download declaration form",
+    DecUp: "Upload declaration form",
     Supporting: "Upload Supporting Documents",
     Submit: "Completion Checklist",
     Submit2: "Summary of responses",
     End: "Submit report"
+};
+
+var filterNames = {
+    TwoA: "Section 2: Summary - No. of Wellcome awards",
+    TwoB: "section2: Summary - Aggregate Wellcome funding",
+    Three: "Section 3: Invention disclosures and new patent applications",
+    ThreeA: "Section 3: Invention disclosures",
+    ThreeB: "Section 3: New patent applications",
+    Four: "Section 4: Granted patents",
+    FourD: "Section 4: Granted patents",
+    Five: "Section 5: other material IP",
+    FiveD: "Section 5: other material IP",
+    Six: "Section 6: New transactions",
+    SixAD: "Section 6: New transactions",
+    SixBD: "Section 6: New transactions - Agreement uploads",
+    Seven: "Section 7: Other live agreements",
+    SevenD: "Section 7: Other live agreements",
+    Eight: "Section 8: Terminated agreements",
+    EightD: "Section 8: Terminated agreements",
+    Nine: "Section 9: Case studies",
+    NineD: "Section 9: Case studies",
+    Eleven: "Section 11: Revenue",
+    ElevenD: "Section 11: Revenue",
+    ElevenD2: "Section 11: Revenue retention",
+    Twelve: "Section 12: Equity",
+    TwelveD: "Section 12: Equity",
 };
 
 //references for question with string filter values
@@ -201,26 +230,25 @@ var columnNames = {
             "25": "Is there any industry involvement with this case?"
         }
     },
-    "10": {
+    "11": {
 
         input: {
             "4": "Wellcome grant/award number(s) (first 6 digits)",
             "7": "Organisation Reference",
-            "16": "Gross income (£)",
-            "19": "Direct Costs (£)",
-            "22": "Net income (£ - auto-calculation)",
-            "25": "Wellcome Contribution/WC (%)",
-            "31": "Wellcome Revenue Share/WR (%)",
-            "34": "Revenue Attributable to Wellcome (auto-calculation)",
-            "37": "Purchase order/invoice number (if applicable)"
+            "13": "Gross income (£)",
+            "16": "Direct Costs (£)",
+            "19": "Net income (£ - auto-calculation)",
+            "22": "Wellcome Contribution/WC (%)",
+            "28": "Wellcome Revenue Share/WR (%)",
+            "31": "Revenue Attributable to Wellcome (auto-calculation)",
+            "34": "Purchase order/invoice number (if applicable)"
         },
         textarea: {
-            "10": "Grant/award title",
-            "13": "Counterparty(s) (avoid acronyms)",
-            "28": "Justification of a lower percentage (if applicable, where 3.2 of Appendix 2 applies)"
+            "10": "Counterparty(s) (avoid acronyms)",
+            "25": "Justification of a lower percentage (if applicable, where 3.2 of Appendix 2 applies)"
         }
     },
-    "11": {
+    "12": {
 
         input: {
             "7": "Organisation Reference",
@@ -241,6 +269,7 @@ var columnNames = {
     }
 };
 
+
 //question columns with dates:
 var dateColumnsAll = {
     filedPatents: "19",
@@ -249,6 +278,7 @@ var dateColumnsAll = {
     liveAgreements: "24",
     terminated: "13",
 };
+
 
 //1) embedded data methods:
 
@@ -275,10 +305,15 @@ var getFilters = function (question, filters) {
 //2) array and object methods:
 var filterBlanks = function (selector) {
     return selector.filter(function () {
-        return jQuery(this).val().length == 1 && jQuery(this).val().charAt(0) == "£"
-            || jQuery(this).val().length == 0
+        return checkBlank(jQuery(this).val()) === "Blank"
     })
 };//get array of blank values from selector
+
+var filterBlanks2 = function (selector) {
+    return selector.filter(function () {
+        return checkNum(jQuery(this)) == "B/0"
+    })
+}
 
 //get an array of the input fields on the page excluding the buttons:
 var filterButtons = function () {
@@ -291,32 +326,61 @@ var filterButtons = function () {
 
 //filter an array of inpur and return an array with the blank fields
 var getBlank = function (array, exception) {
-    if (exception != undefined) {
-        var allBlanks = array.filter(selector => selector.val().length === 0
-            || selector != exception)
-        return allBlanks
-    } else {
-        var allBlanks = array.filter(selector => selector.val().length === 0)
-        return allBlanks
-    }
+    let Blanks = (exception != undefined) ?
+        array.filter(selector => selector.val().length === 0 || selector != exception)
+        : array.filter(selector => selector.val().length === 0);
+
+    return Blanks
+
+    /*  if (exception != undefined) {
+         var allBlanks = array.filter(selector => selector.val().length === 0
+             || selector != exception)
+         return allBlanks
+     } else {
+         var allBlanks = array.filter(selector => selector.val().length === 0)
+         return allBlanks
+     } */
 };
 
 //filter an array of inpur and return an array with the blank fields
 var getNotBlank = function (array, exception) {
-    if (exception != undefined) {
+    switch (exception) {
+        case undefined:
+            let nonBlanks1 = array.filter(selector => selector.val().length > 0);
+            return nonBlanks1;
+        default:
+            let nonBlanks2 = array.filter(selector => selector.val().length > 0 || selector == exception)
+            return nonBlanks2;
+    }
+
+    /* if (exception != undefined) {
         var nonBlanks = array.filter(selector => selector.val().length > 0
             || selector == exception)
         return nonBlanks
     } else {
         var nonBlanks = array.filter(selector => selector.val().length > 0)
         return nonBlanks
-    }
+    } */
+};
 
+var getNotBlank2 = function (array, exception) {
+    switch (exception) {
+        case undefined:
+            let nonBlanks1 = array.filter(function () {
+                return checkNum(jQuery(this)) == "Not B/0"
+            });
+            return nonBlanks1;
+        default:
+            let nonBlanks2 = array.filter(function () {
+                return checkNum(jQuery(this)) == "Not B/0" || jQuery(this) == exception
+            });
+            return nonBlanks2;
+    }
 };
 
 //filter an array of inputs and return the fields otehr than the current field specifed
 var getOthers = function (array, currentItem) {
-    let Others = array.filter(selector => selector != currentItem)
+    let Others = array.filter(selector => selector != currentItem);
     return Others
 };
 
@@ -335,19 +399,19 @@ var columnSelect = function (columnRef, parentarray) {
 // "input" constructor basedon on column select
 var inputSelect = function (selector) {
 
-    let thisinput = selector.find("input");
-    return thisinput
+    let thisInput = selector.find("input");
+    return thisInput
 };
 
 var selectSelect = function (selector) {
 
-    let thisinput = selector.find("select");
-    return thisinput
+    let thisInput = selector.find("select");
+    return thisInput
 };
 
 var textareaselect = function (selector) {
-    let thisinput = selector.find("textarea");
-    return thisinput
+    let thisInput = selector.find("textarea");
+    return thisInput
 };
 
 //theme getters
@@ -847,6 +911,107 @@ var formatWC = function (selectors) {
 };
 
 //6) theme formatting and functionality:
+//set organisation name if blank or updated:
+var setOrgName = function () {
+
+    if (listeners.organisation.length === 0 && listeners.organisationName.length > 0
+        || listeners.organisation != listeners.organisationName & listeners.organisationName.length > 0) {
+        //when the organisation contact list value is blank the organisation contact field in question has been answered
+        //or if the contact field has been answered and it is different to the one in the contact list
+
+        Qualtrics.SurveyEngine.setEmbeddedData('organisation', listeners.organisationName);
+        //set the value in the input field as the embedded data value
+    } else if (listeners.organisationName.length == 0 && listeners.organisation == 0) {
+        let placeholder = "your organisation"; //placeholder text
+        Qualtrics.SurveyEngine.setEmbeddedData('organisation', placeholder);
+
+        let defaultTitle = jQuery("#reportTitle").text().replace(placeholder, "");
+        jQuery("#reportTitle").text(defaultTitle);
+    };
+}
+
+
+
+//check if input is blank or 0
+var checkNum = function (selector) {
+
+    let status = (selector.val().replace(/,/g, "") == 0 || selector.val().replace(/,/g, "") == "")
+        ? "B/0" : "Not B/0";
+    return status
+};
+
+var checkBlank = function (value) {
+    let type = typeof value;
+    let status = "";
+
+    switch (type) {
+        case "string":
+            status = (value.replace(/[^A-Z0-9]/ig, "").length === 0)
+                ? "Blank" : "Not Blank";
+            return status;
+        case "number":
+            status = (value.replace(/,|£/g, "").length === 0)
+                ? "Blank" : "Not Blank";
+            return status;
+    };
+};
+
+
+var checkAll = function (filterList, action, skippers, breaker = "n/a") {
+    let array = Object.entries(filterList);
+    //skippers does not need to be provided:
+    let skip = (typeof skippers == "object") ? skippers : [];
+
+    let stopper = (typeof skippers == "string") ? skippers : breaker;
+
+    //help text:
+    let helper = "Please be aware the following sections are incomplete and need to be completed before you can submit:";
+    var alertText = helper;
+
+    let guidanceHTMLA = '<div class="helpText" id="check-Guidance"> <br/> <strong>';
+    let guidanceHTMLB = "</strong>";
+    var guidance = guidanceHTMLA + helper + guidanceHTMLB;//html
+
+    for (let [key, value] of array) {
+        if (key === stopper || key === array[array.length - 1][0]) {
+            //if checking all filter questions the whole array breaker does not need to be provided
+            break;
+        } else if (skip.indexOf(key) > -1) {
+            continue;
+        };
+        if (checkBlank(value) === "Blank") {
+            alertText = alertText + "\n" + filterNames[key];
+            guidance = guidance + "<br/>" + "- " + filterNames[key];
+        };
+    };
+
+    switch (action) {
+        case "alert":
+            alert(alertText);
+            break;
+        case "guidance":
+            if (jQuery("#EndOfSurvey").length < 1) {
+                let items = guidance.replace(guidanceHTMLA, "").replace(helper, "").replace(guidanceHTMLB, "");;
+                if (items.length > 0) {
+                    //if any values have bee added to the list
+
+                    guidance += '</div>';
+                    jQuery(".check").append(guidance);
+                    //add guidance txt to target div
+                };
+            }
+
+
+            break;
+        case "default":
+            //remove default help text:
+
+            guidance = guidance.replace(guidanceHTMLA, "").replace(helper, "").replace(guidanceHTMLB, "");
+            console.log("guidance text is: ", guidance);
+            return guidance
+    };
+};
+
 //menubar scroll shadow
 var menuScroll = function () {
     //add -- shadow when scrolling 
@@ -1087,27 +1252,19 @@ var nextbuttonSwitch = function (detailsBtn, nextBtn, input) {
     let selector = (input == undefined) ? jQuery("input") : input;
     //define the selector for listener
 
-    console.log("nbs selector: ", selector);
-
     if (selector.val().replace(/,/g, "") > 0) {
         //use replace() to extract commas from cleave
-
-        console.log("nbs: details");
 
         // when filter is above 0 replace button text
         //with details question
         jQuery(nb).val(detailsBtn);
-
-    }
-
-    else {
-        console.log("nbs: Next");
+    } else {
         jQuery(nb).val(nextBtn);
     }
 };//basic
 
 var clickSwitch = function (buttons, wrapperID, optionindex) {
-    //butons is an array: [next button text, details button text]
+    //buttons is an array: [next button text, details button text]
     //option index is the option index (1 based) of the trigger question e.g.
     //yes (1)
     //maybe (2)
@@ -1120,7 +1277,7 @@ var clickSwitch = function (buttons, wrapperID, optionindex) {
             //if yes is selected
 
             nextbuttonDefault(sections[buttons[1]])
-            //update nexttoon to "details"
+            //update next button to "details"
         } else {
             nextbuttonDefault(sections[buttons[0]])
             //otherwise set to "next"
@@ -1130,15 +1287,6 @@ var clickSwitch = function (buttons, wrapperID, optionindex) {
 
 var loadSwitch = function (direction, buttoninfo, filterArray) {
 
-    //define the function to run depending on direction
-    switch (direction) {
-        case 'next':
-            var action = nextbuttonDefault;
-            break;
-        case 'back':
-            var action = prevbuttonDefault;
-            break;
-    };
 
     /* if (direction == "next") {
         action = nextbuttonDefault
@@ -1146,12 +1294,12 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
         action = prevbuttonDefault
     }; */
     //function to set filter logical
-    let setfilter = function (index) {
+    let setFilter = function (index) {
 
         if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] != "Supporting") {
             //if the current  button reference is in stringfilters
 
-            var filter = (filterArray[buttoninfo[index]].length > 0) ? true : false
+            var filter = (filterArray[buttoninfo[index]].length > 0) ? true : false;
             //do logical based on string length
 
         } else if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] == "Supporting") {
@@ -1165,152 +1313,224 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
         return filter
     };
 
+    //define the actio and order to check the 
+    //button info to run depending on direction
+    switch (direction) {
+        case 'next':
+            var action = nextbuttonDefault;
+            var checkOrder = (buttoninfo.length === 3) ? [1, 0, 2] : [0, 1];
+            break;
+        case 'back':
+            var action = prevbuttonDefault;
+            var checkOrder = (buttoninfo.length === 3) ? [0, 1, 2] : [0, 1];
+            break;
+    };
+
     if (buttoninfo.length == 2) {
         //if 2 button values have been provided
-        if (setfilter(0)) {
+        if (setFilter(checkOrder[0])) {
             //if filter value/length is greater than 0,
 
-            action(sections[buttoninfo[0]])
+            action(sections[buttoninfo[checkOrder[0]]]);
             // use the button text for the first reference
         } else {
             //otherwise
 
-            action(sections[buttoninfo[1]])
+            action(sections[buttoninfo[checkOrder[1]]]);
             //use the button text for teh second reference
         };
     } else if (buttoninfo.length == 3) {
-        if (setfilter(0)) {
+        if (setFilter(checkOrder[0])) {
             //if filter 1 value/length is greater than 0,
 
-            action(sections[buttoninfo[0]])
+            action(sections[buttoninfo[checkOrder[0]]])
             // use the button text for the first reference
-        } else if (setfilter(1)) {
+        } else if (setFilter(checkOrder[1])) {
             //otherwise if filter 2 value/length is greater than 0,
 
-            action(sections[buttoninfo[1]])
+            action(sections[buttoninfo[checkOrder[1]]])
             //use the button text for the third reference
         } else {
-            action(sections[buttoninfo[2]])
+            action(sections[buttoninfo[checkOrder[2]]])
         }
     }
 };
 
 var keyupSwitch = function (buttons) {
-
-    let i = filterButtons();
+    //on page load:
+    let i = jQuery(".ChoiceStructure input");
     //array of inputs on the page excluding the next buttons
-    console.log("i: ", i);
 
-    i.keyup(function () {
+    //set array indecies for nextbuttonSwitch function:
+    let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
+    //if more than 2 inputs on page flip buttons array so that it 
+    //can still work with loadSwitch method syntax
 
-        let I = jQuery(this);
+    let nextIndex = (buttons.length > 2) ? 0 : 1;
+    //set next index depending on the number of buttons provided
 
-        /* //set buttons array and reference indecies depending on the 
-        //amount of input on the page so they can still work with 
-        //loadSwith and nextbuttonSwitch methods
-        switch (true) {
-            case buttons.length > 2:
-                console.log("yup");
-                var Buttons = buttons.reverse();
-                var nextIndex = 0;//next will always be 0
-                var Index = i.index(I) + 1; //new 0 based index                
-                break;
-            default:
-                var Index = i.index(I);
-                var Buttons = buttons;
-                var nextIndex = 1;
-        }; */
+    let switcher = (buttons.length > 2) ? "multiple" : "default";
 
-        //define conditional variables:
-        let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
-        console.log("Index: ", Index);
+    //on keyup:
+    i.keyup(function (e) {
+        if(e.keyCode !== 13){
+           //when enter isn't pressed 
+           let I = jQuery(this);
 
-        //set array indecies for nextbuttonSwitch function:
-        let Buttons = (buttons.length > 2) ? buttons.reverse() : buttons;
-        //if more than 2 inputs on page flip buttons array so that it 
-        //can still work with loadSwitch method syntax
-
-        let nextIndex = (buttons.length > 2) ? 0 : 1;
-        //set next index depending on the number of buttons provided
-
-        let switcher = (buttons.length > 2) ? "multiple" : "default";
-        console.log("switcher: ", switcher);
-
-        // define arrays for comparison:
-        let first = i.filter(function () {
-            let actualIndex = (buttons.length> 2)? Index-1 : Index; 
-            //undo index increase if more than 3 inputs
-
-            return i.index(jQuery(this)) < actualIndex
-        });//inputs which appear before the current one
-
-        console.log("first: ", first);
-
-        let firstBlanks = first.filter(function () {
-            return jQuery(this).val().replace(/,/g, "") == 0 ||
-                jQuery(this).val().replace(/,/g, "") == ""
-        });//blank inputs whic appear before the current one
-
-        console.log("firstBlanks : ", firstBlanks);
-
-        console.log(I.val().replace(/,/g, ""));
-
-        let action = function () {
-            nextbuttonSwitch(sections[Buttons[Index]], sections[Buttons[nextIndex]], I);
+           let checkI = checkNum(I);
+   
+           //define conditional variables:
+           let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
+   
+           // define arrays for comparison:
+           let first = i.filter(function () {
+   
+               let actualIndex = (buttons.length > 2) ? Index - 1 : Index;
+               //undo index increase if more than 3 inputs
+   
+               return i.index(jQuery(this)) < actualIndex
+           });//inputs which appear before the current one
+   
+           let firstBlanks = filterBlanks2(first);
+           //blank inputs which appear before the current one
+   
+           //shorthand nextbutton switch:   
+           let action = function (details, next, field) {
+               //(parameters = Buttons lookup indecies):
+   
+               let input = (field === undefined) ? I : field;
+               //if field is not specified use current input
+   
+               nextbuttonSwitch(sections[Buttons[details]], sections[Buttons[next]], input);
+           };
+   
+           //switch case of actions:
+           switch (switcher) {
+               case "multiple":
+                   //with more than one input field on the the page
+   
+                   if (Index > 1 && firstBlanks.length == first.length) {
+                       //if this isn't the first input and all the previous inputs are blank 
+                       action(Index, nextIndex);
+   
+                   } else if (Index == 1) {
+                       //or if this is the first input
+   
+                       switch (checkI) {
+                           case "B/0":
+   
+                               let i1 = i.eq(0); //this field
+                               let others = i.not(i1); //all other fields
+   
+                               let otherBlanks = filterBlanks(others);
+                               //other non-blank/0 fields
+   
+                               if (otherBlanks.length < others.length) {
+                                   //when one of the other fields is not blank/0
+   
+                                   //get the next non-blank field:
+                                   let nB = getNotBlank2(i);//other non-blanks
+   
+                                   let InB = others.index(nB.eq(0)) + 2;
+                                   //index of next non-blank field, adjusted to grab key 
+                                   //from buttons array
+   
+                                   action(InB, nextIndex, nB.eq(0));
+                                   //run action on next blank field instead of this one
+                               } else {
+                                   action(Index, nextIndex);
+                               }
+                               break;
+                           default:
+   
+                               action(Index, nextIndex);
+                       };
+                   };
+                   break;
+               default:
+                   action(Index, nextIndex);
+           };
         };
-
-        //switch case of actions:
-        switch (switcher) {
-            case "multiple":
-                //with more than one input field on the the page
-
-                if (Index > 1 && firstBlanks.length == first.length) {
-                    //if this isn't the first input and all the previous inputs are blank 
-                    console.log("2nd input");
-                    action();
-
-                } else if (Index == 1) {
-                    //or if this is the first input
-                    console.log("first input");
-                    action();
-                };
-                break;
-            default:
-                //with only one input field on the page
-
-                console.log("first input");
-                action();
-        };
-
-        /* if (buttons.length > 2) {
-            //
-            if (Index > 1 && firstBlanks.length == first.length) {
-                //if this isn't the dirst input and all the previous inputs are blank 
-                console.log("2nd input");
-                action();
-
-            } else if (Index == 1) {
-                //or if this is the first input
-                console.log("first input");
-                action();
-            };
-        } else {
-            console.log("default");
-            action();
-        }
-
-        if (Index > 1 && firstBlanks.length == first.length) {
-            //if this isn't the dirst input and all the previous inputs are blank 
-            console.log("2nd input");
-            action();
-
-        } else if (Index <= 1) {
-            //or if this is the first input
-            console.log("first input");
-            action();
-        }; */
     })
 };
+
+var checkOnly = function () {
+
+    jQuery("#NextButton").click(function () {
+
+        if (jQuery("#EndOfSurvey").length < 1) {
+            //when not the end of survey summary page
+
+            let check = checkAll(filterList, "default", ["SixBD", "ElevenD2"]);
+            //get all blank questions
+
+            if (check.length > 0) {
+                //if any questions are blank
+
+
+                Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
+                console.log("nav off: ", listeners.hotkeyNavigate)
+                question.disableNextButton();
+
+                //alert on load:
+                checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
+
+                let hovertext = "Please complete all sections of this report in order to continue";
+                //add help text on hover:
+                hoverTextAdd(jQuery("#Buttons"), hovertext, [jQuery("#PreviousButton")]);
+            } else {
+
+                if (listeners.hotkeyNavigate == "Stop") {
+                    Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+                };
+            };
+        } else {
+            Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+        };
+    })
+};
+
+//disable next
+var nextCheck = function (filterList, question, blockNext, breaker) {
+
+    if (jQuery("#EndOfSurvey").length < 1) {
+        //when not the end of survey summary page
+
+        let check = checkAll(filterList, "default", ["SixBD", "ElevenD2"], breaker);
+        //get all blank questions
+
+        if (check.length > 0 && blockNext === true) {
+            //if any questions are blank
+
+
+            Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
+            console.log("nav off: ", listeners.hotkeyNavigate)
+            question.disableNextButton();
+
+            //alert on load:
+            checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
+
+            let hovertext = "Please complete all sections of this report in order to continue";
+            //add help text on hover:
+            hoverTextAdd(jQuery("#Buttons"), hovertext, [jQuery("#PreviousButton")]);
+        } else {
+
+            if (listeners.hotkeyNavigate == "Stop") {
+                Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+            };
+
+            console.log("hotKeyNav: ", listeners.hotkeyNavigate);
+            question.enableNextButton();
+        };
+    } else {
+        Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+    };
+
+    jQuery("#PreviousButton").click(function () {
+        console.log("butotn clicked set to go")
+        Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+    });
+}
 
 //---------------copy button
 var copyButton = function (buttonSelector, copySelector) {
@@ -1326,9 +1546,9 @@ var copyButton = function (buttonSelector, copySelector) {
 
         document.execCommand("copy");
 
-        alert("our contact e-mail has been copied")
+        alert("our contact e-mail has been copied");
 
-        console.log(copyText.value)
+        console.log(copyText.value);
     })
 };
 
@@ -1464,111 +1684,84 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
 
 //3) nav & shortcuts:
 //navigation hot keys
+
 var hotkeyNavigate = function (question) {
+    //question = this
+    let pressedKeys = [];//track pressed keys (and order pressed)
+    let input_fields = jQuery(".ChoiceStructure input");//select input fields
+    //alert text:
+    let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
 
-    //define key variales
-    var pressedKeys = [];
-    //array to track pressed keys (and order pressed)
+    //alert when next button is clicked:
+    jQuery("#NextButton").one("click", function () {
+        console.log("next button clicked");
 
-    var input_fields = jQuery(".ChoiceStructure input");
-    //select input fields
-
-    const all_inputs = input_fields.length;
-    //number of inputs
-
+        switch (jQuery(".matrixQText").length) {
+            case 0: //for non-detail questions
+                let blank_inputs = filterBlanks(input_fields).length;
+                if (blank_inputs > 0 && jQuery(".guidancePage").length < 1) {
+                    pressedKeys = [];
+                    alert(warning);//give completion warning
+                };
+                break;
+        };
+    });
+    //shortcuts:
     jQuery(document) //applies to whole page
         .keydown(function (e) {
             pressedKeys.push(e.keyCode);
             //add the pressed key to pressedKeys array
-
-            if (all_inputs < 5) {
-                //when there are under 5 inputs on the page:
-
-                if (all_inputs > 1) {
-                    //if there is 1-4 inputs:
-
-                    var blank_inputs = filterBlanks(input_fields).length
-                    //get the number of blanks as a variable
-
-                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && blank_inputs == 0 && jQuery("#NextButton").length) {
-                        //if CTRL + ALT + N are pressed in sequence and there are no blank questions & the next button is present:
-
-                        question.clickNextButton()
+            console.log(pressedKeys);
+            switch (jQuery(".matrixQText").length) { //for non-detail questions
+                case 0:
+                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length && listeners.hotkeyNavigate == "Go") {
+                        //if CTRL + ALT + N are pressed in sequence and the next button is present:
+                        console.log("next button triggered");
+                        pressedKeys = [];
+                        jQuery("#NextButton").trigger("click");// click the next button
                         //move to next question
-
-                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && blank_inputs == 0 && jQuery("#PreviousButton").length) {
-                        //if CTRL + ALT + P are pressed in sequence and there are no blank questions & the previous is present:
-                        question.clickPreviousButton()
+                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
+                        //if CTRL + ALT + P are pressed in sequence and the previous button is present:    
+                        pressedKeys = [];
+                        question.clickPreviousButton();
                         //move to previous question
-                    }
+                    };
+                    break;
 
-                } else {
-                    //if there is only 1 question:
-
-                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && input_fields.val() != "" && jQuery("#NextButton").length) {
-                        //if CTRL + ALT + N are pressed in sequence and thequestions is not blank & the next button is present:
-
-                        question.clickNextButton()
+                default:
+                    if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
+                        //if CTRL + ALT + N are pressed in sequence and the next button is present:
+                        pressedKeys = [];
+                        console.log("click next button api method")
+                        question.clickNextButton();
                         //move to next question
-
-                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && input_fields.val() != "" && jQuery("#PreviousButton").length) {
-                        //if CTRL + ALT + P are pressed in sequence and there are no blank questions & the previous is present:
-
-                        question.clickPreviousButton()
+                    } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
+                        //if CTRL + ALT + P are pressed in sequence and the previous button is present: 
+                        pressedKeys = [];
+                        question.clickPreviousButton();
                         //move to previous question
-                    }
-
-                }
-            } else {
-                //otherwise if there are more than 4 questions on the page:
-                if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
-                    //if CTRL + ALT + N are pressed in sequence & the next button is present:
-
-                    question.clickNextButton()
-                    //move to next question
-                } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
-                    //if CTRL + ALT + P are pressed in sequence  & the previous is present:
-
-                    question.clickPreviousButton()
-                    //move to previous question
-                }
+                    };
             }
-
         })
         .keyup(function () {
-
             pressedKeys = [];
-        })
+            console.log("pressed: ", pressedKeys.length)
+        });
+    //press enter to submit on filter questions:
+    input_fields.keyup(function (e) {
+        if (jQuery(".matrixQText").length < 1 && e.keyCode == 13) {
+            //if there is not matrix question and ENTER is oressed
+            pressedKeys = [];
+            jQuery("#NextButton").trigger("click");//click the next button
+        };
+    });
+};
 
-    input_fields //applies to input fields
-        .keyup(function (e) {
-
-            if (all_inputs > 1 && all_inputs < 5) {
-                //hwen there is more than one input on the page
-
-                var blank_inputs = filterBlanks(input_fields).length
-                //get the number of blank inouts 
-
-                if (e.keyCode == 13 && blank_inputs == 0) {
-                    //if Enter is pressed and all fields have completed
-
-                    question.clickNextButton()
-                    //got to next question
-                } else if (e.keyCode == 13 && blank_inputs > 1) {
-                    alert("please complete all questions on this page")
-                }
-
-            } else {
-                //if just one input on the page:
-                if (e.keyCode == 13 && input_fields.val() != "") {
-                    //when enter is pressed and the input field is completed
-                    question.clickNextButton()
-                    //go to next question
-                } else if (e.keyCode == 13 && input_fields.val() == "") {
-                    alert("please complete this question before moving on")
-                }
-            }
-        })
+//enable hotkey navigate
+var navReset = function () {
+    console.log("reset complete")
+    Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
+    console.log("nav state: ", listeners.hotkeyNavigate)
 };
 
 //skip last check reminder - declaration download page
@@ -1632,6 +1825,37 @@ var loadDatePicker = function (question) {
 };
 
 //2) Hover text
+
+//basic hover text builder function:
+var hoverTextAdd = function (selector, helpText, hiders = false) {
+    selector.hover(function () {
+        // Hover over code
+        jQuery('<p class="tooltip"></p>')
+            .text(helpText)
+            .appendTo('body')
+            .fadeIn('slow');
+
+    }, function () {
+        // Hover out code
+        jQuery('.tooltip').remove();
+
+    }).mousemove(function (e) {
+        var mousex = e.pageX + 5; //Get X coordinates
+        var mousey = e.pageY + 2; //Get Y coordinates
+        jQuery('.tooltip')
+            .css({ top: mousey, left: mousex })
+    });
+
+    if (hiders !== false) {
+        for (let hider of hiders) {
+            hider.hover(function () {
+                jQuery('.tooltip').remove();
+            })
+        }
+    };
+};
+
+//set hover text on matrix tables:
 var setHoverText = function (question, filterlist) {
     //define the master arrays for each question type if present
     let labelarray = columnNames[question];
@@ -1648,39 +1872,15 @@ var setHoverText = function (question, filterlist) {
         var allSelects = Object.entries(labelarray["select"])
     };//<select>
 
-    //define hover text builder function:
-    function hoverTextAdd(input, helpText) {
-        input.hover(function () {
-            // Hover over code
-            jQuery('<p class="tooltip"></p>')
-                .text(helpText)
-                .appendTo('body')
-                .fadeIn('slow');
-
-        }, function () {
-            // Hover out code
-            jQuery('.tooltip').remove();
-
-        }).mousemove(function (e) {
-            var mousex = e.pageX + 5; //Get X coordinates
-            var mousey = e.pageY + 2; //Get Y coordinates
-            jQuery('.tooltip')
-                .css({ top: mousey, left: mousex })
-        });
-    };
-
     //function to set hovertext and build selector
-    function setHoverText(column_nth_index, hover_text, row) {
-
+    let setHoverText = function (column_nth_index, hover_text, row) {
         //define selector
         let thisColumn = columnSelect(column_nth_index);
         let thisInput = row.find(thisColumn);
         //select current child using nth key
 
         //get the hover text
-
         hoverTextAdd(thisInput, hover_text);
-        //apply the function
     };
 
     //select the rows
@@ -1688,46 +1888,33 @@ var setHoverText = function (question, filterlist) {
 
     //apply hover text 
     getTRow.each(function () {
-
-
         var thisHrow = jQuery(this);
 
-
         let filter = getFilters(question, filterlist);
-
 
         if (thisHrow.index() > 2 && filter > 3) {
             //show for rows 3 and over
 
             if (allInputs !== undefined) {
-
                 //set hover text for each question type using keys
                 for (let [key, value] of allInputs) {
-
-                    setHoverText(key, value, thisHrow)
+                    setHoverText(key, value, thisHrow);
                     //run for inputs
                 };
-            };
-            //inputs
+            };//inputs
             if (allSelects !== undefined) {
-
                 for (let [key, value] of allSelects) {
-
-                    setHoverText(key, value, thisHrow)
+                    setHoverText(key, value, thisHrow);
                     //run for selects
                 };
-            }
-            //selects
-
+            };//selects
             if (allTextareas !== undefined) {
 
                 for (let [key, value] of allTextareas) {
-
-                    setHoverText(key, value, thisHrow)
+                    setHoverText(key, value, thisHrow);
                     //run for textareas
-                }
-            }
-            //textareas
+                };
+            };//textareas
         }
     });
 };
@@ -1742,37 +1929,30 @@ var loadMenu = function (progressBartracker) {
     var menu = jQuery("#navOuter");
     var menuList = jQuery(".navTable");
     //elements to be blurred as array:
-    var blurElements = [
+    let blurElements = [
         jQuery("#SkinContent"),//page
         jQuery("#reportTitle"),//title
         menuButton//logo
     ];
 
     //functions to open and close the menu:
-
     let showMenu = function () {
-
         //blur logo, page and title:
         for (let element of blurElements) {
             element.css("filter", "blur(3px)");
         };
-
-        //show menu animations
+        //show menu animations:
         menu.css("display", "inline-block").fadeIn("100");//make menu visible
         menu.animate({ height: '321px', display: 'inline-block' }, 250);//open menu container
         menuList.show(200);//show menu items
-
-
         menuSwitch = "on";//set switch status to on
     };
-
     let hideMenu = function () {
 
         //remove blur from logo, page and title:
         for (let element of blurElements) {
             element.css("filter", "none");
         };
-
         //close menu animations:
         menuList.hide();//hide menu items
         menu.animate({ height: '0px' }, 100);//close menu container
@@ -1783,7 +1963,8 @@ var loadMenu = function (progressBartracker) {
     menuButton.on({
         click: function () {
 
-            if (menuSwitch == "off" && jQuery("#EndOfSurvey").length == 0 & jQuery(".ResponseSummary").length == 0) {
+            if (menuSwitch == "off" && jQuery("#EndOfSurvey").length == 0
+                && jQuery(".ResponseSummary").length == 0) {
                 //doesn't load on response summary and end of survey pages
 
                 showMenu();//load the menu
@@ -1832,12 +2013,12 @@ var loadMenu = function (progressBartracker) {
     };
 
     let onPosition = function () {
-        //make toggle track dark green
-        toggleArea.css("background-color", getColour("secondary"))
+        //make toggle track dark green 
+        toggleArea.css("background-color", getColour("secondary"));
 
         //move toggle switcher to left
         toggleSwitch.css("background-color", getColour("secondary"));
-        toggleSwitch.css("left", "16px")
+        toggleSwitch.css("left", "16px");
     };
 
 
@@ -1845,7 +2026,7 @@ var loadMenu = function (progressBartracker) {
     if (pbIO == "on") {
         //if progress bar was last set to visible
 
-        progressBar.show()//show the progressbar
+        progressBar.show();//show the progressbar
         onPosition(); //set toggle to "on" position
 
     } else if (pbIO == "off") {
@@ -1856,35 +2037,23 @@ var loadMenu = function (progressBartracker) {
     };
 
     //on click
-    ptoggle.on({
-
-        click: function () {
-
-            if (pbIO == "on") {
-
-                progressBar.hide(100);
-                //hide the progress bar
-
-                offPosition();//set toggle to "off" position
-
-                pbIO = "off";
-                Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
-                //send value to embedded data 
-
-            } else if (pbIO == "off") {
-
-                progressBar.show(200);
-                //show the progress bar
-
-                onPosition(); //set toggle to "on" position
-
-                pbIO = "on";
-                Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
-                //send value to embedded data 
-            }
+    ptoggle.click(function () {
+        if (pbIO == "on") {
+            progressBar.hide(100);
+            //hide the progress bar
+            offPosition();//set toggle to "off" position
+            pbIO = "off";
+            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
+            //send value to embedded data 
+        } else if (pbIO == "off") {
+            progressBar.show(200);
+            //show the progress bar
+            onPosition(); //set toggle to "on" position
+            pbIO = "on";
+            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
+            //send value to embedded data 
         }
     });
-
 };
 
 //--------------------Section X: Question specific
@@ -1905,11 +2074,11 @@ var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
             if (npfSelect.val() == 2) {
                 //if F is selected add 1 to thr olling tally
 
-                var fTally = 1
+                var fTally = 1;
             } else {
                 //otherwise add nothing
 
-                var fTally = 0
+                var fTally = 0;
             };
             //rolling calcs:
             fCount += fTally,
@@ -1918,11 +2087,11 @@ var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
             if (fRolling > 0) {
                 //if 1 or more Fs are selected
 
-                nextbuttonDefault(sections[detailsRef])
+                nextbuttonDefault(sections[detailsRef]);
                 //set button text to "details"
             } else {
                 //otherwise keep as "next"
-                nextbuttonDefault(sections[nextRef])
+                nextbuttonDefault(sections[nextRef]);
             }
         })
     });
@@ -1939,8 +2108,11 @@ var carry3b = function (answerlist) {
 
     allRows.each(function () {
 
-        thisRow = jQuery(this);
-        rowindex = jQuery(this).index();
+        let thisRow = jQuery(this);
+        let rowindex = thisRow.index();
+
+        let header = jQuery(this).find("th strong");
+        console.log("header text: ", header.text())
 
         //define values for row
         var aNo = awardNo[rowindex];
@@ -1959,7 +2131,7 @@ var carry3b = function (answerlist) {
 
             //define the fields + input selector
             var awardN = thisRow.find("td:nth-child(4)");
-            var awardNoIpt = awardN.find("textarea")
+            var awardNoIpt = awardN.find("textarea");
 
             var uniqueI = thisRow.find("td:nth-child(7)");
             var uniqueIDIpt = uniqueI.find("input");
@@ -1979,6 +2151,10 @@ var carry3b = function (answerlist) {
             inventorsIpt.val(nIn);
             autofillCSS(inventorsIpt);
             //named inventors
+        } else if (header.text().replace(/ /g, "") == "") {
+            let rowNumber = rowindex + 1;
+            let header = "<strong>" + rowNumber + "</strong>";
+            thisRow.find("th").append(header);
         }
     });
 };
@@ -2008,7 +2184,7 @@ var format6 = function (formatting_columnRefs) {
         //selet label for higlighting
 
         //comments box textarea:
-        var more_detail = inputs6.find(columnSelect("moreInfo", formatting_columnRefs))
+        var more_detail = inputs6.find(columnSelect("moreInfo", formatting_columnRefs));
         //table column
         var mdTE = textareaselect(more_detail);
         //textareas
@@ -2024,7 +2200,7 @@ var format6 = function (formatting_columnRefs) {
                 if (mdTE.val().length === 0) {
                     //when the comments box is also blank
 
-                    highLight(chL, mdTE)
+                    highLight(chL, mdTE);
                     //highlight fields
 
                 } else {
@@ -2075,7 +2251,7 @@ var format6 = function (formatting_columnRefs) {
                 if (noInfobox.val().length === 0) {
                     //when the comments box is also blank
 
-                    highLight(hasAgreement, noInfobox)
+                    highLight(hasAgreement, noInfobox);
                     //highlight fields
 
                 } else {
@@ -2099,7 +2275,7 @@ var format6 = function (formatting_columnRefs) {
         };
 
         //formatting on load:
-        formathasAgreement()//helpers
+        formathasAgreement();//helpers
         clearFormatHA();//resetter
 
         //DO you have the executed agreement? dropdown:
@@ -2148,12 +2324,12 @@ var buttons6a = function (next, details) {
             if (aSelect.val() == 1) {
                 //if yes is selected
 
-                var yTally = 1
+                var yTally = 1;
                 //add 1 to the rollling count
             } else {
                 //otherwise
 
-                var yTally = 0
+                var yTally = 0;
                 //add nothing
             };
 
@@ -2164,7 +2340,7 @@ var buttons6a = function (next, details) {
             if (yesRolling > 0) {
                 //if yes is selected 1 or more times
 
-                nextbuttonDefault(sections[details])
+                nextbuttonDefault(sections[details]);
                 //next button changes to "upload supporting documents"
             } else {
                 //otherwise
@@ -2177,7 +2353,8 @@ var buttons6a = function (next, details) {
 };
 //4) 6 new transactions upload carry forward
 var carry6 = function (answerlist) {
-    //define array within object as a variable for each answer field
+    //define array within object as a variable for each answer field,
+    //replace any line breaks with a space
     var uniqueID = answerlist["uniqueID"];
     var counterParty = answerlist["counterParty"];
     var effectiveDate = answerlist["effectiveDate"];
@@ -2203,9 +2380,9 @@ var carry6 = function (answerlist) {
                 var thisDate = thisQContainer.find(".effectiveDate"); //effective date
 
                 //append the piped text value from the map to target <span>:
-                thisRef.append(uniqueID[ID] + "'"); //Organsation reference
-                thisParty.append(counterParty[ID] + "'"); //Counterparty
-                thisDate.append(effectiveDate[ID] + ")"); //effective date
+                thisRef.append(uniqueID[ID].replace(/\r?\n|\r/g, "") + "'"); //Organsation reference
+                thisParty.append(counterParty[ID].replace(/(\r\n|\n|\r)/gm, "") + "'"); //Counterparty
+                thisDate.append(effectiveDate[ID].replace(/\r?\n|\r/g, "") + ")"); //effective date
             }
         }
     })
@@ -2553,9 +2730,8 @@ var revenueCalc = function (parentarray) {
                     Qualtrics.SurveyEngine.setEmbeddedData('tRevDisplay', grossrolling);
 
                     //next button switch
-                    let next = "11. Equity"
-                    let details = "Revenue Retention"
-
+                    let next = sections.TwelveD
+                    let details = sections.ElevenD2
 
                     nextbuttonDefault(next);
 

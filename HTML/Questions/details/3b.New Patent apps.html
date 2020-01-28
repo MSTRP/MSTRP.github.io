@@ -1,13 +1,36 @@
-<div class="question_Text">
-    <div>Please enter the number of new patent applications filed between ${e://Field/Reporting%20period}
-        ${e://Field/Previous%20year}​.
-    </div>
-    <div>
-        <span class="helpText">(If none enter "0")</span>
-    </div>
+<div class="question_Text"><span class="questionTitles">3. Details of new patent applications filed</span>
+    <div class="matrixQText">Please enter the patent application number and date below, for the new patent applications
+        that have been filed between ${e://Field/Reporting%20period} ${e://Field/Previous%20year}:&nbsp;</div>
+
+    <ul>
+        <li class="helpText">One patent application per line</li>
+        <li class="helpText">If any fields are highlighted yellow, the information has been pulled from the previous
+            question - please check they are&nbsp;correct</li>
+        <li class="helpText">${e://Field/essay%20box%20help}</li>
+    </ul>
 </div>
 <style type="text/css">
-    .Skin .TE .SL .InputText {
+    .Skin .SBS .Essay {
         width: 300px;
+    }
+
+    .Skin .SBS .Medium {
+        width: 170px;
+    }
+
+    .Skin .SBS .Short {
+        width: 90px;
+    }
+
+    .Skin .SBS .Essay {
+        width: 300px;
+    }
+
+    .Skin .SBS .Medium {
+        width: 130px;
+    }
+
+    .Skin .SBS .Long {
+        width: 170px;
     }
 </style>

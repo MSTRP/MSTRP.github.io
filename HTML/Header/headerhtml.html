@@ -5,7 +5,7 @@ ${e://Field/Header}
     src="https://rawcdn.githack.com/nosir/cleave.js/d1ce937107de54ddbc50c3b6741fac82a56325df/dist/cleave.js"></script>
 <!-- DatePicker Script-->
 <script type="text/javascript"
-    src="https://raw.githack.com/MSTRP/IPReport/master/Apps and plugins/foopicker.js"></script>
+    src="https://raw.githack.com/MSTRP/MSTRP.github.io/Testing/Apps and plugins/foopicker.js"></script>
 <!--IP Library-->
 <!-- <script type="text/javascript"
     src="https://raw.githack.com/MSTRP/MSTRP.github.io/master/JS/Library/IPlibrary.js"></script> -->
@@ -18,6 +18,8 @@ ${e://Field/Header}
 <script type="text/javascript">
     //-----------data references
     var qFilters = {
+        TwoA: "${q://QID4/ChoiceTextEntryValue}",
+        TwoB: "${q://QID5/ChoiceTextEntryValue}",
         ThreeA: "${q://QID8/ChoiceTextEntryValue}",
         ThreeB: "${q://QID100/ChoiceTextEntryValue}",
         FourD: "${q://QID11/ChoiceTextEntryValue}",
@@ -67,8 +69,12 @@ ${e://Field/Header}
         navlabels()
 
 
+
         //--hide tooltip if present
         jQuery('.tooltip').css("display", "none");
+
+        //-------enable hotkey Navigation if disabled:
+        navReset();
 
         //---------set org name for generic links:
         setOrgName();
