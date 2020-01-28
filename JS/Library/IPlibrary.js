@@ -1007,7 +1007,6 @@ var checkAll = function (filterList, action, skippers, breaker = "n/a") {
             //remove default help text:
 
             guidance = guidance.replace(guidanceHTMLA, "").replace(helper, "").replace(guidanceHTMLB, "");
-            console.log("guidance text is: ", guidance);
             return guidance
     };
 };
@@ -1469,7 +1468,6 @@ var checkOnly = function () {
 
 
                 Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
-                console.log("nav off: ", listeners.hotkeyNavigate)
                 question.disableNextButton();
 
                 //alert on load:
@@ -1501,10 +1499,7 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
 
         if (check.length > 0 && blockNext === true) {
             //if any questions are blank
-
-
             Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
-            console.log("nav off: ", listeners.hotkeyNavigate)
             question.disableNextButton();
 
             //alert on load:
@@ -1518,8 +1513,6 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
             if (listeners.hotkeyNavigate == "Stop") {
                 Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
             };
-
-            console.log("hotKeyNav: ", listeners.hotkeyNavigate);
             question.enableNextButton();
         };
     } else {
@@ -1527,7 +1520,6 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
     };
 
     jQuery("#PreviousButton").click(function () {
-        console.log("butotn clicked set to go")
         Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
     });
 }
@@ -1537,7 +1529,6 @@ var copyButton = function (buttonSelector, copySelector) {
     //console.log("buttonSelector #: ", buttonSelector.lastIndexOf(""));
 
     jQuery(buttonSelector).click(function () {
-
         let copyText =
             (copySelector.lastIndexOf("#") > buttonSelector.lastIndexOf("."))
                 ? document.getElementById(copySelector.replace(/#/g, "")) : document.getElementsByClassName(copySelector.replace(/./g, ""));
@@ -1694,8 +1685,6 @@ var hotkeyNavigate = function (question) {
 
     //alert when next button is clicked:
     jQuery("#NextButton").one("click", function () {
-        console.log("next button clicked");
-
         switch (jQuery(".matrixQText").length) {
             case 0: //for non-detail questions
                 let blank_inputs = filterBlanks(input_fields).length;
@@ -1711,12 +1700,10 @@ var hotkeyNavigate = function (question) {
         .keydown(function (e) {
             pressedKeys.push(e.keyCode);
             //add the pressed key to pressedKeys array
-            console.log(pressedKeys);
             switch (jQuery(".matrixQText").length) { //for non-detail questions
                 case 0:
                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length && listeners.hotkeyNavigate == "Go") {
                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
-                        console.log("next button triggered");
                         pressedKeys = [];
                         jQuery("#NextButton").trigger("click");// click the next button
                         //move to next question
@@ -1732,7 +1719,6 @@ var hotkeyNavigate = function (question) {
                     if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 78 && jQuery("#NextButton").length) {
                         //if CTRL + ALT + N are pressed in sequence and the next button is present:
                         pressedKeys = [];
-                        console.log("click next button api method")
                         question.clickNextButton();
                         //move to next question
                     } else if ((pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 80) && jQuery("#PreviousButton").length) {
@@ -1745,7 +1731,6 @@ var hotkeyNavigate = function (question) {
         })
         .keyup(function () {
             pressedKeys = [];
-            console.log("pressed: ", pressedKeys.length)
         });
     //press enter to submit on filter questions:
     input_fields.keyup(function (e) {
@@ -1759,9 +1744,7 @@ var hotkeyNavigate = function (question) {
 
 //enable hotkey navigate
 var navReset = function () {
-    console.log("reset complete")
     Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Go");
-    console.log("nav state: ", listeners.hotkeyNavigate)
 };
 
 //skip last check reminder - declaration download page
@@ -2112,7 +2095,6 @@ var carry3b = function (answerlist) {
         let rowindex = thisRow.index();
 
         let header = jQuery(this).find("th strong");
-        console.log("header text: ", header.text())
 
         //define values for row
         var aNo = awardNo[rowindex];
