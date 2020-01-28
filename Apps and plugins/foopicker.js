@@ -37,7 +37,7 @@ var FooPicker = (function () {
       if (pickerField) {
         var datepicker = pickerField.getBoundingClientRect();
         var left = datepicker.left;
-        var top = datepicker.top - datepicker.height - 155;
+        var top = datepicker.top - datepicker.height - 185;
         console.log("top: ", top);
         if (pickerDiv) {
           pickerDiv.style.position = 'fixed';
