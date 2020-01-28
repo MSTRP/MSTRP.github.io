@@ -29,18 +29,18 @@ var FooPicker = (function () {
     }
 
     // Show date picker on click
-    _self.showPicker = function() {
+    _self.showPicker = function () {
       _self.buildPicker();
       var pickerField = document.getElementById(_id);
       var pickerDiv = document.getElementById('foopicker-' + _id);
       if (pickerField) {
         var datepicker = pickerField.getBoundingClientRect();
         var left = datepicker.left;
-        var top = datepicker.top + datepicker.height - 5;
-        console.log("top: ", top );
+        var top = datepicker.top - datepicker.height - 5;
+        console.log("top: ", top);
         if (pickerDiv) {
           pickerDiv.style.position = 'fixed';
-          pickerDiv.style.top = top  +  'px';
+          pickerDiv.style.top = top - pickerDiv.style.height + 'px';
           console.log("field bottom: ", datepicker.top, "foo bottom: ", top);
           pickerDiv.style.left = left + 'px';
           pickerDiv.style.zIndex = '99999';
@@ -49,8 +49,8 @@ var FooPicker = (function () {
     };
 
     // Hide date picker
-    _self.hidePicker = function(event) {
-      setTimeout(function() {
+    _self.hidePicker = function (event) {
+      setTimeout(function () {
         var pickerDiv, pickerField;
         if (!_self.monthChange && !_self.isPickerClicked) {
           _self.removeListeners(_id);
@@ -71,7 +71,7 @@ var FooPicker = (function () {
     };
 
     // Select date
-    _self.selectDate = function(event) {
+    _self.selectDate = function (event) {
       _self.monthChange = false;
       var el = document.getElementById(event.target.id);
       var pickerField = document.getElementById(_id);
@@ -85,7 +85,7 @@ var FooPicker = (function () {
         if (pickerField) {
           pickerField.value = date;
           pickerField.focus();
-          setTimeout(function() {
+          setTimeout(function () {
             pickerField.blur();
           }, 100);
         }
@@ -95,7 +95,7 @@ var FooPicker = (function () {
       _self.hidePicker();
     };
 
-    _self.removeListeners = function(id) {
+    _self.removeListeners = function (id) {
       var picker = document.getElementById(id);
       if (picker) {
         var el = picker.getElementsByClassName('foopicker__day');
@@ -114,7 +114,7 @@ var FooPicker = (function () {
       htmlRoot.removeEventListener('click', _self.handleDocumentClick, false);
     };
 
-    _self.changeMonth = function(event) {
+    _self.changeMonth = function (event) {
       var className = event.target.className, positive = false;
       if (className.indexOf('foopicker__arrow--next') !== -1) {
         positive = true;
@@ -123,12 +123,12 @@ var FooPicker = (function () {
       _self.updateCalendar(month);
     };
 
-    _self.updateCalendar = function(newMonth, newYear) {
+    _self.updateCalendar = function (newMonth, newYear) {
       _self.monthChange = true;
       var day = _self.currentDate;
       var year = newYear || _self.currentYear;
       _self.currentMonth = newMonth;
-      Calendar.date = new Date(year, newMonth , day);
+      Calendar.date = new Date(year, newMonth, day);
       var pickerDiv = document.getElementById('foopicker-' + _id);
       if (pickerDiv) {
         var datepicker = pickerDiv.querySelector('.foopicker');
@@ -139,7 +139,7 @@ var FooPicker = (function () {
       }
     };
 
-    _self.buildPicker = function() {
+    _self.buildPicker = function () {
       var pickerDiv = document.getElementById('foopicker-' + _id);
       var pickerField = document.getElementById(_id);
       if (pickerDiv && !hasPicker(pickerDiv)) {
@@ -178,20 +178,20 @@ var FooPicker = (function () {
         addEvent(pickerDiv, 'click', _self.handlePickerClick, false);
       }
       document.addEventListener('keydown', keyDownListener, false);
-      
+
       // Close the date picker if clicked anywhere outside the picker element
       var htmlRoot = document.getElementsByTagName('html')[0];
       addEvent(htmlRoot, 'click', _self.handleDocumentClick, false);
     };
 
-    _self.handlePickerClick = function(event) {
+    _self.handlePickerClick = function (event) {
       event.stopPropagation();
       if (!_self.isDateClicked) {
         _self.isPickerClicked = true;
-      }   
+      }
     };
 
-    _self.handleDocumentClick = function(event) {
+    _self.handleDocumentClick = function (event) {
       var pickerField = document.getElementById(_self.options.id);
       var pickerDiv = document.getElementById('foopicker-' + _self.options.id);
       _self.isPickerClicked = false;
@@ -201,14 +201,14 @@ var FooPicker = (function () {
       }
     };
 
-    _self.buildTemplate = function() {
+    _self.buildTemplate = function () {
       var pickerDiv = document.createElement('div');
       pickerDiv.id = 'foopicker-' + _id;
       document.body.appendChild(pickerDiv);
       addListeners(_self);
     };
 
-    _self.destroy = function() {
+    _self.destroy = function () {
       var pickerDiv = document.getElementById('foopicker-' + _id);
       if (pickerDiv) {
         document.body.removeChild(pickerDiv);
@@ -227,7 +227,7 @@ var FooPicker = (function () {
   function format(instance, day, month, year) {
     day = day < 10 ? '0' + day : day;
     month = month < 10 ? '0' + month : month;
-    switch(instance.options.dateFormat) {
+    switch (instance.options.dateFormat) {
       case 'dd-MM-yyyy':
         return day + '-' + month + '-' + year;
       case 'dd-MMM-yyyy':
@@ -266,7 +266,7 @@ var FooPicker = (function () {
   // Date parser
   function parse(instance, value) {
     var date, dateArray;
-    switch(instance.options.dateFormat) {
+    switch (instance.options.dateFormat) {
       case 'dd-MM-yyyy':
         dateArray = value.split('-');
         date = new Date(parseInt(dateArray[2]), parseInt(dateArray[1]) - 1, parseInt(dateArray[0]));
@@ -351,36 +351,36 @@ var FooPicker = (function () {
     date: new Date(),
 
     // Get day of the week
-    day: function() {
+    day: function () {
       return this.date.getDay();
     },
 
     // Get today day
-    today: function() {
+    today: function () {
       return this.date.getDate();
     },
 
     // Get current month
-    month: function() {
+    month: function () {
       return this.date.getMonth();
     },
 
     // Get current year
-    year: function() {
+    year: function () {
       return this.date.getFullYear();
     },
 
-    getCurrentYear: function() {
+    getCurrentYear: function () {
       return new Date().getFullYear();
     },
 
-    rowPadding: function() {
+    rowPadding: function () {
       var startWeekDay = getWeekDay(1, this.month(), this.year());
       return [6, 0, 1, 2, 3, 4, 5][startWeekDay];
     },
 
     // Build calendar header
-    buildHeader: function() {
+    buildHeader: function () {
       return '<div class="foopicker__header">' +
         '<div class="foopicker__arrow foopicker__arrow--prev"></div>' +
         '<div class="foopicker__date">' + this.buildMonths() +
@@ -389,7 +389,7 @@ var FooPicker = (function () {
     },
 
     // Build months select
-    buildMonths: function() {
+    buildMonths: function () {
       var elem = '<select class="foopicker__date--month">', month = this.month();
       for (var i = 0; i < months.length; i++) {
         elem += '<option value="' + i + '"';
@@ -403,7 +403,7 @@ var FooPicker = (function () {
     },
 
     // Build years select
-    buildYears: function() {
+    buildYears: function () {
       var elem = '<select class="foopicker__date--year">', currentYear = this.getCurrentYear();
       var year = this.year();
       for (var i = year - 20; i <= currentYear + 5; i++) {
@@ -418,7 +418,7 @@ var FooPicker = (function () {
     },
 
     // Build calendar body
-    buildCalendar: function() {
+    buildCalendar: function () {
       var index;
       var daysInMonth = getDaysInMonth(this.year(), this.month());
       var template = '<div class="foopicker__calendar"><table><tr>';
@@ -449,7 +449,7 @@ var FooPicker = (function () {
     },
 
     // Header click listeners
-    addListeners: function(instance) {
+    addListeners: function (instance) {
       var id = instance.options.id;
       var pickerDiv = document.getElementById('foopicker-' + id);
       if (pickerDiv) {
@@ -484,27 +484,27 @@ var FooPicker = (function () {
       }
     },
 
-    handleMonthChange: function(instance, event) {
+    handleMonthChange: function (instance, event) {
       instance.updateCalendar(event.target.value);
     },
 
-    handleYearChange: function(instance, event) {
+    handleYearChange: function (instance, event) {
       instance.updateCalendar(instance.currentMonth, event.target.value);
     },
 
-    removeListeners: function(instance) {
+    removeListeners: function (instance) {
       var id = instance.options.id;
       var pickerDiv = document.getElementById('foopicker-' + id);
       if (pickerDiv) {
         var monthSelect = pickerDiv.getElementsByClassName('foopicker__date--month')[0];
         var yearSelect = pickerDiv.getElementsByClassName('foopicker__date--year')[0];
-        
+
         monthSelect.removeEventListener('change', this.handleMonthChange, false);
         yearSelect.removeEventListener('change', this.handleYearChange, false);
       }
     },
 
-    modifyDateClass: function(instance) {
+    modifyDateClass: function (instance) {
       var id = instance.options.id, day = instance.selectedDay, currentDate, disabled;
       var date = new Date();
       var month = date.getMonth(), year = date.getFullYear(), dayClass;
@@ -543,7 +543,7 @@ var FooPicker = (function () {
     },
 
     // Change date in instance
-    changeInstanceDate: function(instance) {
+    changeInstanceDate: function (instance) {
       instance.currentDay = this.day();
       instance.currentDate = this.today();
       instance.currentMonth = this.month();
@@ -606,7 +606,7 @@ var FooPicker = (function () {
   }
 
   // Function to remove events
-  function removeEvent(el , type, callback, capture) {
+  function removeEvent(el, type, callback, capture) {
     if (hasEventListener) {
       if (el) {
         el.removeEventListener(type, callback, capture);
