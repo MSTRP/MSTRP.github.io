@@ -18,6 +18,8 @@ ${e://Field/Header}
 <script type="text/javascript">
     //-----------data references
     var qFilters = {
+        TwoA: "${q://QID4/ChoiceTextEntryValue}",
+        TwoB: "${q://QID5/ChoiceTextEntryValue}",
         ThreeA: "${q://QID8/ChoiceTextEntryValue}",
         ThreeB: "${q://QID100/ChoiceTextEntryValue}",
         FourD: "${q://QID11/ChoiceTextEntryValue}",
@@ -67,8 +69,12 @@ ${e://Field/Header}
         navlabels()
 
 
+
         //--hide tooltip if present
         jQuery('.tooltip').css("display", "none");
+
+        //-------enable hotkey Navigation if disabled:
+        navReset();
 
         //---------set org name for generic links:
         setOrgName();
