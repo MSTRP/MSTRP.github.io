@@ -64,7 +64,7 @@ var sections = {
 
 var filterNames = {
     TwoA: "Section 2: Summary - No. of Wellcome awards",
-    TwoB: "section2: Summary - Aggregate Wellcome funding",
+    TwoB: "section 2: Summary - Aggregate Wellcome funding",
     Three: "Section 3: Invention disclosures and new patent applications",
     ThreeA: "Section 3: Invention disclosures",
     ThreeB: "Section 3: New patent applications",
@@ -1500,7 +1500,9 @@ var nextCheck = function (filterList, question, blockNext, breaker) {
         if (check.length > 0 && blockNext === true) {
             //if any questions are blank
             Qualtrics.SurveyEngine.setEmbeddedData('hotKeyNav', "Stop");
+            nextbuttonDefault("Report incomplete!");
             question.disableNextButton();
+
 
             //alert on load:
             checkAll(filterList, "alert", ["SixBD", "ElevenD2"], breaker);
