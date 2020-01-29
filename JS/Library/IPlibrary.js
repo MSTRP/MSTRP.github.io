@@ -64,7 +64,7 @@ var sections = {
 
 var filterNames = {
     TwoA: "Section 2: Summary - No. of Wellcome awards",
-    TwoB: "section 2: Summary - Aggregate Wellcome funding",
+    TwoB: "Section 2: Summary - Aggregate Wellcome funding",
     Three: "Section 3: Invention disclosures and new patent applications",
     ThreeA: "Section 3: Invention disclosures",
     ThreeB: "Section 3: New patent applications",
