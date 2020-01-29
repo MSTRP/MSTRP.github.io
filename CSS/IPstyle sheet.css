@@ -739,6 +739,7 @@ div #Footer {
 
 .JFEScope .dropzone.dz-drag-hover, .JFEScope .dropzone:not(.dz-max-files-reached):hover {
         background: var(--primaryColour);
+        color: white;
 }
 
 .JFEScope .dropzone:hover .dropzone-btn {
