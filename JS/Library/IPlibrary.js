@@ -517,6 +517,16 @@ var hoverTextAdd = function (selector, text) {
 
 //5) Css formattong:
 
+var colourMe = function(selector, colour){
+    selector.css("background-color", colour);
+};
+
+var hoverMe = function(selector, colours){
+    selector.css("background-color", colours[0]);
+    selector.hover(function(){
+        selector.css("background-color", colours[1])
+    });
+};
 
 //related inputs/general
 var autofillCSS = function (selector) {
