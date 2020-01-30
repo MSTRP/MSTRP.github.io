@@ -1,7 +1,7 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //-------------Carry forward transaction info
     //map out the answers and refs as arrays within an object
-    //(used ref as array value instead of JSON key so that you can serach the class for the ref)
+    //(used ref as array value instead of JSON key so that you can search the class for the ref)
     var answers6B = {
         uniqueID: [
             "${q://QID16%232/ChoiceTextEntryValue/1/1}",
@@ -136,7 +136,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
 	
 	//---------------Buttons 
     nextbuttonDefault(sections["Seven"]);
-    prevbuttonDefault(sections["SixAD"])
+    prevbuttonDefault(sections["SixAD"]);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {
