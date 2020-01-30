@@ -14,7 +14,7 @@ var qFilters = {
     ElevenD: "${q://QID57/ChoiceTextEntryValue}",
     ElevenD2: "${e://Field/tRevDisplay}",
     TwelveD: "${q://QID60/ChoiceTextEntryValue}",
-    Supporting: "${q://QID70/ChoiceGroup/SelectedChoices}"  
+    Supporting: "${q://QID70/ChoiceGroup/SelectedChoices}"
 };
 
 var filters = [
@@ -64,7 +64,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
     //------------page loading
     loadPage();//show questions
 
-    
+
     loadScrollPosition(0);//load page at scroll top
 });
 
@@ -90,6 +90,8 @@ Qualtrics.SurveyEngine.addOnReady(function () {
     //----Response Summary Buttons:
     if (jQuery("#EndOfSurvey").length > 0) {
         prevbuttonDefault('Edit report');
-        nextbuttonDefault("Submit report")
-    };
+        nextbuttonDefault("Submit report");
+        jQuery("#NextButton").css("background-color", "blue");
+        jQuery("#NextButton").attr('title', "Submit Report"); //blue submit button
+    }
 });
