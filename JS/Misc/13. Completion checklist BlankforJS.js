@@ -1,7 +1,7 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //---------------Buttons 
     nextbuttonDefault(sections.Submit2);//NEXT on load
-    loadSwitch("back", ["Supporting", "DecDown"], qFilters); //PREVIOUS on load
+    loadSwitch("back", ["Supporting", "DecUp"], qFilters); //PREVIOUS on load
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

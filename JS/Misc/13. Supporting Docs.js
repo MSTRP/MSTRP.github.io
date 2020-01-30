@@ -1,8 +1,8 @@
 Qualtrics.SurveyEngine.addOnload(function()
 {
 	//-----------Buttons:
-    nextbuttonDefault(sections.Submit2);
-    prevbuttonDefault(sections.DecDown);
+    nextbuttonDefault(sections.Submit);
+    prevbuttonDefault(sections.DecUp);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function()
