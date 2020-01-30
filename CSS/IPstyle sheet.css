@@ -732,17 +732,17 @@ div #Footer {
         color: var(--primaryColour)
 }
 
-.JFEScope .dropzone .dz-message {
+.dropzone .dz-message {
         padding: 0;
         margin: 0;
 }
 
-.JFEScope .dropzone.dz-drag-hover, .JFEScope .dropzone:not(.dz-max-files-reached):hover {
+.dropzone.dz-drag-hover, .dropzone:not(.dz-max-files-reached):hover {
         background: var(--primaryColour);
         color: white;
 }
 
-.JFEScope .dropzone:hover .dropzone-btn {
+.dropzone:hover .dropzone-btn {
         color: var(--tertiaryColour)
 }
 
@@ -754,7 +754,7 @@ div #Footer {
         float: left;
 }
 
-.JFEScope .dropzone .dz-preview .dz-details {
+.dropzone .dz-preview .dz-details {
         z-index: 20;
         position: absolute;
         top: -52px;
@@ -768,7 +768,7 @@ div #Footer {
         line-height: 100%;
 }
 
-.JFEScope .dropzone .dz-preview .dz-image {
+.dropzone .dz-preview .dz-image {
         display: none;
 }
 
