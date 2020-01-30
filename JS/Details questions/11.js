@@ -1,6 +1,6 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //--------------Next button:
-    nextbuttonDefault(sections["Twelve"]);
+    loadSwitch("next", ["ElevenD2", "Twelve"], qFilters);
 
     //-----------Display logic
     hideRows2("11", filters);
