@@ -2149,6 +2149,14 @@ var carry3b = function (answerlist) {
             let rowNumber = rowindex + 1;
             let header = "<strong>" + rowNumber + "</strong>";
             thisRow.find("th").append(header);
+        } else {
+            //overwrite the carried text
+            let carriedHeader = header.text();
+            let rowNumber = rowindex + 1;
+            let headerasNumber  = header.text().replace(carriedHeader, rowNumber);
+            let newHeader = "<strong>" + headerasNumber + "</strong>";
+            header.html(newHeader);
+            console.log("header adjusted");
         }
     });
 };
