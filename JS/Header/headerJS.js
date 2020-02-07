@@ -16,7 +16,6 @@ var qFilters = {
     TwelveD: "${q://QID60/ChoiceTextEntryValue}",
     Supporting: "${q://QID70/ChoiceGroup/SelectedChoices}"
 };
-
 var filters = [
     { filterRef: "3a", filterName: "disclosures", filterValue: "${q://QID8/ChoiceTextEntryValue}" },
     { filterRef: "3b", filterName: "patentApps", filterValue: "${q://QID100/ChoiceTextEntryValue}" },
@@ -29,7 +28,6 @@ var filters = [
     { filterRef: "11", filterName: "revenue", filterValue: "${q://QID57/ChoiceTextEntryValue}" },
     { filterRef: "12", filterName: "equity", filterValue: "${q://QID60/ChoiceTextEntryValue}" }
 ];
-
 var listeners = {
     hotkeyNavigate: "${e://Field/hotKeyNav}",
     organisation: "${e://Field/organisation}",
@@ -46,47 +44,30 @@ Qualtrics.SurveyEngine.addOnload(function () {
     if (jQuery("#Guidance_NOTES").length > 0) {
         broswerAlert();
     };
-
     //-------Button labels
-    navlabels()
-
-
-
+    navlabels();
     //--hide tooltip if present
     jQuery('.tooltip').css("display", "none");
 
     //-------enable hotkey Navigation if disabled:
     navReset();
-
     //---------set org name for generic links:
     setOrgName();
-
     //------------page loading
     loadPage();//show questions
-
-
     loadScrollPosition(0);//load page at scroll top
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {
     //---------Menu
     menuScroll(); //shadow when scrolling 
-
     loadMenu('${e://Field/progressBar}'); //menu button
-
     //---------Hotkey Navigate ---- ADD ON READY
-
     hotkeyNavigate(this);
-
     //-------sideways scroller for matrices (ADD ON READY):
     sideScrollButtons(jQuery(".SBS .QuestionBody"), ".ChoiceStructure tbody");
-
     //--------menu helper flash:
-    borderFlash2(jQuery(".menuHelper"), getColour("error"), jQuery("#Logo img"))
-
-    //copy button
-    copyButton("#CopyContact", "#contactInfo")
-
+    borderFlash2(jQuery(".menuHelper"), getColour("error"), jQuery("#Logo img"));
     //----Response Summary Buttons:
     if (jQuery("#EndOfSurvey").length > 0) {
         prevbuttonDefault('Edit report');
