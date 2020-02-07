@@ -2137,8 +2137,7 @@ var carry3b = function (answerlist) {
         } else if (header.text().replace(/ /g, "") == "") {
             //set row label to number when carried value is blank
             let rowNumber = rowindex + 1;
-            let newHeader = "<strong>" + rowNumber + "</strong>";
-            header.append(newHeader);
+            header.append(rowNumber);
         } else {
             //overwrite the carried text with row number
             let rowNumber = rowindex + 1;
