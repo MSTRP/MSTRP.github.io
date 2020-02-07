@@ -2094,44 +2094,33 @@ var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
 // 2) 3B Filed patents carry forward :
 var carry3b = function (answerlist) {
     //select the array for each answer field
-    var awardNo = answerlist["awardNo"];
-    var NPF = answerlist["NPF"];
-    var uniqueID = answerlist["uniqueID"];
-    var inventors = answerlist["inventors"];
+    let awardNo = answerlist["awardNo"];
+    let NPF = answerlist["NPF"];
+    let uniqueID = answerlist["uniqueID"];
+    let inventors = answerlist["inventors"];
 
-    var allRows = jQuery(".QuestionBody tbody tr");
-
+    let allRows = jQuery(".QuestionBody tbody tr");
     allRows.each(function () {
-
         let thisRow = jQuery(this);
         let rowindex = thisRow.index();
-
-        let header = jQuery(this).find("th strong");
+        let header = thisRow.find("th");
 
         //define values for row
-        var aNo = awardNo[rowindex];
-        //award No.
-
-        var uID = uniqueID[rowindex];
-        //org ref
-
-        var nIn = inventors[rowindex];
-        //inventors
-
-        var nPF = NPF[rowindex];
-        //Patent app status
+        let aNo = awardNo[rowindex];//award No.
+        let uID = uniqueID[rowindex];//org ref
+        let nIn = inventors[rowindex];//inventors
+        let nPF = NPF[rowindex];//Patent app status
 
         if (nPF == "F") {
-
             //define the fields + input selector
             var awardN = thisRow.find("td:nth-child(4)");
-            var awardNoIpt = awardN.find("textarea");
+            var awardNoIpt = textareaselect(awardN);
 
             var uniqueI = thisRow.find("td:nth-child(7)");
-            var uniqueIDIpt = uniqueI.find("input");
+            var uniqueIDIpt = inputSelect(uniqueI);
 
             var invs = thisRow.find("td:nth-child(10)");
-            var inventorsIpt = invs.find("textarea");
+            var inventorsIpt = textareaselect(invs);
 
             //set values and format the fields
             awardNoIpt.val(aNo);
@@ -2146,19 +2135,15 @@ var carry3b = function (answerlist) {
             autofillCSS(inventorsIpt);
             //named inventors
         } else if (header.text().replace(/ /g, "") == "") {
+            //set row label to number when carried value is blank
             let rowNumber = rowindex + 1;
-            let header = "<strong>" + rowNumber + "</strong>";
-            thisRow.find("th").append(header);
+            let newHeader = "<strong>" + rowNumber + "</strong>";
+            header.append(newHeader);
         } else {
-            //overwrite the carried text
-            let carriedHeader = header.text();
-            console.log("old row header: ", carriedHeader);
+            //overwrite the carried text with row number
             let rowNumber = rowindex + 1;
-            let headerasNumber = header.text().replace(carriedHeader, rowNumber);
-            console.log("new row header: ", headerasNumber);
-            //let newHeader = "<strong>" + headerasNumber + "</strong>";
-            header.text(headerasNumber);
-            console.log("header adjusted");
+            header.text(header.text().replace(header.text(), rowNumber));
+            console.log("header adjusted, new heade for row ", rowNumber, " is: ", header.text());
         }
     });
 };
