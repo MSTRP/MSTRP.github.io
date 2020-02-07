@@ -517,13 +517,13 @@ var hoverTextAdd = function (selector, text) {
 
 //5) Css formattong:
 
-var colourMe = function(selector, colour){
+var colourMe = function (selector, colour) {
     selector.css("background-color", colour);
 };
 
-var hoverMe = function(selector, colours){
+var hoverMe = function (selector, colours) {
     selector.css("background-color", colours[0]);
-    selector.hover(function(){
+    selector.hover(function () {
         selector.css("background-color", colours[1])
     });
 };
@@ -1382,83 +1382,83 @@ var keyupSwitch = function (buttons) {
 
     //on keyup:
     i.keyup(function (e) {
-        if(e.keyCode !== 13){
-           //when enter isn't pressed 
-           let I = jQuery(this);
+        if (e.keyCode !== 13) {
+            //when enter isn't pressed 
+            let I = jQuery(this);
 
-           let checkI = checkNum(I);
-   
-           //define conditional variables:
-           let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
-   
-           // define arrays for comparison:
-           let first = i.filter(function () {
-   
-               let actualIndex = (buttons.length > 2) ? Index - 1 : Index;
-               //undo index increase if more than 3 inputs
-   
-               return i.index(jQuery(this)) < actualIndex
-           });//inputs which appear before the current one
-   
-           let firstBlanks = filterBlanks2(first);
-           //blank inputs which appear before the current one
-   
-           //shorthand nextbutton switch:   
-           let action = function (details, next, field) {
-               //(parameters = Buttons lookup indecies):
-   
-               let input = (field === undefined) ? I : field;
-               //if field is not specified use current input
-   
-               nextbuttonSwitch(sections[Buttons[details]], sections[Buttons[next]], input);
-           };
-   
-           //switch case of actions:
-           switch (switcher) {
-               case "multiple":
-                   //with more than one input field on the the page
-   
-                   if (Index > 1 && firstBlanks.length == first.length) {
-                       //if this isn't the first input and all the previous inputs are blank 
-                       action(Index, nextIndex);
-   
-                   } else if (Index == 1) {
-                       //or if this is the first input
-   
-                       switch (checkI) {
-                           case "B/0":
-   
-                               let i1 = i.eq(0); //this field
-                               let others = i.not(i1); //all other fields
-   
-                               let otherBlanks = filterBlanks(others);
-                               //other non-blank/0 fields
-   
-                               if (otherBlanks.length < others.length) {
-                                   //when one of the other fields is not blank/0
-   
-                                   //get the next non-blank field:
-                                   let nB = getNotBlank2(i);//other non-blanks
-   
-                                   let InB = others.index(nB.eq(0)) + 2;
-                                   //index of next non-blank field, adjusted to grab key 
-                                   //from buttons array
-   
-                                   action(InB, nextIndex, nB.eq(0));
-                                   //run action on next blank field instead of this one
-                               } else {
-                                   action(Index, nextIndex);
-                               }
-                               break;
-                           default:
-   
-                               action(Index, nextIndex);
-                       };
-                   };
-                   break;
-               default:
-                   action(Index, nextIndex);
-           };
+            let checkI = checkNum(I);
+
+            //define conditional variables:
+            let Index = (buttons.length > 2) ? i.index(I) + 1 : i.index(I); //index of current input
+
+            // define arrays for comparison:
+            let first = i.filter(function () {
+
+                let actualIndex = (buttons.length > 2) ? Index - 1 : Index;
+                //undo index increase if more than 3 inputs
+
+                return i.index(jQuery(this)) < actualIndex
+            });//inputs which appear before the current one
+
+            let firstBlanks = filterBlanks2(first);
+            //blank inputs which appear before the current one
+
+            //shorthand nextbutton switch:   
+            let action = function (details, next, field) {
+                //(parameters = Buttons lookup indecies):
+
+                let input = (field === undefined) ? I : field;
+                //if field is not specified use current input
+
+                nextbuttonSwitch(sections[Buttons[details]], sections[Buttons[next]], input);
+            };
+
+            //switch case of actions:
+            switch (switcher) {
+                case "multiple":
+                    //with more than one input field on the the page
+
+                    if (Index > 1 && firstBlanks.length == first.length) {
+                        //if this isn't the first input and all the previous inputs are blank 
+                        action(Index, nextIndex);
+
+                    } else if (Index == 1) {
+                        //or if this is the first input
+
+                        switch (checkI) {
+                            case "B/0":
+
+                                let i1 = i.eq(0); //this field
+                                let others = i.not(i1); //all other fields
+
+                                let otherBlanks = filterBlanks(others);
+                                //other non-blank/0 fields
+
+                                if (otherBlanks.length < others.length) {
+                                    //when one of the other fields is not blank/0
+
+                                    //get the next non-blank field:
+                                    let nB = getNotBlank2(i);//other non-blanks
+
+                                    let InB = others.index(nB.eq(0)) + 2;
+                                    //index of next non-blank field, adjusted to grab key 
+                                    //from buttons array
+
+                                    action(InB, nextIndex, nB.eq(0));
+                                    //run action on next blank field instead of this one
+                                } else {
+                                    action(Index, nextIndex);
+                                }
+                                break;
+                            default:
+
+                                action(Index, nextIndex);
+                        };
+                    };
+                    break;
+                default:
+                    action(Index, nextIndex);
+            };
         };
     })
 };
@@ -2152,10 +2152,12 @@ var carry3b = function (answerlist) {
         } else {
             //overwrite the carried text
             let carriedHeader = header.text();
+            console.log("old row header: ", carriedHeader);
             let rowNumber = rowindex + 1;
-            let headerasNumber  = header.text().replace(carriedHeader, rowNumber);
-            let newHeader = "<strong>" + headerasNumber + "</strong>";
-            header.html(newHeader);
+            let headerasNumber = header.text().replace(carriedHeader, rowNumber);
+            console.log("new row header: ", headerasNumber);
+            //let newHeader = "<strong>" + headerasNumber + "</strong>";
+            header.text(headerasNumber);
             console.log("header adjusted");
         }
     });
