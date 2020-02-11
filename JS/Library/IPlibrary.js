@@ -1910,7 +1910,7 @@ var loadMenu = function (progressBartracker) {
         };
         //show menu animations:
         menu.css("display", "inline-block").fadeIn("100");//make menu visible
-        menu.animate({ height: '343pxpx', display: 'inline-block' }, 250);//open menu container
+        menu.animate({ height: '343px', display: 'inline-block' }, 250);//open menu container
         menuList.show(200);//show menu items
         menuSwitch = "on";//set switch status to on
     };
