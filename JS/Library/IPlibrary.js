@@ -1562,10 +1562,8 @@ var copyButton = function (buttonSelector, copySelector) {
 var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText) {
     //load target and hover text are optional
 
-    var parameters = [element_being_scrolled, load_Target, hoverText];
-
-
-    var hoverYN = parameters.filter(entry => typeof (entry) === Boolean);
+    let parameters = [element_being_scrolled, load_Target, hoverText];
+    let hoverYN = parameters.filter(entry => typeof (entry) === Boolean);
 
     if (jQuery(".SBSMatrix").length > 0) {
         //add the html to question text:
@@ -1678,7 +1676,7 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
                 }
             }
         }, {
-            threshold: [0.1] //load when target is 10% in view
+            threshold: [0.01] //load when target is 1% in view
         });
 
         //run the function:
