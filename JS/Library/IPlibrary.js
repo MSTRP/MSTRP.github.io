@@ -1206,6 +1206,7 @@ var hideRows = function (questionNumber, filters) {
 var hideRows2 = function (questionNumber, filters) {
 
     let rows = jQuery(".ChoiceStructure tbody").find("tr");
+    let totalIndex = jQuery(".ChoiceStructure tbody tr:last-child").index();
     //select the table rows on the page with jQuery
 
     //run the function to get filter value 
@@ -1219,7 +1220,7 @@ var hideRows2 = function (questionNumber, filters) {
         //it is hidden
         if (jQuery(this).index() >= filter) {
 
-            if (jQuery(this).index() == 30) { return; };
+            if (jQuery(this).index() == totalIndex) { return; };
             jQuery(this).hide();
         };
     })
