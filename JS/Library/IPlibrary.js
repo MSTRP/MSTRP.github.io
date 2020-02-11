@@ -1582,106 +1582,79 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
             hoverTextAdd(jQuery(this), hoverText["left"]) //left k
         };
 
-
         //looping scroll function:
         function scrollTable(direction) {
-
-            var leftPos = element_being_scrolled.scrollLeft()
-            //get initial position
-
-            let speed = 10;
-            //amount to scroll per second 20 = fast, 10 = medium, 5 = slow 
-
-            var scroll_amount = (direction === "left" ? leftPos - speed : leftPos + speed)
-            //set scroll increment depending on scroll direction specified
+            let leftPos = element_being_scrolled.scrollLeft();//initial position
+            let speed = 10;//20 = fast, 10 = medium, 5 = slow
+            let scrollValue = (direction === "left" ? leftPos - speed : leftPos + speed);
 
             element_being_scrolled
                 .stop(true, true) //stop other animations in queue
                 .animate({
-                    scrollLeft: scroll_amount
-                    //move scrollar 20px in specified direction
-
+                    scrollLeft: scrollValue
                 }, 1, function () {
                     if (scrolling) {
-                        //while hovering on button scroll button
-                        scrollTable(direction)
-                        //keep looping function
-                    }
-                })
+                        //loop while hovering
+                        scrollTable(direction);
+                    };
+                });
         };
 
-        var scroll_Buttons = [
+        let scroll_Buttons = [
             jQuery('.Scroll--left'),
             jQuery('.Scroll--right')
         ];
 
-        //get page and table widths
-        let tablewidth = jQuery(".ChoiceStructure").width();//table in px
-        let questionpagewidth = jQuery(".Skin #SkinContent").width();//page in px
+        //get page and table widths in px
+        let tablewidth = jQuery(".ChoiceStructure").width();
+        let questionpagewidth = jQuery(".Skin #SkinContent").width();
+
+        //if more than 30 rows displayed, load when 2 rows are visible. Otherwise 10%
+        let tablelength = jQuery(load_Target).find("tr").length;
+        let load = (tablelength > 30) ? 2 / tablelength : 0.1;
 
         //function to display load buttons when target is in view:
         var observer = new IntersectionObserver(function (entries) {
             if (entries[0]['isIntersecting'] == true && tablewidth > questionpagewidth) {
-                //when the load target is in view on screen and the table is wider than the question page:
-
+                //when the load target is in view:
                 jQuery('.Scroll--left')
                     .on({
-                        //event handlers for the buttons:
-
                         mouseover: function () {
-                            //run scrolling function on hover
-
                             scrolling = true;
-                            scrollTable("left")
-
+                            scrollTable("left");
                         },
-
                         mouseout: function () {
-                            //stop scrolling function on hover
                             scrolling = false
                         }
-
                     })
                     .stop(true, true)
                     .fadeIn('slow'); //load the button
 
                 jQuery('.Scroll--right')
                     .on({
-                        //event handlers for the buttons:
-
                         mouseover: function () {
-                            //run scrolling function on hover
-
                             scrolling = true;
-                            scrollTable("right")
-
+                            scrollTable("right");
                         },
-
                         mouseout: function () {
-                            //stop scrolling function on hover
                             scrolling = false
                         }
-
                     })
                     .stop(true, true) //stop other animations in queue
                     .fadeIn('slow'); //load the button
-
                 for (let value of scroll_Buttons) {
                     borderFlash(value, getColour("error"))
-                }
-
+                };
             } else {
                 for (let value of scroll_Buttons) {
-                    value.stop(true, true).hide()
-                }
-            }
+                    value.stop(true, true).hide();
+                };
+            };
         }, {
-            threshold: [0.01] //load when target is 1% in view
+            threshold: [load] //load when target 2 rows are in view
         });
-
-        //run the function:
         observer.observe(document.querySelector(load_Target));
-    }
+    };
 };
 
 //3) nav & shortcuts:
