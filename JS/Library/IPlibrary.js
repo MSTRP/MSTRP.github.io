@@ -509,13 +509,7 @@ var englishPounds = new Intl.NumberFormat('en-GB', { style: 'currency', currency
 var formatNumber = new Intl.NumberFormat('en-GB', { style: 'decimal', maximumFractionDigits: 0, useGrouping: true }).format;
 //basic number formatting
 
-//5) Hover text:
-
-var hoverTextAdd = function (selector, text) {
-    jQuery(selector.attr('title', text))
-};
-
-//5) Css formattong:
+//5) Css formatting:
 
 var colourMe = function (selector, colour) {
     selector.css("background-color", colour);
