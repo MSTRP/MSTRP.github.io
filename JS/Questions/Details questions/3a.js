@@ -1,14 +1,12 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //-----------Display logic   
-    hideRows("3a", filters); //run the program
+    hideRows("3a", filters);
+
+    //-------------------load Extended submissions template text:
+    loadTemplate(qFilters.ThreeA);
 
     //---------------Buttons 
-    var next = "Four";
-    var details = "ThreeB";
-
-    loadSwitch("next", [details, next,], qFilters);
-    /* //on NPF click:
-    buttons3a("16", details, next); */
+    loadSwitch("next", ["ThreeB", "Four"], qFilters);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

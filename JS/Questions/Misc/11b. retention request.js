@@ -1,7 +1,10 @@
 Qualtrics.SurveyEngine.addOnload(function () {
+    //-------------------load Extended submissions template text:
+    loadTemplate(qFilters.ElevenD2);
+
     //---------------Buttons:
-    nextbuttonDefault(sections["Twelve"]);
-    prevbuttonDefault(sections["ElevenD"])
+    nextbuttonDefault(sections.Twelve);
+    prevbuttonDefault(sections.ElevenD);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

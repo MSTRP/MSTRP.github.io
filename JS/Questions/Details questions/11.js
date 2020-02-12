@@ -1,13 +1,16 @@
 Qualtrics.SurveyEngine.addOnload(function () {
-    //--------------Next button:
-    nextbuttonDefault(sections["Twelve"]);
-
     //-----------Display logic
     hideRows2("11", filters);
 
+    //-------------------load Extended submissions template text:
+    loadTemplate(qFilters.ElevenD);
+
+    //--------------Next button:
+    nextbuttonDefault(sections.Twelve);
+
     //------------Revenue calc
-    //nth-child selectors for input fields as an object:
-    let calcRefs2 = {
+    //nth-child selectors for input fields:
+    let calcRefs = {
         incomeGrossRef: "13",
         directCostsRef: "16",
         revNetRef: "19",
@@ -16,11 +19,10 @@ Qualtrics.SurveyEngine.addOnload(function () {
         revShareWTRef: "28",
         revWTRef: "31"
     };
-
-    totalRowFormat([3, 6]); //total row formatting
-    totalColumnFormat(true, ['revNetRef', 'revWTRef'], calcRefs2); //total columns formatting
-    revenueFormatting(calcRefs2); //claculation helpers fromatting
-    revenueCalc(calcRefs2);//calculations on input:
+    totalRowFormat([3, 6]);
+    totalColumnFormat(true, ['revNetRef', 'revWTRef'], calcRefs);
+    revenueFormatting(calcRefs); 
+    revenueCalc(calcRefs);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

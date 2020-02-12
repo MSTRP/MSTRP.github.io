@@ -1,4 +1,7 @@
 Qualtrics.SurveyEngine.addOnload(function () {
+    //-------------------load Extended submissions template text:
+    loadTemplate(qFilters.SixBD);
+
     //-------------Carry forward transaction info
     //map out the answers and refs as arrays within an object
     //(used ref as array value instead of JSON key so that you can serach the class for the ref)
@@ -133,10 +136,10 @@ Qualtrics.SurveyEngine.addOnload(function () {
         ]
     };
     carry6(answers6B);
-	
-	//---------------Buttons 
-    nextbuttonDefault(sections["Seven"]);
-    prevbuttonDefault(sections["SixAD"])
+
+    //---------------Buttons 
+    nextbuttonDefault(sections.Seven);
+    prevbuttonDefault(sections.SixAD)
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

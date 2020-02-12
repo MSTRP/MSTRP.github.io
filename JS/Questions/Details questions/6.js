@@ -1,12 +1,13 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //-----------Display logic:
-    hideRows("6", filters); //run the program
+    hideRows("6", filters);
+
+    //-------------------load Extended submissions template text:
+    loadTemplate(qFilters.SixAD);
 
     //---------------Buttons 
-    var next = "Seven";
-    var details = "SixBD";
-
-    //on load:
+    let next = "Seven";
+    let details = "SixBD";
     loadSwitch("next", [details, next], qFilters); //NEXT on load   
     buttons6a(next, details);//click switcher
 });

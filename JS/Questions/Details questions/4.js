@@ -2,8 +2,11 @@ Qualtrics.SurveyEngine.addOnload(function () {
     //-----------Display logic
     hideRows("4", filters);
 
+     //-------------------load Extended submissions template text:
+     loadTemplate(qFilters.FourD);
+
     //---------------Buttons 
-    nextbuttonDefault(sections["Five"]);
+    nextbuttonDefault(sections.Five);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

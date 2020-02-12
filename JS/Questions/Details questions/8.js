@@ -1,13 +1,16 @@
 Qualtrics.SurveyEngine.addOnload(function () {
-    //-----------Display logic
-    hideRows("8", filters); //run the program
+    //-----------Display logic:
+    hideRows("8", filters); 
 
-    //---------------Buttons 
-    nextbuttonDefault(sections["Nine"]);
+    //-------------------load Extended submissions template text:
+    loadTemplate(qFilters.EightD);
+
+    //---------------Buttons:
+    nextbuttonDefault(sections.Nine);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {
-    //----------set hover text for each input
+    //----------set hover text for each input:
     setHoverText("8", filters);
 
     //-----------date picker:

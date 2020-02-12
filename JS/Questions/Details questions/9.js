@@ -1,12 +1,12 @@
 Qualtrics.SurveyEngine.addOnload(function () {
-    //-----------Display logic
+    //-----------Display logic:
     hideRows("9", filters);
 
-    //-------------------load excel template
-    loadtemplate(jQuery("#caseStudies_Template"), "9", filters)
+    //-------------------load Extended submissions template text:
+    loadTemplate(qFilters.NineD);
 
-    //---------------Buttons 
-    nextbuttonDefault(sections["Part2"]);
+    //---------------Buttons: 
+    nextbuttonDefault(sections.Part2);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

@@ -1,9 +1,12 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //-----------Display logic
-    hideRows("7", filters); //run the program
+    hideRows("7", filters);
+
+    //-------------------load Extended submissions template text:
+    loadTemplate(qFilters.SevenD);
 
     //---------------Buttons 
-    nextbuttonDefault(sections["Eight"]);
+    nextbuttonDefault(sections.Eight);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

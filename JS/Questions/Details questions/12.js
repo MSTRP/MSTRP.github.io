@@ -2,21 +2,24 @@ Qualtrics.SurveyEngine.addOnload(function () {
     //-----------Display logic
     hideRows("12", filters); //run the program
 
+    //-------------------load Extended submissions template text:
+    loadTemplate(qFilters.TwelveD);
+
     //--------------Next button:
     nextbuttonDefault(sections.DecDown);
 
     //-----------Equity calc and formatting
-    //nth-child selectors for input fields as an object:
-    var eCalcRefs = {
+    //nth-child selectors for calc fields:
+    let calcRefs = {
         totalSharesRef: "10",
         contributionWTRef: "19",
         contJustificationRef: "22",
         equityShareWTRef: "25",
         equityWTRef: "28"
     };
-    totalColumnFormat(false, ["equityWTRef"], eCalcRefs); //total column formatting
-    equityFormatting(eCalcRefs); //inout helpers formatting
-    equityCalc(eCalcRefs);//calc
+    totalColumnFormat(false, ["equityWTRef"], calcRefs); //total column formatting
+    equityFormatting(calcRefs); //inout helpers formatting
+    equityCalc(calcRefs);//calc
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

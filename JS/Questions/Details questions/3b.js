@@ -4,6 +4,9 @@ Qualtrics.SurveyEngine.addOnload(function () {
     prevbuttonDefault(sections["ThreeA"]);
     loadSwitch("back", ["ThreeA", "Back"], qFilters);
 
+     //-------------------load Extended submissions template text:
+     loadTemplate(qFilters.ThreeB);
+
     //------------------3b carry forward:
     //define the answers as object
     var threeBVals = {
