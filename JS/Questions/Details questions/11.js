@@ -5,8 +5,8 @@ Qualtrics.SurveyEngine.addOnload(function () {
     //-------------------load Extended submissions template text:
     loadTemplate(qFilters.ElevenD);
 
-    //--------------Next button:
-    nextbuttonDefault(sections.Twelve);
+    //--------------Buttons:
+    loadSwitch("next", ["ElevenD2", "Twelve"], qFilters);
 
     //------------Revenue calc
     //nth-child selectors for input fields:
