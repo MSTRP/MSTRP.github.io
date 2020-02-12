@@ -1220,14 +1220,13 @@ var hideRows2 = function (questionNumber, filters) {
     })
 };
 
-//show template doc when filter is over 30
-var loadtemplate = function (templatewrapper, questionNumber, filters) {
+//show extended submissions quidance text when filter > default rows for question 
+var loadTemplate = function (questionNumber, filters, trigger = 30) {
     let filter = getFilters(questionNumber, filters);
-
-    if (filter > 30) {
-        jQuery(templatewrapper).show()
+    if (filter > trigger) {
+        jQuery("#ExtendSubmissions").show()
     } else {
-        jQuery(templatewrapper).hide()
+        jQuery("#ExtendSubmissions").hide()
     };
 };
 
