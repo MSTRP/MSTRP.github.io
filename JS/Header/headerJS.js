@@ -67,7 +67,7 @@ Qualtrics.SurveyEngine.addOnReady(function () {
     //-------sideways scroller for matrices (ADD ON READY):
     sideScrollButtons(jQuery(".SBS .QuestionBody"), ".ChoiceStructure tbody");
     //--------menu helper flash:
-    borderFlash2(jQuery(".menuHelper"), getColour("error"), jQuery("#Logo img"));
+    borderFlash2([".menuHelper", "#ExtendSubmissions"], getColour("error"), "#Logo img");
     //----Response Summary Buttons:
     if (jQuery("#EndOfSurvey").length > 0) {
         prevbuttonDefault('Edit report');

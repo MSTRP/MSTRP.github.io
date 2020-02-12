@@ -732,12 +732,14 @@ var borderFlash = function (selector, flashColour) {
 };
 
 //hover highlight
-var borderFlash2 = function (hoverSelector, flashColour, flashSelector) {
-    let flasher = (flashSelector != undefined) ? flashSelector : hoverSelector
-
-    hoverSelector.mouseenter(function () {
-        borderFlash(flasher, flashColour)
-    })
+var borderFlash2 = function (hoverSelectors, flashColour, flashSelector) {
+    //hoverSelectors is an array    
+    for (let selector of hoverSelectors) {
+        let flasher = (flashSelector != undefined) ? jQuery(flashSelector) : jQuery(selector);
+        jQuery(selector).mouseenter(function () {
+            borderFlash(flasher, flashColour)
+        })
+    }
 };
 
 //6) Question formatting:
