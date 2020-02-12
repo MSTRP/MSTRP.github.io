@@ -1220,13 +1220,14 @@ var hideRows2 = function (questionNumber, filters) {
     })
 };
 
-//show extended submissions quidance text when filter > default rows for question 
-var loadTemplate = function (questionNumber, filters, trigger = 30) {
-    let filter = getFilters(questionNumber, filters);
+//show extended submissions guidance text when filter > default rows for question 
+var loadTemplate = function (filters, trigger = 30) {
+    //if the filter is a selected choices value, use the amount of choices as the filter (by counting delimiter)
+    let filter = (typeof filters == "string") ? filters.replace(/[0=9]|[a-z]/ig, "").length + 1 : filters;
     if (filter > trigger) {
-        jQuery("#ExtendSubmissions").show()
+        jQuery("#ExtendSubmissions").show();
     } else {
-        jQuery("#ExtendSubmissions").hide()
+        jQuery("#ExtendSubmissions").hide();
     };
 };
 
