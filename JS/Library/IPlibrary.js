@@ -1,3 +1,7 @@
+//version tracking
+var version = "live Beta update" + 1.1;//increment me when publishing changes
+console.log("Version: ", version)
+
 //----------------------SECTION 0: GLOBAL VARIABLES
 //0) Mapping
 //theme colours as hex codes
