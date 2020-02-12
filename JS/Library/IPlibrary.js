@@ -2021,7 +2021,7 @@ var loadMenu = function (progressBartracker) {
 
 //--------------------Section X: Question specific
 //1) 3A buttons on click
-var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
+/* var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
 
     let table = jQuery(".QuestionBody");
 
@@ -2058,7 +2058,7 @@ var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
             }
         })
     });
-}
+}; */
 // 2) 3B Filed patents carry forward :
 var carry3b = function (answerlist) {
     //select the array for each answer field
