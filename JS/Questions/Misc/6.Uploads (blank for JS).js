@@ -1,6 +1,6 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //-------------------load Extended submissions template text:
-    loadTemplate(qFilters.SixBD);
+    loadTemplate(qFilters.SixAD);
 
     //-------------Carry forward transaction info
     //map out the answers and refs as arrays within an object
