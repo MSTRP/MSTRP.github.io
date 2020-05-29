@@ -1,9 +1,9 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //-----------Buttons:
-    let next = "Submit Report";
-    let details = "Upload supporting documents";
+    let next = "Submit2";
+    let details = "Supporting";
 
-    loadSwitch("next", [details, next]); //NEXT on load
+    loadSwitch("next", [details, next],qFilters); //NEXT on load
     clickSwitch([next, details], '#QID156', '1')//click switcher
     prevbuttonDefault("Section 2: Activity Summary");
 });
