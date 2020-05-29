@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.1';//increment me when publishing changes
+var version = "live Beta update " + '1.1.2';//increment me when publishing changes
 console.log("Version: ", version);
 
 //----------------------SECTION 0: GLOBAL VARIABLES
@@ -1896,6 +1896,7 @@ var loadMenu = function (progressBartracker) {
 
     var menuButton = jQuery("#Logo img");
     var menuSwitch = "off";
+    var menuHeight = (jQuery("#reportTitle").text().indexOf("Retention")>0)? "'233px'": "'343px'";
     var menu = jQuery("#navOuter");
     var menuList = jQuery(".navTable");
     //elements to be blurred as array:
@@ -1904,7 +1905,7 @@ var loadMenu = function (progressBartracker) {
         jQuery("#reportTitle"),//title
         menuButton//logo
     ];
-    let height = (jQuery("#reportTitle").text().indexOf("Retention")>0)? "'233px'": "'343px'";
+    
     //functions to open and close the menu:
     let showMenu = function () {
         //blur logo, page and title:
@@ -1913,7 +1914,7 @@ var loadMenu = function (progressBartracker) {
         };
         //show menu animations:
         menu.css("display", "inline-block").fadeIn("100");//make menu visible
-        menu.animate({ height: height, display: 'inline-block' }, 250);//open menu container
+        menu.animate({ height: menuHeight, display: 'inline-block' }, 250);//open menu container
         menuList.show(200);//show menu items
         menuSwitch = "on";//set switch status to on
     };
