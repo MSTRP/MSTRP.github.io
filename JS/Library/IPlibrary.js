@@ -1,6 +1,8 @@
+"use strict";
+
 //version tracking
 var version = "live Beta update" + 1.1;//increment me when publishing changes
-console.log("Version: ", version)
+console.log("Version: ", version);
 
 //----------------------SECTION 0: GLOBAL VARIABLES
 //0) Mapping
@@ -302,8 +304,8 @@ var getFilters = function (question, filters) {
         if (ref == question) {
             Qualtrics.SurveyEngine.setEmbeddedData(name, val);
             return Qualtrics.SurveyEngine.getEmbeddedData(name);
-        }
-    }
+        };
+    };
 };
 
 //2) array and object methods:
@@ -406,6 +408,7 @@ var inputSelect = function (selector) {
     let thisInput = selector.find("input");
     return thisInput
 };
+
 
 var selectSelect = function (selector) {
 
@@ -1901,7 +1904,7 @@ var loadMenu = function (progressBartracker) {
         jQuery("#reportTitle"),//title
         menuButton//logo
     ];
-
+    let height = (jQuery("#reportTitle").text().indexOf("Retention")>0)? "'233px'": "'343px'";
     //functions to open and close the menu:
     let showMenu = function () {
         //blur logo, page and title:
@@ -1910,7 +1913,7 @@ var loadMenu = function (progressBartracker) {
         };
         //show menu animations:
         menu.css("display", "inline-block").fadeIn("100");//make menu visible
-        menu.animate({ height: '343px', display: 'inline-block' }, 250);//open menu container
+        menu.animate({ height: height, display: 'inline-block' }, 250);//open menu container
         menuList.show(200);//show menu items
         menuSwitch = "on";//set switch status to on
     };
