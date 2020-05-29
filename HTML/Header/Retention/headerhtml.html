@@ -1,0 +1,56 @@
+${e://Field/Header}
+
+<!--cleave JS edit -->
+<script type="text/javascript"
+    src="https://rawcdn.githack.com/nosir/cleave.js/d1ce937107de54ddbc50c3b6741fac82a56325df/dist/cleave.js"></script>
+<!--IP Library-->
+<script type="text/javascript"
+    src="https://raw.githack.com/MSTRP/MSTRP.github.io/master/JS/Library/IPlibrary.js"></script>
+<!--Header JS-->
+<script type="text/javascript">
+    //-----------data references
+    var qFilters = {
+        Supporting: "${q://QID156/ChoiceGroup/SelectedChoices}"
+    };
+   var listeners = {
+        hotkeyNavigate: "${e://Field/hotKeyNav}",
+        organisation: "${e://Field/organisation}",
+        organisationName: "${q://QID3/ChoiceTextEntryValue/6}"
+    };
+
+    Qualtrics.SurveyEngine.addOnload(function () {
+        //------Browser check
+        if (jQuery("#Guidance_NOTES").length > 0) {
+            broswerAlert();
+        };
+        //-------Button labels
+        navlabels();
+        //--hide tooltip if present
+        jQuery('.tooltip').css("display", "none");
+
+        //-------enable hotkey Navigation if disabled:
+        navReset();
+        //---------set org name for generic links:
+        setOrgName();
+        //------------page loading
+        loadPage();//show questions
+        loadScrollPosition(0);//load page at scroll top
+    });
+
+    Qualtrics.SurveyEngine.addOnReady(function () {
+        //---------Menu
+        menuScroll(); //shadow when scrolling 
+        loadMenu('${e://Field/progressBar}'); //menu button
+        //---------Hotkey Navigate ---- ADD ON READY
+        hotkeyNavigate(this);
+        //--------menu helper flash:
+        borderFlash2([".menuHelper", "#ExtendSubmissions"], getColour("error"), "#Logo img");
+        //----Response Summary Buttons:
+        if (jQuery("#EndOfSurvey").length > 0) {
+            prevbuttonDefault('Edit report');
+            nextbuttonDefault("Submit report");
+            jQuery("#NextButton").css("background-color", "blue");
+            jQuery("#NextButton").attr('title', "Submit Report"); //blue submit button
+        }
+    });
+</script>
