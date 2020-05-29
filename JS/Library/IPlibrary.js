@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update" + 1.1;//increment me when publishing changes
+var version = "live Beta update " + '1.1.1';//increment me when publishing changes
 console.log("Version: ", version);
 
 //----------------------SECTION 0: GLOBAL VARIABLES
