@@ -1158,8 +1158,8 @@ var setScroll = function () {
 
 //shortcut labels for nav buttons:
 var navlabels = function () {
-    jQuery("#PreviousButton").attr('title', "Ctrl + Alt + P");
-    jQuery("#NextButton").attr('title', "Ctrl + Alt + N");
+    jQuery("#PreviousButton").attr('title', "Go Back 1 page (Ctrl + Alt + P)");
+    jQuery("#NextButton").attr('title', "Next (Ctrl + Alt + N)");
 };
 
 //show questions
@@ -1706,8 +1706,8 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
 var hotkeyNavigate = function (question) {
     //question = this
     let pressedKeys = [];//track pressed keys (and order pressed)
-    let input_fields = (jQuery(".ChoiceStructure input").length > 0)
-        ? jQuery(".ChoiceStructure input") : jQuery(".ChoiceStructure textarea");//select input fields
+    let input_fields = jQuery(".ChoiceStructure input");/* (jQuery(".ChoiceStructure input").length > 0)
+        ? jQuery(".ChoiceStructure input") : jQuery(".ChoiceStructure textarea") */;//select input fields
     //alert text:
     let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
 
