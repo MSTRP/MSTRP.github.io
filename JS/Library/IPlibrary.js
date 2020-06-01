@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.4';//increment me when publishing changes
+var version = "live Beta update " + '1.1.5';//increment me when publishing changes
 console.log("Version: ", version);
 
 //----------------------SECTION 0: GLOBAL VARIABLES
@@ -9,22 +9,22 @@ console.log("Version: ", version);
 //theme colours as hex codes
 var theme = {
     default: {
-        text: "#000000",//black
+        text: "#000000",//Pitch
         border: "#262626",//dark grey
         inputBackground: "rgba(0, 0, 0, 0.06)",//light grey
-        helpText: "#0000FF", //blue
+        helpText: "#009BB2", //Bora Bora
     },
     colours: {
-        primary: "#000000",//darkest shade/colour
-        secondary: "#848282", //medium shade/colour
-        tertiary: "#e0e0e0", //lightest shade/colour
-        error: "#ff0000", //red
+        primary: "#000000",//darkest shade/colour: Pitch
+        secondary: "#464749", //medium shade/colour: Pitch 2
+        tertiary: "#C7C8C9", //lightest shade/colour: Pitch 3
+        error: "#E10F2D", //Rare
     },
     highlights: {
-        errorBackground: "#ee4b6b81", //light red/pink
-        totalBorder: "#ac8400", //gold
-        autofillBackground: "#e5e4938c",//yellow
-        relatedBackground: "#97c4e45c"//light blue
+        errorBackground: "#ED858E",//Rare 2
+        totalBorder: "#C29207", //Runny Yolk 2
+        autofillBackground: "#FFF9A6",//Submarine 2
+        relatedBackground: "#BAE2E2"//Bora Bora 3
     },
     /* darkMode: {
         text: "#ffffff",
