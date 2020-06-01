@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.5';//increment me when publishing changes
+var version = "live Beta update " + '1.1.6';//increment me when publishing changes
 console.log("Version: ", version);
 
 //----------------------SECTION 0: GLOBAL VARIABLES
@@ -12,7 +12,7 @@ var theme = {
         text: "#000000",//Pitch
         border: "#262626",//dark grey
         inputBackground: "rgba(0, 0, 0, 0.06)",//light grey
-        helpText: "#009BB2", //Bora Bora
+        helpText: "#003170",//Double Denim 2
     },
     colours: {
         primary: "#000000",//darkest shade/colour: Pitch
