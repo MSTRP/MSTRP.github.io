@@ -1,8 +1,17 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.7';//increment me when publishing changes
+var version = "live Beta update " + '1.1.8';//increment me when publishing changes
 console.log("Version: ", version);
+
+
+//---------------------------Sections contents:
+//SECTION 0: GLOBAL VARIABLES
+//SECTION 1: Text and Formatting
+//SECTION 2: Display logic
+//SECTION 3: Buttons ans shortcuts
+//SECTION 4: WIDGETS
+
 
 //----------------------SECTION 0: GLOBAL VARIABLES
 //0) Mapping
@@ -923,6 +932,34 @@ var formatWC = function (selectors) {
     };
 };
 
+//Character counter
+var countText = function (selector) {
+    //use "textCount" class to identify where count is added
+
+    let field = jQuery(selector);
+    let target = jQuery(".textCount");
+
+    //get the number of characters entered:
+    let loadCount = function () {
+        return field.val().length;
+    };
+
+    //print count to question text:
+    let setCount = function () {
+        target.val(formatNumber(loadCount()));
+    };
+
+    setCount();//on load
+
+    //keyup
+    field.keyup(function () {
+        setCount();
+        if (loadCount >= 1000) {
+            alert("1000 characters used")
+        }
+    })
+};
+
 //6) theme formatting and functionality:
 //set organisation name if blank or updated:
 var setOrgName = function () {
@@ -1763,7 +1800,7 @@ var checkSkip2 = function (direction, target) {
     }
 };
 
-//---------------------SECTION: 4: WIDGETS ------------------
+//---------------------SECTION 4: WIDGETS ------------------
 
 //1) date picker:
 var loadDatePicker = function (question) {
