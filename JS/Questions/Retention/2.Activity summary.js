@@ -6,7 +6,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
 
 Qualtrics.SurveyEngine.addOnReady(function () {
     //----character limit
-    countText(".ChoiceStructure textarea")
+    countText(".ChoiceStructure textarea", 1000, ".textCount")
 });
 
 Qualtrics.SurveyEngine.addOnUnload(function () {

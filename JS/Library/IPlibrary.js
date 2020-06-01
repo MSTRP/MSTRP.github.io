@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.8.1';//increment me when publishing changes
+var version = "live Beta update " + '1.1.8.2';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -9,7 +9,7 @@ console.log("Version: ", version);
 //SECTION 0: GLOBAL VARIABLES
 //SECTION 1: Text and Formatting
 //SECTION 2: Display logic
-//SECTION 3: Buttons ans shortcuts
+//SECTION 3: Buttons and shortcuts
 //SECTION 4: WIDGETS
 
 
@@ -933,20 +933,23 @@ var formatWC = function (selectors) {
 };
 
 //Character counter
-var countText = function (selector) {
-    //use "textCount" class to identify where count is added
+var countText = function (selector, limit, target) {
+    //limit and target are optional
 
+    let Limit = (limit !== undefined) ? limit : 1000000000000;
     let field = jQuery(selector);
+    let showCount = (target !== undefined) ? jQuery(target) : "";
 
     //get the number of characters entered:
     let loadCount = function () {
-        console.log("length: ", field.val().length);
         return field.val().length;
     };
 
     //print count to question text:
     let setCount = function () {
-        jQuery(".textCount").text((formatNumber(loadCount())));
+        if (showCount.length > 0) {
+            jQuery(".textCount").text((formatNumber(loadCount())) + "/" + limit);
+        };
     };
 
     setCount();//on load
@@ -954,10 +957,10 @@ var countText = function (selector) {
     //keyup
     field.keyup(function () {
         setCount();
-        if (loadCount() >= 1000) {
-            alert("1000 characters used")
+        if (loadCount() >= Limit) {
+            alert("you have entered the maximum number of characters")
         }
-    })
+    });
 };
 
 //6) theme formatting and functionality:
