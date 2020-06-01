@@ -12,7 +12,7 @@ var theme = {
         text: "#000000",//Pitch
         border: "#262626",//dark grey
         inputBackground: "rgba(0, 0, 0, 0.06)",//light grey
-        helpText: "#003170",//Double Denim 2
+        helpText: "#F07F0A",//Amber Ale
     },
     colours: {
         primary: "#000000",//darkest shade/colour: Pitch
