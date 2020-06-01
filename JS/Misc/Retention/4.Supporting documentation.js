@@ -1,7 +1,7 @@
 Qualtrics.SurveyEngine.addOnload(function()
 {
 	//-----------Buttons:
-    nextbuttonDefault(sections.Submit);
+    nextbuttonDefault(sections.Submit2);
     prevbuttonDefault("Section 3: Supporting translation");
 });
 
