@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.3';//increment me when publishing changes
+var version = "live Beta update " + '1.1.4';//increment me when publishing changes
 console.log("Version: ", version);
 
 //----------------------SECTION 0: GLOBAL VARIABLES
@@ -1666,7 +1666,8 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
 var hotkeyNavigate = function (question) {
     //question = this
     let pressedKeys = [];//track pressed keys (and order pressed)
-    let input_fields = jQuery(".ChoiceStructure input");//select input fields
+    let input_fields = (jQuery(".ChoiceStructure input").length > 0)
+        ? jQuery(".ChoiceStructure input") : jQuery(".ChoiceStructure textarea");//select input fields
     //alert text:
     let warning = "You will need to complete this section, or any sections highlighted below before you submit your report";
 
@@ -1896,7 +1897,7 @@ var loadMenu = function (progressBartracker) {
 
     var menuButton = jQuery("#Logo img");
     var menuSwitch = "off";
-    var menuHeight = (jQuery("#reportTitle").text().includes("Retention"))? "233px": "343px";
+    var menuHeight = (jQuery("#reportTitle").text().includes("Retention")) ? "233px" : "343px";
     console.log("menuHeight: ", menuHeight);
     var menu = jQuery("#navOuter");
     var menuList = jQuery(".navTable");
@@ -1906,7 +1907,7 @@ var loadMenu = function (progressBartracker) {
         jQuery("#reportTitle"),//title
         menuButton//logo
     ];
-    
+
     //functions to open and close the menu:
     let showMenu = function () {
         //blur logo, page and title:
