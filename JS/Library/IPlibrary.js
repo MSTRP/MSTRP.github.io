@@ -11,6 +11,7 @@ console.log("Version: ", version);
 //SECTION 2: Display logic
 //SECTION 3: Buttons and shortcuts
 //SECTION 4: WIDGETS
+//Section 5: Question specific
 
 
 //----------------------SECTION 0: GLOBAL VARIABLES
@@ -2069,7 +2070,7 @@ var loadMenu = function (progressBartracker) {
     });
 };
 
-//--------------------Section X: Question specific
+//--------------------Section 5: Question specific
 //1) 3A buttons on click
 /* var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
 
