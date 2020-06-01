@@ -1898,7 +1898,6 @@ var loadMenu = function (progressBartracker) {
     var menuButton = jQuery("#Logo img");
     var menuSwitch = "off";
     var menuHeight = (jQuery("#reportTitle").text().includes("Retention")) ? "233px" : "343px";
-    console.log("menuHeight: ", menuHeight);
     var menu = jQuery("#navOuter");
     var menuList = jQuery(".navTable");
     //elements to be blurred as array:
