@@ -559,6 +559,9 @@ div #Footer {
         /* Allow the centering to work */
         margin: 0 auto;
 }
+.navTable, .footerNav{
+        width: 100%;
+}
 
 .footerNav {
         list-style: none;

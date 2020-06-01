@@ -1897,7 +1897,7 @@ var loadMenu = function (progressBartracker) {
 
     var menuButton = jQuery("#Logo img");
     var menuSwitch = "off";
-    var menuHeight = (jQuery("#reportTitle").text().includes("Retention")) ? "233px" : "343px";
+    var menuHeight = (jQuery("#reportTitle").text().includes("Retention")) ? "191px" : "343px";
     var menu = jQuery("#navOuter");
     var menuList = jQuery(".navTable");
     //elements to be blurred as array:
@@ -2010,6 +2010,7 @@ var loadMenu = function (progressBartracker) {
 
     //on click
     ptoggle.click(function () {
+        console.log("pb siwtch clicked");
         if (pbIO == "on") {
             progressBar.hide(100);
             //hide the progress bar
