@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.8';//increment me when publishing changes
+var version = "live Beta update " + '1.1.8.1';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -937,16 +937,16 @@ var countText = function (selector) {
     //use "textCount" class to identify where count is added
 
     let field = jQuery(selector);
-    let target = jQuery(".textCount");
 
     //get the number of characters entered:
     let loadCount = function () {
+        console.log("length: ", field.val().length);
         return field.val().length;
     };
 
     //print count to question text:
     let setCount = function () {
-        target.val(formatNumber(loadCount()));
+        jQuery(".textCount").text((formatNumber(loadCount())));
     };
 
     setCount();//on load
@@ -954,7 +954,7 @@ var countText = function (selector) {
     //keyup
     field.keyup(function () {
         setCount();
-        if (loadCount >= 1000) {
+        if (loadCount() >= 1000) {
             alert("1000 characters used")
         }
     })

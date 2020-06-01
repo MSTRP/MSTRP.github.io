@@ -5,7 +5,8 @@ Qualtrics.SurveyEngine.addOnload(function () {
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {
-    /*Place your JavaScript here to run when the page is fully displayed*/
+    //----character limit
+    countText(".ChoiceStructure textarea")
 });
 
 Qualtrics.SurveyEngine.addOnUnload(function () {
