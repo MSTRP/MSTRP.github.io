@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.8.2';//increment me when publishing changes
+var version = "live Beta update " + '1.1.8.3';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -949,17 +949,20 @@ var countText = function (selector, limit, target) {
     //print count to question text:
     let setCount = function () {
         if (showCount.length > 0) {
-            jQuery(".textCount").text((formatNumber(loadCount())) + "/" + limit);
+            jQuery(".textCount").text((formatNumber(loadCount())) + "/" + formatNumber(limit));
         };
     };
 
     setCount();//on load
 
-    //keyup
-    field.keyup(function () {
+    //update count when typing and alert if limit is reached 
+    //or delete isn't being pressed:
+    field.keyup(function (e) {
+        let deleting = (e.keyCode = 8) ? true : (e.keyCode = 46) ? true : false;
         setCount();
-        if (loadCount() >= Limit) {
-            alert("you have entered the maximum number of characters")
+        if (loadCount() >= Limit && deleting == false) {
+
+            alert("you have entered the maximum number of characters");
         }
     });
 };
