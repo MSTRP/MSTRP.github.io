@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.8.3';//increment me when publishing changes
+var version = "live Beta update " + '1.1.8.4';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -959,6 +959,9 @@ var countText = function (selector, limit, target) {
     //or delete isn't being pressed:
     field.keyup(function (e) {
         let deleting = (e.keyCode = 8) ? true : (e.keyCode = 46) ? true : false;
+        console.log("keycode", e.keyCode);
+        console.log("deleting: ",deleting);
+
         setCount();
         if (loadCount() >= Limit && deleting == false) {
 
