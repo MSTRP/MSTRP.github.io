@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.8.6';//increment me when publishing changes
+var version = "live Beta update " + '1.1.8.7';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -447,9 +447,9 @@ var getHighlight = function (item) {
 
 //*----------------------SECTION 1: Text and Formatting--------------------*/
 
-//  1) turn filters questionsentry field into numeral with currency
+//  1) turn filter question entry field into numeral with currency
 var currencyPounds1 = function (answerFieldi) {
-
+    //currencyPounds1(this); //<---run the programme
 
     let QID = answerFieldi.getQuestionInfo()["QuestionID"];
     //pull question id from qualtrics
@@ -481,7 +481,7 @@ var currencyPounds1 = function (answerFieldi) {
     });
 };
 
-//currencyPounds1(this); //<---run the programme
+
 
 //  3) numeral formatting for filter questions
 var formatNumeral = function (answerFieldi) {
@@ -516,7 +516,7 @@ var formatNumeral = function (answerFieldi) {
 
 /*formatNumeral(this); //run the programme*/
 
-// 4) General numberformatting :
+// 4) General number formatting :
 var englishPerecent = new Intl.NumberFormat('en-GB', { style: 'percent', maximumSignificantDigits: 3, maximumFractionDigits: 0, useGrouping: false }).format;
 //% format
 
@@ -539,7 +539,7 @@ var hoverMe = function (selector, colours) {
     });
 };
 
-//related inputs/general
+//-----related inputs/general
 var autofillCSS = function (selector) {
     selector.css("background-color", getHighlight("autofillBackground"));
     selector.css("color", getColour("secondary"))
@@ -572,8 +572,6 @@ var changeBorder = function (selector, colour) {
 var resetBorder = function (selector) {
     changeBorder(selector, getDefault("border"))
 };//reset input border to default
-
-
 
 
 //total
@@ -693,7 +691,7 @@ var removehighLight2 = function (border, background) {
 };
 //remove highlights - non active input
 
-//5) Animations:
+//------Animations:
 //border highlight
 var borderFlash = function (selector, flashColour) {
 
@@ -759,7 +757,7 @@ var borderFlash2 = function (hoverSelectors, flashColour, flashSelector) {
     }
 };
 
-//6) Question formatting:
+//------Question formatting:
 
 //total row styling and display:
 var totalRowFormat = function (non_blanks) {
@@ -812,7 +810,7 @@ var totalRowFormat = function (non_blanks) {
 };
 
 //total column styling and display
-var totalColumnFormat = function (hasTotal, columns, parentarray, ) {
+var totalColumnFormat = function (hasTotal, columns, parentarray,) {
     //has total = true for total row 
     //hasTotal = false for no total row
     //parent array is optional
@@ -960,7 +958,7 @@ var countText = function (selector, limit, target) {
     field.keyup(function (e) {
         let deleting = (e.keyCode == 8) ? true : (e.keyCode == 46) ? true : false;
         console.log("keycode", e.keyCode);
-        console.log("deleting: ",deleting);
+        console.log("deleting: ", deleting);
 
         setCount();
         if (loadCount() >= Limit && deleting == false) {
@@ -988,7 +986,7 @@ var setOrgName = function () {
         let defaultTitle = jQuery("#reportTitle").text().replace(placeholder, "");
         jQuery("#reportTitle").text(defaultTitle);
     };
-}
+};
 
 
 
@@ -1230,6 +1228,27 @@ var broswerAlert = function () {
         alert(text);
     };
 };
+
+//-------input-based Calculations:
+
+//field calculation: subtract
+//subtract inputted value from a "starting number" and update another field with that value
+//for fields with unique parents
+var fieldSub = function (calcField, targetField, startNumber) {
+    //calcField and targetField = input field parents
+    let input = inputSelect(jQuery(calcField));
+    let target = inputSelect(jQuery(targetField));
+
+    //subtract entered value from reference and print to target on keyup:
+    input.keyup(function () {
+        let field = jQuery(this);
+        let amount = field.val();
+        let unspent = startNumber.replace(/£|,/g, "") - amount.replace(/£|,/g, "");
+        target.val(englishPounds(unspent));
+        console.log("unspent: ", englishPounds(unspent));
+    });
+};
+
 /*----------------------SECTION 2: Display logic --------------------*/
 //1) hide rows 
 var hideRows = function (questionNumber, filters) {
