@@ -809,7 +809,13 @@ div #Footer {
 /*Response Summary*/
 
 @media screen and (max-width: 1399px) {
-        .ResponseSummary ~ .QuestionOuter :not(tbody) > textarea  {
+        .ResponseSummary ~ .QuestionOuter .ChoiceStructure:not(table) textarea   {
                 min-height: 200px !important;
+        }
+}
+
+@media screen and (min-width: 1400px) {
+        .ResponseSummary ~ .QuestionOuter .ChoiceStructure:not(table) textarea   {
+                min-height: 150px !important;
         }
 }
