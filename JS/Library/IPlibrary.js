@@ -1245,7 +1245,6 @@ var fieldSub = function (calcField, targetField, startNumber) {
         let amount = field.val();
         let unspent = startNumber.replace(/£|,/g, "") - amount.replace(/£|,/g, "");
         target.val(englishPounds(unspent));
-        console.log("unspent: ", englishPounds(unspent));
     });
 };
 
