@@ -8,7 +8,7 @@ Qualtrics.SurveyEngine.addOnReady(function () {
         currencyPounds1(this);
 
         //---------Calc unspent amounts
-        fieldCalc("#QID235", "#QID236", "${e://Field/Retained%20amount}");
+        fieldSub("#QID235", "#QID236", "${e://Field/Retained%20amount}");
 });
 
 Qualtrics.SurveyEngine.addOnUnload(function () {
