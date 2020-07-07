@@ -437,9 +437,15 @@ a[href] {
         color: var(--primaryColour);
 }
 
-a[href]:hover {
+a[href]:hover, a[href]:focus {
         text-decoration: underline;
         color: var(--helpText);
+}
+
+a[href]:focus {
+        outline-style: dashed;
+        outline-width: 2px;
+        outline-color: var(--helpText);
 }
 
 .headingBlank {
@@ -809,13 +815,13 @@ div #Footer {
 /*Response Summary*/
 
 @media screen and (max-width: 1399px) {
-        .ResponseSummary ~ .QuestionOuter .ChoiceStructure:not(table) textarea   {
+        .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) textarea {
                 min-height: 200px !important;
         }
 }
 
 @media screen and (min-width: 1400px) {
-        .ResponseSummary ~ .QuestionOuter .ChoiceStructure:not(table) textarea   {
+        .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) textarea {
                 min-height: 150px !important;
         }
 }
