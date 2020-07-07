@@ -1,6 +1,6 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //-----Button labels:
-    nextbuttonDefault(sections.Supporting);
+    nextbuttonDefault("Section 4: Expenditure breakdown and supporting documents");
     prevbuttonDefault("Section 2: Activity summary");
 });
 

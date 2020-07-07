@@ -1,11 +1,7 @@
 Qualtrics.SurveyEngine.addOnload(function () {
-    //-----------Buttons:
-    let next = "Submit2";
-    let details = "Supporting";
-
-    loadSwitch("next", [details, next],qFilters); //NEXT on load
-    clickSwitch([next, details], '#QID156', '1')//click switcher
-    prevbuttonDefault("Section 3: Supporting Translation");
+    //-----Button labels:
+    nextbuttonDefault(sections.Submit2);
+    prevbuttonDefault("Section 3: Supporting translation");
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {

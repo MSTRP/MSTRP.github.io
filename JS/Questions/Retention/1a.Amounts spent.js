@@ -1,6 +1,6 @@
 Qualtrics.SurveyEngine.addOnload(function () {
         /*Place your JavaScript here to run when the page loads*/
-        nextbuttonDefault("Activity summary");
+        nextbuttonDefault("Section 2: Activity summary");
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {
