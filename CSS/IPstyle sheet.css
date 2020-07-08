@@ -816,7 +816,7 @@ div #Footer {
 
 @media screen and (max-width: 1399px) {
         .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) textarea {
-                min-height: 200px !important;
+                min-height: 350px !important;
         }
 }
 
