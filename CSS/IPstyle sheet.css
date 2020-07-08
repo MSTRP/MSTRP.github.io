@@ -649,7 +649,7 @@ div #Footer {
         text-decoration: none;
 } */
 
-#NextButton:hover,#NextButton:focus #PreviousButton:hover, #PreviousButton:focus {
+#NextButton:hover,#NextButton:focus, #PreviousButton:hover, #PreviousButton:focus {
         color: white;
         box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.2), 0 5px 10px 0 rgba(0, 0, 0, 0.3);
         z-index: 100;
