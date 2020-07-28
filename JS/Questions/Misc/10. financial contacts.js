@@ -1,12 +1,12 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //---------------Buttons 
     nextbuttonDefault(sections.Eleven);
-    prevbuttonDefault("Financial Reporting info");
+    prevbuttonDefault(sections.Part2);
 });
 
 Qualtrics.SurveyEngine.addOnReady(function () {
     //--------clear trailing spaces on blur:	
-    cleanForm();
+    cleanForm(this);
 });
 
 Qualtrics.SurveyEngine.addOnUnload(function () {

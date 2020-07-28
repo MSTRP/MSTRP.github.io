@@ -6,7 +6,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
 
 Qualtrics.SurveyEngine.addOnReady(function () {
     //--------clear trailing spaces on blur:	
-    cleanForm();
+    cleanForm(this);
 });
 
 Qualtrics.SurveyEngine.addOnUnload(function () {
