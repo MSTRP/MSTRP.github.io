@@ -107,7 +107,7 @@ var filterNames = {
 };
 
 //references for question with string filter values
-var stringfilters = ["SixBD", "Supporting"];
+var stringfilters = ["SixBD", "Supporting", "TTO2"];
 
 //question table headings:
 var columnNames = {
@@ -1382,7 +1382,7 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
             var filter = (filterArray[buttoninfo[index]].length > 0) ? true : false;
             //do logical based on string length
 
-        } else if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] == "Supporting") {
+        } else if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] == "Supporting" || buttoninfo[index] == "TTO2") {
             var filter = (filterArray[buttoninfo[index]].includes("Yes")) ? true : false;
             //check filter for "yes"
         } else {
