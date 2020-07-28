@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.9.5';//increment me when publishing changes
+var version = "live Beta update " + '1.1.9.6';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -859,8 +859,8 @@ var totalColumnFormat = function (hasTotal, columns, parentarray,) {
 //clear trailing spaces for forms:
 var cleanForm = function (target) {
     //target = this
-    let me = jQuery("#" + target.questionId + " input[type=text]"/* ,InputText "*/);
-    me.on('blur', function () {
+    jQuery("#" + target.questionId + " input[type=text]").on('blur', function () {
+        let me = jQuery(this);
         let cleanEntry = me.val().replace(/\s+/g, '');
         me.val(cleanEntry);
     });
