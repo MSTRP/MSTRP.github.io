@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.9.6';//increment me when publishing changes
+var version = "live Beta update " + '1.1.9.7';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -861,7 +861,7 @@ var cleanForm = function (target) {
     //target = this
     jQuery("#" + target.questionId + " input[type=text]").on('blur', function () {
         let me = jQuery(this);
-        let cleanEntry = me.val().replace(/\s+/g, '');
+        let cleanEntry = me.val().trim();
         me.val(cleanEntry);
     });
 };
