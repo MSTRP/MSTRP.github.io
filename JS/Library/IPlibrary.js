@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.9.0';//increment me when publishing changes
+var version = "live Beta update " + '1.1.9.1';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -857,9 +857,10 @@ var totalColumnFormat = function (hasTotal, columns, parentarray,) {
 };
 
 //clear trailing spaces for forms:
-var cleanForm = function () {
-    jQuery("#" + this.questionId + " input[type=text],InputText").on('blur', function (e) {
-        this.value = this.value.trim();
+var cleanForm = function (target) {
+    //target = this
+    jQuery("#" + target.questionId + " input[type=text],InputText").on('blur', function (e) {
+        this.val(this.val().trim);
     });
 };
 
