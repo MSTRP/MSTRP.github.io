@@ -1,0 +1,60 @@
+:root {
+    --primaryColour: #000000;
+    --primaryTransparency: #0000009e;
+    --secondaryColour: #464749;
+    --secondaryTransparency: #46474985;
+    --tertiaryColour: #e0e0e0;
+    --primaryContrast: #ffffff; 
+    --helpText: #0000ff;
+    --pageWidth: calc(100% - 15px);
+}
+
+#Logo img{
+	box-shadow: none !important;
+    cursor: default !important;
+}
+
+#Logo img:hover, #Logo img:focus {
+       box-shadow: none !important;
+}
+.Skin .QuestionOuter.Matrix {
+    max-width: none !important;
+}
+
+.ChoiceRow:hover, .ChoiceRow:focus, .ChoiceRow:focus-within, .Skin label.SingleAnswer:hover, .Skin label.SingleAnswer:focus {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.ChoiceRow:focus-within {
+    background: var(--primaryColour);
+}
+
+.ChoiceRow:focus-within label {
+    color: var(--primaryContrast);
+}
+
+.ChoiceRow:focus-within input{
+    background-color: rgb(245, 245, 245) !important;
+    border-color: var(--primaryContrast) !important;
+}
+
+.ChoiceRow:focus-within:hover label{
+    color: black !important;
+}
+
+.ChoiceRow:focus-within:hover input {
+    border-color: var(--primaryColour) !important;
+}
+
+.Skin label.SingleAnswer.q-checked {
+    background-color: #c7c7c7 !important
+}
+
+fieldset input {
+        width: 800px !important;
+        margin-right: 15px !important;
+}
+
+fieldset label {
+	    font-size: 18px;
+}
