@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.9.1';//increment me when publishing changes
+var version = "live Beta update " + '1.1.9.2';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -860,7 +860,8 @@ var totalColumnFormat = function (hasTotal, columns, parentarray,) {
 var cleanForm = function (target) {
     //target = this
     jQuery("#" + target.questionId + " input[type=text],InputText").on('blur', function (e) {
-        this.val(this.val().trim);
+        let me = jQuery(this);
+        me.val(me.val().trim);
     });
 };
 
