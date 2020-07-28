@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.8.9';//increment me when publishing changes
+var version = "live Beta update " + '1.1.9.0';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1376,7 +1376,7 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
     //function to set filter logical
     let setFilter = function (index) {
 
-        if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] != "Supporting") {
+        if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] === "SixBD") {
             //if the current  button reference is in stringfilters
 
             var filter = (filterArray[buttoninfo[index]].length > 0) ? true : false;
