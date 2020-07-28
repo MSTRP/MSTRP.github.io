@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.9.3';//increment me when publishing changes
+var version = "live Beta update " + '1.1.9.4';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -859,10 +859,11 @@ var totalColumnFormat = function (hasTotal, columns, parentarray,) {
 //clear trailing spaces for forms:
 var cleanForm = function (target) {
     //target = this
-    jQuery("#" + target.questionId + " input[type=text],InputText").on('blur', function (e) {
-        let me = jQuery(this);
-        let entry = me.val();
-        me.val(entry.trim);
+
+    let me = jQuery("#" + target.questionId + " input[type=text],InputText");
+    me.on('blur', function (e) {
+        let cleanEntry = me.val().replace(/\s+/g, "");
+        me.val(cleanEntry);
     });
 };
 
@@ -1736,7 +1737,7 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
 var hotkeyNavigate = function (question, Enablewarning) {
     //question = this
     //EnableWarning = Boolean
-    let warn = (Enablewarning == undefined)? true : false;
+    let warn = (Enablewarning == undefined) ? true : false;
     let pressedKeys = [];//track pressed keys (and order pressed)
     let input_fields = jQuery(".ChoiceStructure input");/* (jQuery(".ChoiceStructure input").length > 0)
         ? jQuery(".ChoiceStructure input") : jQuery(".ChoiceStructure textarea") */;//select input fields
