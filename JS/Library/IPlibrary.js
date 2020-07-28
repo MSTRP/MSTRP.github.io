@@ -75,7 +75,8 @@ var sections = {
     Supporting: "Upload Supporting Documents",
     Submit: "Completion Checklist",
     Submit2: "Summary of responses",
-    End: "Submit report"
+    End: "Submit report",
+    TTO2: "Financial contact information"
 };
 
 var filterNames = {
