@@ -6,6 +6,7 @@ Qualtrics.SurveyEngine.addOnReady(function () {
     //-----Button labels:
     nextbuttonDefault(sections.End2);
     prevbuttonDefault('Key contact information');
+    jQuery("#NextButton").css("background-color", "blue");
 
     //--------clear trailing spaces on blur:	
 	cleanForm(this);
