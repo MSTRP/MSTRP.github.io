@@ -76,6 +76,7 @@ var sections = {
     Submit: "Completion Checklist",
     Submit2: "Summary of responses",
     End: "Submit report",
+    End2: "Submit",
     TTO2: "Financial contact information"
 };
 
@@ -1729,8 +1730,10 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
 //3) nav & shortcuts:
 //navigation hot keys
 
-var hotkeyNavigate = function (question) {
+var hotkeyNavigate = function (question, Enablewarning) {
     //question = this
+    //EnableWarning = Boolean
+    let warn = (Enablewarning == undefined)? true : false;
     let pressedKeys = [];//track pressed keys (and order pressed)
     let input_fields = jQuery(".ChoiceStructure input");/* (jQuery(".ChoiceStructure input").length > 0)
         ? jQuery(".ChoiceStructure input") : jQuery(".ChoiceStructure textarea") */;//select input fields
@@ -1742,7 +1745,7 @@ var hotkeyNavigate = function (question) {
         switch (jQuery(".matrixQText").length) {
             case 0: //for non-detail questions
                 let blank_inputs = filterBlanks(input_fields).length;
-                if (blank_inputs > 0 && jQuery(".guidancePage").length < 1) {
+                if (blank_inputs > 0 && jQuery(".guidancePage").length < 1 && warn === true) {
                     pressedKeys = [];
                     alert(warning);//give completion warning
                 };
