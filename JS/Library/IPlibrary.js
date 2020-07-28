@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.8.8';//increment me when publishing changes
+var version = "live Beta update " + '1.1.8.9';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1382,7 +1382,7 @@ var loadSwitch = function (direction, buttoninfo, filterArray) {
             var filter = (filterArray[buttoninfo[index]].length > 0) ? true : false;
             //do logical based on string length
 
-        } else if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] == "Supporting" || stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] == "TTO2") {
+        } else if (stringfilters.indexOf(buttoninfo[index]) > -1 && buttoninfo[index] !== "SixBD") {
             var filter = (filterArray[buttoninfo[index]].includes("Yes")) ? true : false;
             //check filter for "yes"
         } else {
