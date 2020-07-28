@@ -6,12 +6,9 @@ Qualtrics.SurveyEngine.addOnload(function () {
 
 Qualtrics.SurveyEngine.addOnReady(function () {
 	//--------clear trailing spaces on blur:	
-	cleanForm();
+	cleanForm(this);
 });
 
 Qualtrics.SurveyEngine.addOnUnload(function () {
-	console.log("unload");
-	
-	//--------Set organisation if blank (for generic links):
-	setOrgName();
+	/*Place your JavaScript here to run when the page is unloaded*/
 });

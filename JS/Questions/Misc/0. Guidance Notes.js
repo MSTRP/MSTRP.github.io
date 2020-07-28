@@ -1,6 +1,6 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //-----------Buttons:
-    nextbuttonDefault('Begin e-report');
+    nextbuttonDefault('Begin report');
 });
 Qualtrics.SurveyEngine.addOnReady(function () {
     /*Place your JavaScript here to run when the page is fully displayed*/
