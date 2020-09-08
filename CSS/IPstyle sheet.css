@@ -834,6 +834,10 @@ div #Footer {
         max-width: 1399px;
 }
 
+.ResponseSummary~.QuestionOuter.FileUpload .dropzone {
+        max-width: 1080px;
+}
+
 .ResponseSummary~div .SBSMatrix {
         max-width: min-content;
 }
