@@ -818,21 +818,34 @@ div #Footer {
         .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) textarea {
                 min-height: 350px !important;
         }
-
 }
 
 @media screen and (min-width: 1400px) {
         .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) textarea {
                 min-height: 150px !important;
         }
-        
+}
+
+.ResponseSummary~.QuestionOuter {
+        min-width: min-content;
+}
+
+.ResponseSummary~.QuestionOuter.TE, .ResponseSummary~.QuestionOuter .FileUpload, .ResponseSummary~.QuestionOuter .question_Text, .ResponseSummary~.QuestionOuter .matrixQText {
+        max-width: 1399px;
 }
 
 .ResponseSummary~div .SBSMatrix {
         max-width: min-content;
 }
 
-.ResponseSummary .fieldset {
+.ResponseSummary~.QuestionOuter .fieldset {
         max-width: min-content;
+}
 
+.ResponseSummary~.QuestionOuter .matrixQText {
+        display: block;
+}
+
+.ResponseSummary~.QuestionOuter .preCompletion {
+        display: none;
 }
