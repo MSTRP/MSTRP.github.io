@@ -826,11 +826,11 @@ div #Footer {
         }
 }
 
-.ResponseSummary~.QuestionOuter {
+.ResponseSummary~.QuestionOuter, .ResponseSummary~.QuestionOuter .Inner  {
         min-width: min-content;
 }
 
-.ResponseSummary~.QuestionOuter.TE, .ResponseSummary~.QuestionOuter .FileUpload, .ResponseSummary~.QuestionOuter .question_Text, .ResponseSummary~.QuestionOuter .matrixQText {
+.ResponseSummary~.QuestionOuter.TE, .ResponseSummary~.QuestionOuter .FileUpload, .ResponseSummary~.QuestionOuter .question_Text, .ResponseSummary~.QuestionOuter .matrixQText > div:first-of-type{
         max-width: 1399px;
 }
 
@@ -853,3 +853,4 @@ div #Footer {
 .ResponseSummary~.QuestionOuter .preCompletion {
         display: none;
 }
+
