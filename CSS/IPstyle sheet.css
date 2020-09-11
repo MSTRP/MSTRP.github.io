@@ -826,7 +826,7 @@ div #Footer {
         }
 }
 
-.ResponseSummary~.QuestionOuter, .ResponseSummary~.QuestionOuter .Inner  {
+.ResponseSummary~.QuestionOuter, .ResponseSummary~.QuestionOuter .Inner, .ResponseSummary~.QuestionOuter .matrixQText, .ResponseSummary~div .SBSMatrix, .ResponseSummary~.QuestionOuter .fieldset  {
         min-width: min-content;
 }
 
@@ -838,14 +838,14 @@ div #Footer {
         max-width: 1080px;
 }
 
-.ResponseSummary~div .SBSMatrix {
+/* .ResponseSummary~div .SBSMatrix {
         max-width: min-content;
 }
+ */
 
-
-.ResponseSummary~.QuestionOuter .fieldset {
+/* .ResponseSummary~.QuestionOuter .fieldset {
         max-width: min-content;
-}
+} */
 
 .ResponseSummary~.QuestionOuter .matrixQText {
         display: block;
