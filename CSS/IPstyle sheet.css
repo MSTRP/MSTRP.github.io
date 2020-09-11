@@ -826,11 +826,15 @@ div #Footer {
         }
 }
 
-.ResponseSummary~.QuestionOuter, .ResponseSummary~.QuestionOuter .Inner, .ResponseSummary~.QuestionOuter .matrixQText, .ResponseSummary~div .SBSMatrix, .ResponseSummary~.QuestionOuter .fieldset  {
+.ResponseSummary~.QuestionOuter .Inner, .ResponseSummary~.QuestionOuter .matrixQText, .ResponseSummary~div .SBSMatrix, .ResponseSummary~.QuestionOuter .fieldset {
         min-width: min-content;
 }
 
-.ResponseSummary~.QuestionOuter.TE, .ResponseSummary~.QuestionOuter .FileUpload, .ResponseSummary~.QuestionOuter .question_Text, .ResponseSummary~.QuestionOuter .matrixQText > div:first-of-type{
+.ResponseSummary~.QuestionOuter {
+        min-width: max-content;
+}
+
+.ResponseSummary~.QuestionOuter.TE, .ResponseSummary~.QuestionOuter .FileUpload, .ResponseSummary~.QuestionOuter .question_Text, .ResponseSummary~.QuestionOuter .matrixQText>div:first-of-type {
         max-width: 1399px;
 }
 
@@ -838,14 +842,6 @@ div #Footer {
         max-width: 1080px;
 }
 
-/* .ResponseSummary~div .SBSMatrix {
-        max-width: min-content;
-}
- */
-
-/* .ResponseSummary~.QuestionOuter .fieldset {
-        max-width: min-content;
-} */
 
 .ResponseSummary~.QuestionOuter .matrixQText {
         display: block;
@@ -854,4 +850,3 @@ div #Footer {
 .ResponseSummary~.QuestionOuter .preCompletion {
         display: none;
 }
-
