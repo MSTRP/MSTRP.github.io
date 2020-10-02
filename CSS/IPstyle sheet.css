@@ -850,3 +850,9 @@ div #Footer {
 .ResponseSummary~.QuestionOuter .preCompletion {
         display: none;
 }
+
+@media print {
+      @page {
+              size: A3 landscape;
+      }  
+}
