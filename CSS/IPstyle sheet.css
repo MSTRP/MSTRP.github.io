@@ -753,9 +753,9 @@ div #Footer {
         color: var(--tertiaryColour)
 }
 
-.ResponseSummary .DownloadResponsesPDF {
+/* .ResponseSummary .DownloadResponsesPDF {
         display: none;
-}
+} */
 
 .FileUploadName {
         float: left;
@@ -842,7 +842,6 @@ div #Footer {
         max-width: 1080px;
 }
 
-
 .ResponseSummary~.QuestionOuter .matrixQText {
         display: block;
 }
@@ -852,7 +851,7 @@ div #Footer {
 }
 
 @media print {
-      @page {
-              size: A3 landscape;
-      }  
+        @page {
+                size: A3 landscape;
+        }
 }
