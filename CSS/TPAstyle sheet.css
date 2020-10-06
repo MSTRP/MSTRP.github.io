@@ -1,0 +1,18 @@
+#Logo img{
+	box-shadow: none !important;
+    cursor: default !important;
+}
+
+#Logo img:hover, #Logo img:focus {
+       box-shadow: none !important;
+}
+
+.ChoiceStructure textarea{
+    min-width: 1200px;
+    min-height: 150px;
+}
+
+.ResponseSummary .DownloadResponsesPDF {
+    display: block !important;
+}
+

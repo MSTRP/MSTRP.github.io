@@ -1,0 +1,45 @@
+<!--IP Library-->
+<script type="text/javascript"
+    src="https://raw.githack.com/MSTRP/MSTRP.github.io/master/JS/Library/IPlibrary.js"></script>
+
+<div id="hideThis">
+    <div class="reportTitleContainer">
+        <span id="reportTitle" style="text-align: center;">Translational Partnership Award Annual Report</span>
+    </div>
+</div>
+<script>
+    var countWords = function (s) {
+        s = s.replace(/\n/g, ' '); // newlines to space
+        s = s.replace(/(^\s*)|(\s*$)/gi, ''); // remove spaces from start + end
+        s = s.replace(/[ ]{2,}/gi, ' '); // 2 or more spaces to 1a
+        if (s == '') {
+            return 0;
+        } else {
+            return s.split(' ').length;
+        }
+    };
+    Qualtrics.SurveyEngine.addOnload(function () {
+        //------Browser check
+        if (jQuery("#Guidance_NOTES").length > 0) { broswerAlert(); };
+        //------------page loading
+        if (jQuery("#hideHeaderText").length > 0) { jQuery("#hideThis").hide(); };
+        loadPage();//show questions
+        loadScrollPosition(0);//load page at scroll top
+        //-------Button labels
+        navlabels();
+    });
+
+    Qualtrics.SurveyEngine.addOnReady(function () {
+        //---------Menu
+        menuScroll(); //shadow when scrolling 
+        //---------Hotkey Navigate ---- ADD ON READY
+        hotkeyNavigate(this, false);
+        //----Response Summary Buttons:
+        if (jQuery(".ResponseSummary").length > 0) {
+            prevbuttonDefault('Edit report');
+            nextbuttonDefault("Submit report");
+            jQuery("#NextButton").css("background-color", "blue");
+            jQuery("#NextButton").attr('title', "Submit Report"); //blue submit button
+        };
+    });
+</script>
