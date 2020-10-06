@@ -852,6 +852,17 @@ div #Footer {
 
 @media print {
         @page {
-                size: A3 landscape;
+                size: landscape;
+        }
+
+        .ResponseSummary~.QuestionOuter {
+                size: A3;
+        }
+        #ResponseSummaryHeader, #EndOfSurvey{
+                display: none;
+        }
+
+        .ResponseSummary~.Separator{
+                display: none;
         }
 }
