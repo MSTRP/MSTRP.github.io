@@ -535,9 +535,11 @@ a[href]:focus {
         top: 0;
         width: 100%
 }
+.Button {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
 
 #PreviousButton, #NextButton {
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
         position: relative;
         bottom: 10px;
         z-index: 100;
@@ -648,16 +650,18 @@ div #Footer {
 /* #Footer .contact a:link, #Footer .contact a:visited {
         text-decoration: none;
 } */
+.Button:hover, .Button:focus{
+        color: white;
+        background-color: var(--secondaryColour) !important;  /* override the inbuilt media queries*/
+        cursor: pointer;
+}
 
 #NextButton:hover, #NextButton:focus, #PreviousButton:hover, #PreviousButton:focus {
-        color: white;
         box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.2), 0 5px 10px 0 rgba(0, 0, 0, 0.3);
         z-index: 100;
         animation-name: raise;
         animation-duration: 100ms;
-        bottom: 13px;
-        background-color: var(--secondaryColour) !important;
-        /* over ride the inbuild media queries*/
+        bottom: 13px;      
 }
 
 @keyframes raise {
@@ -753,9 +757,17 @@ div #Footer {
         color: var(--tertiaryColour)
 }
 
-/* .ResponseSummary .DownloadResponsesPDF {
+.ResponseSummary {
         display: none;
-} */
+}
+
+.Skin #EndOfSurvey {
+        border: 1px solid #aaa;
+        border-width: 1px 0;
+        background: rgba(0, 0, 0, .06);
+        padding: 20px;
+        box-shadow: inset 0px -1px 1px rgba(0, 0, 0, 0.19), inset 0px 1px 1px rgba(0, 0, 0, 0.19);
+}
 
 .FileUploadName {
         float: left;
@@ -851,18 +863,16 @@ div #Footer {
 }
 
 @media print {
-        @page {
+        /*   @page {
                 size: landscape;
-        }
-
+        } */
         .ResponseSummary~.QuestionOuter {
-                size: A3;
+                size: A1 portrait;
         }
-        #ResponseSummaryHeader, #EndOfSurvey{
+        #ResponseSummaryHeader, #EndOfSurvey {
                 display: none;
         }
-
-        .ResponseSummary~.Separator{
+        .ResponseSummary~.Separator {
                 display: none;
         }
 }
