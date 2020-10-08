@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.9.7';//increment me when publishing changes
+var version = "live Beta update " + '1.1.9.8';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -43,6 +43,15 @@ var theme = {
         canvas: "#313131",
     } */
 };
+
+//menu blur elements:
+//elements to be blurred as array:
+var blurElements = [
+    jQuery("#SkinContent"),//page
+    jQuery("#reportTitle"),//title
+    jQuery("#Logo img")//logo
+];
+
 
 //section headings
 var sections = {
@@ -693,6 +702,19 @@ var removehighLight2 = function (border, background) {
 };
 //remove highlights - non active input
 
+//blur page:
+var pageBLur = function () {
+    for (let element of blurElements) {
+        element.css("filter", "blur(3px)");
+    };
+};
+
+var pageClear = function () {
+    for (let element of blurElements) {
+        element.css("filter", "none");
+    };
+};
+
 //------Animations:
 //border highlight
 var borderFlash = function (selector, flashColour) {
@@ -1251,6 +1273,20 @@ var fieldSub = function (calcField, targetField, startNumber) {
         let unspent = startNumber.replace(/£|,/g, "") - amount.replace(/£|,/g, "");
         target.val(englishPounds(unspent));
     });
+};
+
+//-------print formatting:
+var nullTag = function () {
+    let input = jQuery(".ChoiceStructure:not(table) input");
+    let wrappers = jQuery(".QuestionOuter");
+    // add non-null class to question wrapper where the input value is not 0
+    if (checkBlank(input.val()) === "Blank") {
+        for (let wrapper of wrappers) {
+            if (input.attr("id").indexOf(jQuery(wrapper).attr("id")) > -1) {
+                jQuery(wrapper).addClass("non-null");
+            };
+        };
+    };
 };
 
 /*----------------------SECTION 2: Display logic --------------------*/
@@ -1835,6 +1871,12 @@ var checkSkip2 = function (direction, target) {
     }
 };
 
+//4 page printing:
+var printPage = function () {
+    pageClear();
+    window.print();
+}
+
 //---------------------SECTION 4: WIDGETS ------------------
 
 //1) date picker:
@@ -1972,32 +2014,19 @@ var loadMenu = function (progressBartracker) {
     var menuHeight = (jQuery("#reportTitle").text().includes("Retention")) ? "191px" : "343px";
     var menu = jQuery("#navOuter");
     var menuList = jQuery(".navTable");
-    //elements to be blurred as array:
-    let blurElements = [
-        jQuery("#SkinContent"),//page
-        jQuery("#reportTitle"),//title
-        menuButton//logo
-    ];
 
     //functions to open and close the menu:
     let showMenu = function () {
-        //blur logo, page and title:
-        for (let element of blurElements) {
-            element.css("filter", "blur(3px)");
-        };
         //show menu animations:
+        pageBLur();
         menu.css("display", "inline-block").fadeIn("100");//make menu visible
         menu.animate({ height: menuHeight, display: 'inline-block' }, 250);//open menu container
         menuList.show(200);//show menu items
         menuSwitch = "on";//set switch status to on
     };
     let hideMenu = function () {
-
-        //remove blur from logo, page and title:
-        for (let element of blurElements) {
-            element.css("filter", "none");
-        };
         //close menu animations:
+        pageClear();
         menuList.hide();//hide menu items
         menu.animate({ height: '0px' }, 100);//close menu container
         menuSwitch = "off"; //set switch status to off
