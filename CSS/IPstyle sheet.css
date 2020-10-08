@@ -535,6 +535,7 @@ a[href]:focus {
         top: 0;
         width: 100%
 }
+
 .Button {
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
@@ -588,7 +589,7 @@ div #Footer {
         height: 9px;
 }
 
-#navOuter a, #pdButton, .navElement3 {
+#navOuter a, #pdButton, .navElement3, #printPage {
         color: rgb(255, 255, 255);
         font-weight: bold;
 }
@@ -650,9 +651,11 @@ div #Footer {
 /* #Footer .contact a:link, #Footer .contact a:visited {
         text-decoration: none;
 } */
-.Button:hover, .Button:focus{
+
+.Button:hover, .Button:focus {
         color: white;
-        background-color: var(--secondaryColour) !important;  /* override the inbuilt media queries*/
+        background-color: var(--secondaryColour) !important;
+        /* override the inbuilt media queries*/
         cursor: pointer;
 }
 
@@ -661,7 +664,7 @@ div #Footer {
         z-index: 100;
         animation-name: raise;
         animation-duration: 100ms;
-        bottom: 13px;      
+        bottom: 13px;
 }
 
 @keyframes raise {
@@ -722,6 +725,11 @@ div #Footer {
         filter: blur(2px);
         -webkit-filter: opacity(70%);
         filter: opacity(70%);
+}
+
+.declarationWrapper {
+        text-align: -webkit-center;
+        text-align: center;
 }
 
 .matrixQText {
@@ -866,13 +874,24 @@ div #Footer {
         /*   @page {
                 size: landscape;
         } */
+        body {
+                transform: scale(.7);
+        }
+        table {
+                page-break-inside: avoid;
+        }
         .ResponseSummary~.QuestionOuter {
                 size: A1 portrait;
+                page-break-inside: avoid;
+                page-break-after: always;
         }
-        #ResponseSummaryHeader, #EndOfSurvey {
+        .ResponseSummary~.QuestionOuter:not(.FileUpload, ) {
+                page-break-after: always;
+        }
+        #ResponseSummaryHeader, #EndOfSurvey, .navOuter,.ResponseSummary~.Separator, .non-null {
                 display: none;
         }
-        .ResponseSummary~.Separator {
-                display: none;
-        }
+            /* .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) input {
+
+        } */
 }
