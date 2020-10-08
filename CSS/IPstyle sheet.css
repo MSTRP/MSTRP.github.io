@@ -871,12 +871,63 @@ div #Footer {
 }
 
 @media print {
-        /*   @page {
+        .Skin, #SkinContent {
+                width: 100%;
+                margin: 0;
+                float: none;
+        }
+        .Skin #SkinContent, div .SBSMatrix, .matrixQText {
+                max-width: none;
+        }
+        @page {
                 size: landscape;
-        } */
+                margin: 2cm;
+        }
         body {
                 transform: scale(.7);
+                font: 12pt arial;
+                line-height: 1.3;
         }
+        a:link, a:visited, a {
+                background: transparent;
+                color: var(--helpText);
+                font-weight: bold;
+                text-decoration: underline;
+                text-align: left;
+        }
+        a {
+                page-break-inside: avoid
+        }
+        a[href^=http]:after {
+                content: " < " attr(href) "> ";
+        }
+        /*  $a:after > img {
+                   content: "";
+                }
+                 */
+        /*  article a[href^="#"]:after {
+                   content: "";
+                } */
+        a:not(:local-link):after {
+                content: " < " attr(href) "> ";
+        }
+        /*    #SkinContent {
+                top: 115px;
+        } */
+        .QuestionOuter {
+                size: A2 landscape;
+        }
+        /*       #LogoContainer {
+                background-color: unset;
+                box-shadow: unset;
+        } */
+        /*  #Logo{
+                margin: unset;
+        } */
+        /*    #Logo img {
+                filter: invert(1);
+                height: 67pt;
+        } */
         table {
                 page-break-inside: avoid;
         }
@@ -885,13 +936,17 @@ div #Footer {
                 page-break-inside: avoid;
                 page-break-after: always;
         }
-        .ResponseSummary~.QuestionOuter:not(.FileUpload, ) {
+        .ResponseSummary~.QuestionOuter:not(.FileUpload, #QID4, #QID17, #QID64, #QID67) {
                 page-break-after: always;
         }
-        #ResponseSummaryHeader, #EndOfSurvey, .navOuter,.ResponseSummary~.Separator, .non-null {
+        #ResponseSummaryHeader, #EndOfSurvey, .navOuter, .ResponseSummary~.Separator, .non-null, .QuestionOuter.FileUpload, #QID17/* new transaction upload header */
+        , #QID64/* declaration downloads */
+        , #QID67/* declaration upload */
+        , #QID70/* supporting docs */
+        , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track {
                 display: none;
         }
-            /* .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) input {
+        /* .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) input {
 
         } */
 }
