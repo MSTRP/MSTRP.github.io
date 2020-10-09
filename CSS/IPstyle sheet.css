@@ -881,7 +881,7 @@ div #Footer {
         }
         @page {
                 size: landscape;
-                margin: 2cm;
+                margin: 2cm !important;
         }
         body {
                 transform: scale(.7);
