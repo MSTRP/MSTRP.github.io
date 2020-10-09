@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.0.0';//increment me when publishing changes
+var version = "live Beta update " + '1.2.0.1';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -2034,7 +2034,7 @@ var loadMenu = function (progressBartracker) {
     };
 
     //button switch
-   menu.menu.Button.on({
+   menu.Button.on({
         click: function () {
             if (menuSwitch == "off" && jQuery("#EndOfSurvey").length == 0
                 && jQuery(".ResponseSummary").length == 0) {
