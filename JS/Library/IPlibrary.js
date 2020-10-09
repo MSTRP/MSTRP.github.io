@@ -45,12 +45,6 @@ var theme = {
 };
 
 //menu blur elements:
-//elements to be blurred as array:
-var blurElements = [
-    jQuery("#SkinContent"),//page
-    jQuery("#reportTitle"),//title
-    jQuery("#Logo img")//logo
-];
 
 
 //section headings
@@ -704,13 +698,13 @@ var removehighLight2 = function (border, background) {
 
 //blur page:
 var pageBLur = function () {
-    for (let element of blurElements) {
+    for (let element of menu.blurElements) {
         element.css("filter", "blur(3px)");
     };
 };
 
 var pageClear = function () {
-    for (let element of blurElements) {
+    for (let element of menu.blurElements) {
         element.css("filter", "none");
     };
 };
@@ -1873,7 +1867,8 @@ var checkSkip2 = function (direction, target) {
 
 //4 page printing:
 var printPage = function () {
-    pageClear();
+    pageClear(menu.blurElements);
+    hideMenu("on");
     window.print();
 }
 
@@ -2005,91 +2000,88 @@ var setHoverText = function (question, filterlist) {
 };
 
 //3 menu button
+var menu = {
+    Button: jQuery("#Logo img"),
+    Height: (jQuery("#reportTitle").text().includes("Retention")) ? "191px" : "343px",
+    menu: jQuery("#navOuter"),
+    List: jQuery(".navTable"),
+    blurElements: [
+        jQuery("#SkinContent"),//page
+        jQuery("#reportTitle"),//title
+        jQuery("#Logo img")//logo
+    ]
+};
+//functions to open and close the menu:
+var showMenu = function (Mswitch) {
+    //show menu animations:
+    pageBLur();
+    menu.menu.css("display", "inline-block").fadeIn("100");//make menu visible
+    menu.menu.animate({ height: menu.Height, display: 'inline-block' }, 250);//open menu container
+    menu.List.show(200);
+    Mswitch = "on";
+};
+var hideMenu = function (Mswitch) {
+    //close menu animations:
+
+    pageClear();
+    menu.List.hide();//hide menu items
+    menu.menu.animate({ height: '0px' }, 100);
+    Mswitch = "off";
+};
 var loadMenu = function (progressBartracker) {
     //progressbar tracker =  piped text code for embeded data used to track of//on status
     //accepts string values "off" and "on". default value is "on"
-
-    var menuButton = jQuery("#Logo img");
-    var menuSwitch = "off";
-    var menuHeight = (jQuery("#reportTitle").text().includes("Retention")) ? "191px" : "343px";
-    var menu = jQuery("#navOuter");
-    var menuList = jQuery(".navTable");
-
-    //functions to open and close the menu:
-    let showMenu = function () {
-        //show menu animations:
-        pageBLur();
-        menu.css("display", "inline-block").fadeIn("100");//make menu visible
-        menu.animate({ height: menuHeight, display: 'inline-block' }, 250);//open menu container
-        menuList.show(200);//show menu items
-        menuSwitch = "on";//set switch status to on
-    };
-    let hideMenu = function () {
-        //close menu animations:
-        pageClear();
-        menuList.hide();//hide menu items
-        menu.animate({ height: '0px' }, 100);//close menu container
-        menuSwitch = "off"; //set switch status to off
-    };
+    let menuSwitch = "off";
 
     //button switch
-    menuButton.on({
+    menu.Button.on({
         click: function () {
 
             if (menuSwitch == "off" && jQuery("#EndOfSurvey").length == 0
                 && jQuery(".ResponseSummary").length == 0) {
                 //doesn't load on response summary and end of survey pages
-
-                showMenu();//load the menu
-
+                showMenu(menuSwitch);
             } else if (menuSwitch == "on") {
-
-                hideMenu(); //close the menu
+                hideMenu(menuSwitch);
             }
         }
     });
 
     //hide menu when leaving the menu with mouse
     menu.mouseleave(function () {
-        hideMenu();//close menu
+        hideMenu(menuSwitch);
     });
 
     //hide menu when click outside of menu
     jQuery(document).mouseup(e => {
-        if (!menu.is(e.target) // if the target of the click isn't the container...
-            && menu.has(e.target).length === 0 // ... nor a descendant of the container
-            && !menuButton.is(e.target)) //nor the menu button
-        {
-            hideMenu(); //close menu
-        }
+        if (!menu.menu.is(e.target) // if the target of the click isn't the container...
+            && menu.menu.has(e.target).length === 0 // ... nor a descendant of the container
+            && !menu.Button.is(e.target)) //nor the menu button
+        { hideMenu(menuSwitch); };
     });
 
 
     //Progressbar show-hide
-    var pbIO = progressBartracker;
+    let pbIO = progressBartracker;
     //get progress bar setting on load (default is on)
 
     //selectors
-    var ptoggle = jQuery("#pdButton");//wrapper
-    var toggleSwitch = jQuery("#toggle-switcher"); //toggle
-    var toggleArea = jQuery(".toggle-button");//toggle track
-    var progressBar = jQuery(".ProgressBarContainer");//progress bar
+    let ptoggle = jQuery("#pdButton");//wrapper
+    let toggleSwitch = jQuery("#toggle-switcher"); //toggle
+    let toggleArea = jQuery(".toggle-button");//toggle track
+    let progressBar = jQuery(".ProgressBarContainer");//progress bar
 
     //toggle actions
     let offPosition = function () {
-        //make toggle track white
+        //make toggle track white + move switcher to right
         toggleArea.css("background-color", "white");
-
-        //move toggle switcher to right
         toggleSwitch.css("background-color", "#f1f1f1");
         toggleSwitch.css("left", "0");
     };
 
     let onPosition = function () {
-        //make toggle track dark green 
+        //make toggle track theme secondary colour green + move switcher to left
         toggleArea.css("background-color", getColour("secondary"));
-
-        //move toggle switcher to left
         toggleSwitch.css("background-color", getColour("secondary"));
         toggleSwitch.css("left", "16px");
     };
@@ -2097,16 +2089,11 @@ var loadMenu = function (progressBartracker) {
 
     //on load
     if (pbIO == "on") {
-        //if progress bar was last set to visible
-
-        progressBar.show();//show the progressbar
-        onPosition(); //set toggle to "on" position
-
+        progressBar.show();
+        onPosition();
     } else if (pbIO == "off") {
-        //otherwise if it was last set to off
-
-        progressBar.hide(); //hide the progress bar
-        offPosition(); //set toggle to "off" position
+        progressBar.hide();
+        offPosition();
     };
 
     //on click
@@ -2114,15 +2101,13 @@ var loadMenu = function (progressBartracker) {
         console.log("pb siwtch clicked");
         if (pbIO == "on") {
             progressBar.hide(100);
-            //hide the progress bar
-            offPosition();//set toggle to "off" position
+            offPosition();
             pbIO = "off";
             Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
             //send value to embedded data 
         } else if (pbIO == "off") {
             progressBar.show(200);
-            //show the progress bar
-            onPosition(); //set toggle to "on" position
+            onPosition();
             pbIO = "on";
             Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
             //send value to embedded data 
