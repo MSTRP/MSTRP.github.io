@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.1.9.9';//increment me when publishing changes
+var version = "live Beta update " + '1.2.0.0';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1867,10 +1867,10 @@ var checkSkip2 = function (direction, target) {
 
 //4 page printing:
 var printPage = function () {
-    pageClear(menu.blurElements);
-    hideMenu("on");
+    pageClear();
+    menu.menu.hide()
     window.print();
-}
+};
 
 //---------------------SECTION 4: WIDGETS ------------------
 
@@ -2011,45 +2011,44 @@ var menu = {
         jQuery("#Logo img")//logo
     ]
 };
-//functions to open and close the menu:
-var showMenu = function (Mswitch) {
-    //show menu animations:
-    pageBLur();
-    menu.menu.css("display", "inline-block").fadeIn("100");//make menu visible
-    menu.menu.animate({ height: menu.Height, display: 'inline-block' }, 250);//open menu container
-    menu.List.show(200);
-    Mswitch = "on";
-};
-var hideMenu = function (Mswitch) {
-    //close menu animations:
 
-    pageClear();
-    menu.List.hide();//hide menu items
-    menu.menu.animate({ height: '0px' }, 100);
-    Mswitch = "off";
-};
 var loadMenu = function (progressBartracker) {
     //progressbar tracker =  piped text code for embeded data used to track of//on status
     //accepts string values "off" and "on". default value is "on"
     let menuSwitch = "off";
+    //functions to open and close the menu:
+    let showMenu = function () {
+        //show menu animations:
+        pageBLur();
+        menu.menu.css("display", "inline-block").fadeIn("100");//make menu visible
+        menu.menu.animate({ height: menu.Height, display: 'inline-block' }, 250);//open menu container
+        menu.List.show(200);
+        menuSwitch = "on";
+    };
+    let hideMenu = function () {
+        //close menu animations:
+        pageClear();
+        menu.List.hide();//hide menu items
+        menu.menu.animate({ height: '0px' }, 100);
+        menuSwitch = "off";
+    };
 
     //button switch
-    menu.Button.on({
+   menu.menu.Button.on({
         click: function () {
-
             if (menuSwitch == "off" && jQuery("#EndOfSurvey").length == 0
                 && jQuery(".ResponseSummary").length == 0) {
                 //doesn't load on response summary and end of survey pages
-                showMenu(menuSwitch);
+                showMenu();
             } else if (menuSwitch == "on") {
-                hideMenu(menuSwitch);
+                hideMenu();
             }
         }
     });
 
     //hide menu when leaving the menu with mouse
-    menu.mouseleave(function () {
-        hideMenu(menuSwitch);
+    menu.menu.mouseleave(function () {
+        hideMenu();
     });
 
     //hide menu when click outside of menu
@@ -2057,7 +2056,7 @@ var loadMenu = function (progressBartracker) {
         if (!menu.menu.is(e.target) // if the target of the click isn't the container...
             && menu.menu.has(e.target).length === 0 // ... nor a descendant of the container
             && !menu.Button.is(e.target)) //nor the menu button
-        { hideMenu(menuSwitch); };
+        { hideMenu(); };
     });
 
 
