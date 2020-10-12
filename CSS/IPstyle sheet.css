@@ -883,7 +883,6 @@ div #Footer {
                 size: A2 landscape;
                 margin: 2cm;
         }
-        
         a:link, a:visited, a {
                 background: transparent;
                 font-weight: bold;
@@ -922,7 +921,7 @@ div #Footer {
         .matrixQText, table.ChoiceStructure {
                 z-index: 0;
         }
-        .matrixQText,.question_Text, .guidancePage {
+        .matrixQText, .question_Text, .guidancePage {
                 clear: right;
                 min-width: 293mm;
                 float: left;
@@ -942,8 +941,9 @@ div #Footer {
         , #QID64/* declaration downloads */
         , #QID67/* declaration upload */
         , #QID70/* supporting docs */
+        , #QID84/* Broswer info */
         , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track, table.ChoiceStructure thead:not(:first-of-type), div#Plug/* "powered by Qualtrics" */
-        , .Skin *:not(.QuestionText, .ChoiceStructure,.question_Text, .guidancePage)/* everything except the question info */
+        /*  , .Skin *:not(.QuestionText, .ChoiceStructure,.question_Text, .guidancePage)/* everything except the question info */
                 {
                 display: none !important;
         }
