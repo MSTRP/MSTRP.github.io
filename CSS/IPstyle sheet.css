@@ -883,23 +883,19 @@ div #Footer {
                 size: A2 landscape;
                 margin: 2cm;
         }
-        /*  body {
-                transform: scale(.7);
-                font: 12pt arial;
-                line-height: 1.3;
-        } */
+        
         a:link, a:visited, a {
                 background: transparent;
-                color: var(--helpText);
                 font-weight: bold;
-                text-decoration: underline;
                 text-align: left;
         }
         a {
                 page-break-inside: avoid
         }
         a[href^=http]:after {
-                content: " < " attr(href) "> ";
+                text-decoration: underline;
+                content: " (" attr(href) ")";
+                color: var(--helpText);
         }
         /*  $a:after > img {
                    content: "";
@@ -911,22 +907,8 @@ div #Footer {
         a:not(:local-link):after {
                 content: " < " attr(href) "> ";
         }
-        /*    #SkinContent {
-                top: 115px;
-        } */
         /*  .QuestionOuter {
                 size: A2 landscape;
-        } */
-        /*       #LogoContainer {
-                background-color: unset;
-                box-shadow: unset;
-        } */
-        /*  #Logo{
-                margin: unset;
-        } */
-        /*    #Logo img {
-                filter: invert(1);
-                height: 67pt;
         } */
         table.ChoiceStructure {
                 page-break-inside: avoid;
@@ -936,6 +918,17 @@ div #Footer {
                 position: fixed;
                 top: 2cm;
                 left: 2cm;
+        }
+        .matrixQText, table.ChoiceStructure {
+                z-index: 0;
+        }
+        .matrixQText,.question_Text, .guidancePage {
+                clear: right;
+                min-width: 293mm;
+                float: left;
+        }
+        table.ChoiceStructure {
+                clear: left;
         }
         .ResponseSummary~.QuestionOuter {
                 size: A1 portrait;
@@ -949,7 +942,9 @@ div #Footer {
         , #QID64/* declaration downloads */
         , #QID67/* declaration upload */
         , #QID70/* supporting docs */
-        , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track {
+        , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track, table.ChoiceStructure thead:not(:first-of-type), div#Plug/* "powered by Qualtrics" */
+        , .Skin *:not(.QuestionText, .ChoiceStructure,.question_Text, .guidancePage)/* everything except the question info */
+                {
                 display: none !important;
         }
         /* .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) input {
