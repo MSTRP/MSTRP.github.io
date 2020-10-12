@@ -933,6 +933,9 @@ div #Footer {
                 page-break-before: always;
                 transform: scale(0.7);
                 float: left;
+                position: fixed;
+                top: 2cm;
+                left: 2cm;
         }
         .ResponseSummary~.QuestionOuter {
                 size: A1 portrait;
