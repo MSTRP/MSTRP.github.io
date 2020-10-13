@@ -872,12 +872,18 @@ div #Footer {
 
 @media print {
         .Skin, #SkinContent {
-                /*             width: 100%; */
                 margin: 0;
+                
+        }
+        .Skin{
                 float: none;
         }
         .Skin #SkinContent, div .SBSMatrix, .matrixQText {
                 max-width: none !important;
+        }
+
+        #SkinContent{
+                float: left;
         }
         @page {
                 size: A2 landscape;
@@ -914,7 +920,7 @@ div #Footer {
                 page-break-before: always; */
                 transform: scale(0.7);
                 float: left;
-                position: fixed;
+                /* position: fixed; */
                 top: 2cm;
                 left: 2cm;
                 clear: left;
@@ -940,7 +946,7 @@ div #Footer {
         , #QID64/* declaration downloads */
         , #QID67/* declaration upload */
         , #QID70/* supporting docs */
-        , #QID84/* Broswer info */
+        , #QID84/* Browser info */
         , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track, table.ChoiceStructure thead:not(:first-of-type), div#Plug/* "powered by Qualtrics" */
         /*  , .Skin *:not(.QuestionText, .ChoiceStructure,.question_Text, .guidancePage)/* everything except the question info */
                 {
