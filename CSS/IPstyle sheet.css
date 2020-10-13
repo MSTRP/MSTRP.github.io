@@ -876,12 +876,15 @@ div #Footer {
         .Skin {
                 float: none;
         }
-        .Skin #SkinContent, div .SBSMatrix, .question_Text{
+        .Skin #SkinContent, div .SBSMatrix, .question_Text {
                 max-width: none;
+        }
+        .QuestionText{
+                padding: none;
         }
         #SkinContent {
                 float: left;
-                position: fixed;
+            /*     position: fixed; */
                 top: -2cm;
                 left: 0cm;
         }
@@ -917,29 +920,29 @@ div #Footer {
         } */
         table.ChoiceStructure {
                 page-break-inside: avoid;
-                /* page-break-before: always; */
-                transform: scale(0.7);
-                float: left;
-                position: fixed;
-                margin: auto;
-                left: -10cm;
-                clear: left;
+                page-break-before: always;
+                /*  transform: scale(0.9); */
+         /*        float: left; */
+                /* position: fixed; */
+           /*      margin: auto; */
+              /*   left: -12cm; */
+               /* A */
         }
+
         .question_Text, table.ChoiceStructure {
                 z-index: 0;
         }
         .question_Text {
                 clear: right;
-                position: fixed;
-                max-width: none;
+                /*       position: fixed;
+                max-width: none; */
                 float: left;
         }
         .ResponseSummary~.QuestionOuter {
                 size: A1 portrait;
                 page-break-inside: avoid;
-                page-break-after: always;
         }
-        .ResponseSummary~.QuestionOuter:not(.FileUpload, #QID4, #QID17, #QID64, #QID67) {
+        .ResponseSummary~.QuestionOuter:not(.FileUpload, #QID4, #QID17, #QID64, #QID67), .question_Text,.QuestionText {
                 page-break-after: always;
         }
         #ResponseSummaryHeader, #EndOfSurvey, .navOuter, .ResponseSummary~.Separator, .non-null, .QuestionOuter.FileUpload, #Buttons, #QID17/* new transaction upload header */
@@ -947,9 +950,7 @@ div #Footer {
         , #QID67/* declaration upload */
         , #QID70/* supporting docs */
         , #QID84/* Browser info */
-        , table.ChoiceStructure .Headings:not(:first-child)/* header row 1/2 */
-        , table.ChoiceStructure .Answers:not(:first-child)/* header row 2/2 */
-        , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track, table.ChoiceStructure .Headings:not(:first-child) {
+        , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track {
                 display: none !important;
         }
         /* .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) input {
