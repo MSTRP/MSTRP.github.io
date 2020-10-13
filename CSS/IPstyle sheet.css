@@ -916,8 +916,8 @@ div #Footer {
                 size: A2 landscape;
         } */
         table.ChoiceStructure {
-                /* page-break-inside: avoid;
-                page-break-before: always; */
+                page-break-inside: avoid;
+                /* page-break-before: always; */
                 transform: scale(0.7);
                 float: left;
                 /* position: fixed; */
