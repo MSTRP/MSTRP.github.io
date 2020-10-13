@@ -732,8 +732,7 @@ div #Footer {
         text-align: center;
 }
 
-.matrixQText>div:first-of-type {
-        max-width: 1080px;
+.matrixQText {
         display: inline-block;
 }
 
@@ -873,17 +872,18 @@ div #Footer {
 @media print {
         .Skin, #SkinContent {
                 margin: 0;
-                
         }
-        .Skin{
+        .Skin {
                 float: none;
         }
-        .Skin #SkinContent, div .SBSMatrix, .matrixQText {
-                max-width: none !important;
+        .Skin #SkinContent, div .SBSMatrix, .question_Text{
+                max-width: none;
         }
-
-        #SkinContent{
+        #SkinContent {
                 float: left;
+                position: fixed;
+                top: -2cm;
+                left: 0cm;
         }
         @page {
                 size: A2 landscape;
@@ -920,20 +920,20 @@ div #Footer {
                 /* page-break-before: always; */
                 transform: scale(0.7);
                 float: left;
-                /* position: fixed; */
-                top: 2cm;
-                left: 2cm;
+                position: fixed;
+                margin: auto;
+                left: -10cm;
                 clear: left;
         }
-        .matrixQText, table.ChoiceStructure {
+        .question_Text, table.ChoiceStructure {
                 z-index: 0;
         }
-        .matrixQText, .question_Text, .guidancePage {
+        .question_Text {
                 clear: right;
-                min-width: 293mm;
+                position: fixed;
+                max-width: none;
                 float: left;
         }
-       
         .ResponseSummary~.QuestionOuter {
                 size: A1 portrait;
                 page-break-inside: avoid;
@@ -942,14 +942,14 @@ div #Footer {
         .ResponseSummary~.QuestionOuter:not(.FileUpload, #QID4, #QID17, #QID64, #QID67) {
                 page-break-after: always;
         }
-        #ResponseSummaryHeader, #EndOfSurvey, .navOuter, .ResponseSummary~.Separator, .non-null, .QuestionOuter.FileUpload, #QID17/* new transaction upload header */
+        #ResponseSummaryHeader, #EndOfSurvey, .navOuter, .ResponseSummary~.Separator, .non-null, .QuestionOuter.FileUpload, #Buttons, #QID17/* new transaction upload header */
         , #QID64/* declaration downloads */
         , #QID67/* declaration upload */
         , #QID70/* supporting docs */
         , #QID84/* Browser info */
-        , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track, table.ChoiceStructure thead:not(:first-of-type), div#Plug/* "powered by Qualtrics" */
-        /*  , .Skin *:not(.QuestionText, .ChoiceStructure,.question_Text, .guidancePage)/* everything except the question info */
-                {
+        , table.ChoiceStructure .Headings:not(:first-child)/* header row 1/2 */
+        , table.ChoiceStructure .Answers:not(:first-child)/* header row 2/2 */
+        , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track, table.ChoiceStructure .Headings:not(:first-child) {
                 display: none !important;
         }
         /* .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) input {
