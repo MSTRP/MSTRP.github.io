@@ -1868,7 +1868,8 @@ var checkSkip2 = function (direction, target) {
 //4 page printing:
 var printPage = function () {
     pageClear();
-    menu.menu.hide()
+    jQuery("#Plug").hide();
+    menu.menu.hide();
     window.print();
 };
 
