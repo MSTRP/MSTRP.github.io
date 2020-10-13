@@ -910,13 +910,14 @@ div #Footer {
                 size: A2 landscape;
         } */
         table.ChoiceStructure {
-                page-break-inside: avoid;
-                page-break-before: always;
+                /* page-break-inside: avoid;
+                page-break-before: always; */
                 transform: scale(0.7);
                 float: left;
                 position: fixed;
                 top: 2cm;
                 left: 2cm;
+                clear: left;
         }
         .matrixQText, table.ChoiceStructure {
                 z-index: 0;
@@ -926,9 +927,7 @@ div #Footer {
                 min-width: 293mm;
                 float: left;
         }
-        table.ChoiceStructure {
-                clear: left;
-        }
+       
         .ResponseSummary~.QuestionOuter {
                 size: A1 portrait;
                 page-break-inside: avoid;
