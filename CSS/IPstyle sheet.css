@@ -870,34 +870,31 @@ div #Footer {
 }
 
 @media print {
-       /*  .Skin, #SkinContent {
+        .Skin, #SkinContent {
                 margin: 0;
                 float: none;
-        } */
-        /* .Skin #SkinContent, div .SBSMatrix, .question_Text, .QuestionText, table.ChoiceStructure {
+        }
+        .Skin, #SkinContent, div .SBSMatrix, .question_Text, .QuestionText, table.ChoiceStructure {
                 max-width: none;
                 min-width: none !important;
-        } */
-       /*  .question_Text, legend~fieldset {
+        }
+        /*  .question_Text, legend~fieldset {
                 display: block;
                 float: none
         } */
-        /* #SkinContent, 
+        /*        #SkinContent, 
         .QuestionText {
                 padding: none;
                 float: none;
         } */
-     /*    #SkinContent {
+        #SkinContent {
                 top: 0cm;
                 left: 0cm;
-        } */
+        }
         @page {
                 size: A1 landscape;
                 /* margin: 2cm; */
         }
-        /*  body{
-                transform: scale(0.9);
-        } */
         a:link, a:visited, a {
                 background: transparent;
                 font-weight: bold;
@@ -922,18 +919,22 @@ div #Footer {
                 content: " < " attr(href) "> ";
         } */
         /*  .QuestionOuter {
-                size: A2 landscape;
-        } */
-      /*   table.ChoiceStructure {
-                left: -50cm;
-                page-break-before: page;
-                position: relative;
-                transform: scale(0.9);
-                clear: both;
-                float: none;
                 page-break-inside: avoid;
-                page-break-before: always !important;
+                display: block;
         } */
+        textarea, input, .q-checkbox, select {
+                background-color: unset;
+        }
+        table.ChoiceStructure {
+                /*    left: -50cm; */
+                clear: left;
+                float: none;
+                break-before: page;
+                /*   position: relative; */
+                /*  transform: scale(0.9); */
+                break-inside: avoid;
+                /*    page-break-before: always !important; */
+        }
         /*          .question_Text, table.ChoiceStructure {
                 z-index: 0;
         } */
@@ -944,15 +945,17 @@ div #Footer {
                 size: A1 portrait;
                 page-break-inside: avoid;
         }
-    /*     .ResponseSummary~.QuestionOuter:not(.FileUpload, #QID4, #QID17, #QID64, #QID67), .question_Text, .QuestionText {
+        /*     .ResponseSummary~.QuestionOuter:not(.FileUpload, #QID4, #QID17, #QID64, #QID67), .question_Text, .QuestionText {
                 float: none;
                 page-break-after: always;
         } */
-        #ResponseSummaryHeader, #EndOfSurvey, .navOuter, .ResponseSummary~.Separator, .non-null, .QuestionOuter.FileUpload, #Buttons, #QID17/* new transaction upload header */
+        #ResponseSummaryHeader, #EndOfSurvey, .navOuter, .ResponseSummary~.Separator, .non-null, .noPrint, .QuestionOuter.FileUpload, #Buttons, #QID17/* new transaction upload header */
         , #QID64/* declaration downloads */
         , #QID67/* declaration upload */
         , #QID70/* supporting docs */
         , #QID84/* Browser info */
+        ,.menuHelper /* Menu highlight help text */
+        , .Scroll--left, .Scroll--right/* side scroll buttons */
         , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track {
                 display: none !important;
         }
