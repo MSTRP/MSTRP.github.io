@@ -1869,6 +1869,7 @@ var checkSkip2 = function (direction, target) {
 var printPage = function () {
     pageClear();
     jQuery("#Plug").hide();
+    jQuery(".Skin").scrollTop(0); //ensures table headers display properly
     menu.menu.hide();
     window.print();
 };
