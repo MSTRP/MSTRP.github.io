@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.0.2';//increment me when publishing changes
+var version = "live Beta update " + '1.2.0.3';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -2036,16 +2036,21 @@ var loadMenu = function (progressBartracker) {
     };
 
     //button switch
-   menu.Button.on({
-        click: function () {
-            if (menuSwitch == "off" && jQuery("#EndOfSurvey").length == 0
-                && jQuery(".ResponseSummary").length == 0) {
+    menu.Button.click(function () {
+        switch (menuSwitch) {
+            case "off":
+                showMenu();
+                break;
+            case "on":
+                hideMenu();
+                break;
+        };
+        /*     if (menuSwitch == "off") {
                 //doesn't load on response summary and end of survey pages
                 showMenu();
             } else if (menuSwitch == "on") {
                 hideMenu();
-            }
-        }
+            }; */
     });
 
     //hide menu when leaving the menu with mouse
