@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.0.7';//increment me when publishing changes
+var version = "live Beta update " + '1.2.0.8';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1262,7 +1262,8 @@ var nullTag = function () {
     inputs.each(function () {
         let input = jQuery(this);
         let inputID = input.attr("id");
-        if (alwaysPrint.indexOf(inputID) < 0) {
+
+        if (alwaysPrint.toString().indexOf(inputID) < 0) {
             if (checkBlank(input.val()) === "Not Blank") {
                 for (let wrapper of wrappers) {
                     if (inputID.indexOf(jQuery(wrapper).attr("id")) > -1) {
@@ -1271,6 +1272,8 @@ var nullTag = function () {
                 };
             };
         };
+
+
     });
 };
 
