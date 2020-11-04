@@ -46,6 +46,7 @@ var theme = {
 
 //Question IDs - selectors for question wrappers
 var QuestionIDs = {
+    ThreeB: jQuery("#QID10"),
     Eleven: jQuery("#QID57"),
     ElevenD: jQuery("#QID58"),
     Twelve: jQuery("#QID60"),
@@ -1264,8 +1265,8 @@ var nullTag = function () {
         if (alwaysPrint.indexOf(inputID) < 0) {
             if (checkBlank(input.val()) === "Not Blank") {
                 for (let wrapper of wrappers) {
-                    if (inputID.indexOf(wrapper.attr("id")) > -1) {
-                        wrapper.addClass("noPrint");
+                    if (inputID.indexOf(jQuery(wrapper).attr("id")) > -1) {
+                        jQuery(wrapper).addClass("noPrint");
                     };
                 };
             };
