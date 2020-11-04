@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.0.5';//increment me when publishing changes
+var version = "live Beta update " + '1.2.0.6';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1249,38 +1249,40 @@ var fieldSub = function (calcField, targetField, startNumber) {
 
 //-------print formatting:
 var nullTag = function () {
-    let input = jQuery(".ChoiceStructure:not(table) input");
+    let inputs = jQuery(".ChoiceStructure:not(table) input");
     let wrappers = jQuery(".QuestionOuter");
-    // add noPrint class to question wrapper where the input value is not 0
-    if (checkBlank(input.val()) === "Not Blank") {
-        for (let wrapper of wrappers) {
-            if (input.attr("id").indexOf(jQuery(wrapper).attr("id")) > -1) {
-                jQuery(wrapper).addClass("noPrint");
+    let alwaysPrint = [
+        "QR~QID3~1", "QR~QID3~2", "QR~QID3~4", "QR~QID3~6",//Key contact form inputs IDs
+        "QR~QID4", "QR~QID5",//summary Questions input IDs
+        "QR~QID56~1", "QR~QID56~2", "QR~QID56~3", "QR~QID56~4"//financial contact form input IDs
+    ];
+
+    //add noPrint class to question wrapper where the input value is not 0/blank
+    inputs.each(function () {
+        let input = jQuery(this);
+        let inputID = input.attr("id");
+        if (alwaysPrint.indexOf(inputID) < 0) {
+            if (checkBlank(input.val()) === "Not Blank") {
+                for (let wrapper of wrappers) {
+                    if (inputID.indexOf(wrapper.attr("id")) > -1) {
+                        wrapper.addClass("noPrint");
+                    };
+                };
             };
         };
-    };
+    });
 };
 
 /*----------------------SECTION 2: Display logic --------------------*/
 //1) hide rows 
 var hideRows = function (questionNumber, filters) {
-
     let rows = jQuery(".ChoiceStructure tbody").find("tr");
-    //select the table rows on the page with jQuery
-
-
     let filter = getFilters(questionNumber, filters);
-    // get the value of the filter question response
 
     rows.each(function () {
         //function will loop through all rows in question
-        if (jQuery(this).index() >= filter) {
-            //if the row number on the page is above the filter value
-
-            jQuery(this).hide();
-            //it is hidden
-        };
-    })
+        if (jQuery(this).index() >= filter) { jQuery(this).hide(); };
+    });
 };
 
 //2) hide rows with total row
