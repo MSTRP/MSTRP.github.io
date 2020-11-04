@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.0.6';//increment me when publishing changes
+var version = "live Beta update " + '1.2.0.7';//increment me when publishing changes
 console.log("Version: ", version);
 
 
