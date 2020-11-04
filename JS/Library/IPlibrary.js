@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.0.3';//increment me when publishing changes
+var version = "live Beta update " + '1.2.0.5';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -44,8 +44,13 @@ var theme = {
     } */
 };
 
-//menu blur elements:
-
+//Question IDs - selectors for question wrappers
+var QuestionIDs = {
+    Eleven: jQuery("#QID57"),
+    ElevenD: jQuery("#QID58"),
+    Twelve: jQuery("#QID60"),
+    TwelveD: jQuery("#QID61")
+};
 
 //section headings
 var sections = {
@@ -780,50 +785,30 @@ var borderFlash2 = function (hoverSelectors, flashColour, flashSelector) {
 //total row styling and display:
 var totalRowFormat = function (non_blanks) {
     //Non-blanks are optional
+    if (jQuery("#EndOfSurvey").length < 1) {
+        //selectors for last row:
+        let totalRow = jQuery(".ChoiceStructure tbody tr:last-child");
+        let inputsTotal = totalRow.find("input");
+        let teTotal = totalRow.find("textarea");
+        let input_fields = [inputsTotal, teTotal];
 
-    //selectors for last row:
-    let totalRow = jQuery(".ChoiceStructure tbody tr:last-child");
-    //whole row
+        totalRow.css("background-color", getColour("tertiary"));
 
-    let inputsTotal = totalRow.find("input");
-    //input fields
-
-    let teTotal = totalRow.find("textarea");
-    //text area fields
-
-    //array of input for iteration
-    let input_fields = [inputsTotal, teTotal];
-
-    //format the last row:
-    totalRow.css("background-color", getColour("tertiary"));
-
-    for (let inputs of input_fields) {
-
-        //format the input fields
-        jQuery(inputs).css("font-weight", "bold");
-
-
-        if (non_blanks != undefined) {
-            //if non blanks are provided 
-
-            //hide fields that don't need to be visible:
-            jQuery(inputs).each(function () {
-                let currentTotal = jQuery(this);
-
-                //define function to compare input index vs 
-                //nonBlankInputs array using array.find() method
-                let checkMatch = function (ref) {
-                    return ref == jQuery(inputs).index(currentTotal)
-                };
-
-                if (non_blanks.find(checkMatch) == undefined) {
-                    //if input index is not in non blank inputs array
-
-                    currentTotal.hide()
-                    //hide input
-                }
-            });
-        }
+        for (let inputs of input_fields) {
+            jQuery(inputs).css("font-weight", "bold");
+            if (non_blanks != undefined) {
+                //hide fields that don't need to be visible:
+                jQuery(inputs).each(function () {
+                    let currentTotal = jQuery(this);
+                    let checkMatch = function (ref) {
+                        return ref == jQuery(inputs).index(currentTotal)
+                    };
+                    if (non_blanks.find(checkMatch) == undefined) {
+                        currentTotal.hide();
+                    };
+                });
+            }
+        };
     };
 };
 
@@ -837,39 +822,32 @@ var totalColumnFormat = function (hasTotal, columns, parentarray,) {
     //selet the table rows
     let tableRow = jQuery(".ChoiceStructure tbody").find('tr');
 
-
     //set total rows to read only and formatting
-    tableRow.each(function () {
-        let thisRow = jQuery(this);
 
-        let Tablesize = tableRow.length - 1;
-        //get number of rows as a 0 based 
+    if (jQuery("#EndOfSurvey").length < 1) {
+        tableRow.each(function () {
+            let thisRow = jQuery(this);
 
-        for (let column of columns) {
-            if (parentarray != undefined) {
+            let Tablesize = tableRow.length - 1;
+            //get number of rows as a 0 based 
 
-                var thisInput = inputSelect(thisRow.find(columnSelect(column, parentarray)))
-            } else {
+            for (let column of columns) {
+                if (parentarray != undefined) {
+                    var thisInput = inputSelect(thisRow.find(columnSelect(column, parentarray)))
+                } else {
 
-                var thisInput = inputSelect(thisRow.find(columnSelect(column)));
+                    var thisInput = inputSelect(thisRow.find(columnSelect(column)));
+                };
+                if (thisRow.index() == Tablesize && hasTotal === true) {
+                    //if there is a total row
+
+                    sumtotalSelect(thisInput)//sum total formatting
+
+                } else { totalSelect(thisInput); } //total formatting    
+                thisInput.prop("readonly", true);
             };
-
-
-            if (thisRow.index() == Tablesize && hasTotal === true) {
-                //if there is a total row
-
-                sumtotalSelect(thisInput)
-                //apply sum total formatting
-
-            } else {
-
-                totalSelect(thisInput);
-                //apply total formatting
-            }
-
-            thisInput.prop("readonly", true);
-        }
-    });
+        });
+    };
 };
 
 //clear trailing spaces for forms:
@@ -1273,11 +1251,11 @@ var fieldSub = function (calcField, targetField, startNumber) {
 var nullTag = function () {
     let input = jQuery(".ChoiceStructure:not(table) input");
     let wrappers = jQuery(".QuestionOuter");
-    // add non-null class to question wrapper where the input value is not 0
-    if (checkBlank(input.val()) === "Blank") {
+    // add noPrint class to question wrapper where the input value is not 0
+    if (checkBlank(input.val()) === "Not Blank") {
         for (let wrapper of wrappers) {
             if (input.attr("id").indexOf(jQuery(wrapper).attr("id")) > -1) {
-                jQuery(wrapper).addClass("non-null");
+                jQuery(wrapper).addClass("noPrint");
             };
         };
     };
@@ -1878,32 +1856,19 @@ var printPage = function () {
 
 //1) date picker:
 var loadDatePicker = function (question) {
+    if (jQuery("#EndOfSurvey").length === 0) {
+        let dateRef = columnSelect(question, dateColumnsAll);
+        let qRows = jQuery(".ChoiceStructure tbody").find("tr");
 
-    //build the nth-child column selector string using
+        qRows.each(function () {
+            let datePickerCell = jQuery(this);
 
-
-    var dateRef = columnSelect(question, dateColumnsAll);
-
-    var qRows = jQuery(".ChoiceStructure tbody").find("tr");
-
-    qRows.each(function () {
-
-        thisQRow = jQuery(this);
-
-        var dpCell = thisQRow.find(dateRef);
-        //select the date input cell
-
-        var dpInput = dpCell.find('input');
-        //select the input field
-
-        var dpID = dpInput.attr('id');
-        //get ID of field for FooPicker
-
-        var foopicker = new FooPicker({ //run FooPicker
-            id: dpID,
-            dateFormat: 'dd/MM/yyyy'
-        })
-    })
+            let foopicker = new FooPicker({ //run FooPicker
+                id: inputSelect(datePickerCell.find(dateRef)).attr('id'),
+                dateFormat: 'dd/MM/yyyy'
+            });
+        });
+    };
 };
 
 //2) Hover text
@@ -2169,7 +2134,7 @@ var carry3b = function (answerlist) {
     let uniqueID = answerlist["uniqueID"];
     let inventors = answerlist["inventors"];
 
-    let allRows = jQuery(".QuestionBody tbody tr");
+    let allRows = QuestionIDs.ThreeB.find("tbody tr");
     allRows.each(function () {
         let thisRow = jQuery(this);
         let rowindex = thisRow.index();
@@ -2413,61 +2378,61 @@ var buttons6a = function (next, details) {
 var carry6 = function (answerlist) {
     //define array within object as a variable for each answer field,
     //replace any line breaks with a space
-    var uniqueID = answerlist["uniqueID"];
-    var counterParty = answerlist["counterParty"];
-    var effectiveDate = answerlist["effectiveDate"];
+    let uniqueID = answerlist["uniqueID"];
+    let counterParty = answerlist["counterParty"];
+    let effectiveDate = answerlist["effectiveDate"];
 
     //define the Question IDs as an array - to be used with string.find() 
-    var questionIDs = answerlist["questionIDs"];
+    let IDs = answerlist["questionIDs"];
 
     jQuery(".QuestionOuter").each(function () {
-        var thisQContainer = jQuery(this);
-        var thisID = thisQContainer.attr("id");
+        let thisQContainer = jQuery(this);
+        let thisID = thisQContainer.attr("id");
         //get class and  id as a string e.g. "QuestionOuter BorderColor FileUpload  QID174"
 
-        for (let ID in questionIDs) {
+        for (let ID in IDs) {
             // loop through question Ids
 
-            if (thisID == questionIDs[ID]) {
+            if (thisID == IDs[ID]) {
                 //if the key value is present in the class:
 
                 //define the target <span> elements as variable
                 //selecting them by id
-                var thisRef = thisQContainer.find(".orgRef");//Organsation reference
-                var thisParty = thisQContainer.find(".counterParty"); //Counterparty
-                var thisDate = thisQContainer.find(".effectiveDate"); //effective date
+                let thisRef = thisQContainer.find(".orgRef");//Organsation reference
+                let thisParty = thisQContainer.find(".counterParty"); //Counterparty
+                let thisDate = thisQContainer.find(".effectiveDate"); //effective date
 
                 //append the piped text value from the map to target <span>:
                 thisRef.append(uniqueID[ID].replace(/\r?\n|\r/g, "") + "'"); //Organsation reference
                 thisParty.append(counterParty[ID].replace(/(\r\n|\n|\r)/gm, "") + "'"); //Counterparty
                 thisDate.append(effectiveDate[ID].replace(/\r?\n|\r/g, "") + ")"); //effective date
-            }
-        }
-    })
+            };
+        };
+    });
 }
 
 //3) 10 Revenue calctable formatting:
 var revenueFormatting = function (parentarray) {
 
-    jQuery(".ChoiceStructure tbody tr").each(function () {
+    QuestionIDs.ElevenD.find(".ChoiceStructure tbody tr").each(function () {
         //for each table row:
         let inputs = jQuery(this);
         //selector for current row
 
         //define and map inputs:
-        var incomeGrossInput = inputSelect(inputs.find(columnSelect("incomeGrossRef", parentarray))); //gross income
-        var directCostsInput = inputSelect(inputs.find(columnSelect("directCostsRef", parentarray))); //direct costs
-        var contributionWTInput = inputSelect(inputs.find(columnSelect("contributionWTRef", parentarray))); //WT contribution %
-        var contributionJustInput = textareaselect(inputs.find(columnSelect("contributionJust", parentarray))); //WT contribution Justification
+        let incomeGrossInput = inputSelect(inputs.find(columnSelect("incomeGrossRef", parentarray))); //gross income
+        let directCostsInput = inputSelect(inputs.find(columnSelect("directCostsRef", parentarray))); //direct costs
+        let contributionWTInput = inputSelect(inputs.find(columnSelect("contributionWTRef", parentarray))); //WT contribution %
+        let contributionJustInput = textareaselect(inputs.find(columnSelect("contributionJust", parentarray))); //WT contribution Justification
 
-        var revShareWTInput = inputSelect(inputs.find(columnSelect("revShareWTRef", parentarray))); //WT revenue share %
-        var selectorFieldRN = inputSelect(inputs.find(columnSelect("revNetRef", parentarray))); //net revenue
-        var selectorFieldRA = inputSelect(inputs.find(columnSelect("revWTRef", parentarray))); //revenue attributable to WT
+        let revShareWTInput = inputSelect(inputs.find(columnSelect("revShareWTRef", parentarray))); //WT revenue share %
+        let selectorFieldRN = inputSelect(inputs.find(columnSelect("revNetRef", parentarray))); //net revenue
+        let selectorFieldRA = inputSelect(inputs.find(columnSelect("revWTRef", parentarray))); //revenue attributable to WT
 
         //create arrays for looping:
-        var netcalcFields = [incomeGrossInput, directCostsInput];//net revenue
-        var attCalcfields = [revShareWTInput, contributionWTInput];//% for revenue attributable
-        var allCalcFields = netcalcFields.concat(attCalcfields);
+        let netcalcFields = [incomeGrossInput, directCostsInput];//net revenue
+        let attCalcfields = [revShareWTInput, contributionWTInput];//% for revenue attributable
+        let allCalcFields = netcalcFields.concat(attCalcfields);
         //calculation input fields
 
         //calc formatting
@@ -2490,12 +2455,12 @@ var revenueFormatting = function (parentarray) {
                 //highlight border of active current input
 
                 //get blank and non-blank fields as arrays:
-                var attBlanks = getBlank(attCalcfields);
-                var attNotBlanks = getNotBlank(attCalcfields);
+                let attBlanks = getBlank(attCalcfields);
+                let attNotBlanks = getNotBlank(attCalcfields);
                 //att calc fields
 
-                var calcBlanks = getBlank(allCalcFields);
-                var calcNotBlanks = getNotBlank(allCalcFields, directCostsInput);
+                let calcBlanks = getBlank(allCalcFields);
+                let calcNotBlanks = getNotBlank(allCalcFields, directCostsInput);
 
                 //all calc fields
                 if (calcNotBlanks.length > 2) {
@@ -2527,30 +2492,22 @@ var revenueFormatting = function (parentarray) {
                                 //if ine of the "non-blank" fields is being selected
 
                                 //highlihgt the others as related inputs
-                                for (let val of getOthers(calcNotBlanks, value)) {
-                                    relatedInput(val)
-                                }
+                                for (let val of getOthers(calcNotBlanks, value)) { relatedInput(val); };
 
                             } else {
                                 //otherwise highlight them all
-
-                                for (let val of calcNotBlanks) {
-                                    relatedInput(val)
-                                }
-                            }
+                                for (let val of calcNotBlanks) { relatedInput(val); }
+                            };
                         };
-                    }
+                    };
 
                 } else if (netcalcFields.indexOf(value) > -1) {
                     //if the field in focues is a net calc field
 
                     //highlight the other field(s):
-                    for (let other of getOthers(netcalcFields, value)) {
-                        relatedInput(other)
-                    };
-
-                    totalActive(selectorFieldRN) //highlight net total   
-                }
+                    for (let other of getOthers(netcalcFields, value)) { relatedInput(other); };
+                    totalActive(selectorFieldRN);
+                };
             };//focus
 
             let blurFormat = function () {
@@ -2561,30 +2518,30 @@ var revenueFormatting = function (parentarray) {
                 let precleanRSPCT = revShareWTInput.val().replace(/%/g, "");//%
 
                 //comma seperators
-                var cleanincGross = precleanGross.replace(/,/g, "");
-                var cleandCosts = precleandCosts.replace(/,/g, "");
+                let cleanincGross = precleanGross.replace(/,/g, "");
+                let cleandCosts = precleandCosts.replace(/,/g, "");
 
                 //numeric fratcion for percentages:
-                var cleanContPCT = precleanContPCT.replace(/,/g, "") / 100;
-                var cleanRSPCT = precleanRSPCT.replace(/,/g, "") / 100;
+                let cleanContPCT = precleanContPCT.replace(/,/g, "") / 100;
+                let cleanRSPCT = precleanRSPCT.replace(/,/g, "") / 100;
 
                 //get blank and non-blank fields as arrays:
-                var attBlanks = getBlank(attCalcfields);
-                var attNotBlanks = getNotBlank(attCalcfields);
+                let attBlanks = getBlank(attCalcfields);
+                let attNotBlanks = getNotBlank(attCalcfields);
                 //att calc fields
 
-                var calcBlanks = getBlank(allCalcFields);
-                var calcNotBlanks = getNotBlank(allCalcFields, directCostsInput);
+                let calcBlanks = getBlank(allCalcFields);
+                let calcNotBlanks = getNotBlank(allCalcFields, directCostsInput);
                 //all calc fields
 
                 //map cleaned vals to inputs as arrays
-                var cleanNets = [
+                let cleanNets = [
                     { input: incomeGrossInput, clean: cleanincGross },
                     { input: directCostsInput, clean: cleandCosts }
                 ];
                 //net calc fields
 
-                var cleanPCTs = [
+                let cleanPCTs = [
                     { input: contributionWTInput, clean: cleanContPCT },
                     { input: revShareWTInput, clean: cleanRSPCT }
                 ];
@@ -2708,50 +2665,50 @@ var revenueCalc = function (parentarray) {
     getTable.on({
 
         keyup: function () {
-            var netrolling = 0;
-            var grossrolling = 0;
+            let netrolling = 0;
+            let grossrolling = 0;
             getTable.find('tbody tr').each(function () {
-                var thisRow = jQuery(this);
+                let thisRow = jQuery(this);
                 //gross income
 
-                var trIGInput = inputSelect(thisRow.find(columnSelect('incomeGrossRef', parentarray)));
+                let trIGInput = inputSelect(thisRow.find(columnSelect('incomeGrossRef', parentarray)));
                 // trIG.find('input');
 
                 //direct costs
-                var trDCInput = inputSelect(thisRow.find(columnSelect("directCostsRef", parentarray)));
+                let trDCInput = inputSelect(thisRow.find(columnSelect("directCostsRef", parentarray)));
 
                 //WT contribution %
-                var trWCInput = inputSelect(thisRow.find(columnSelect('contributionWTRef', parentarray)));
+                let trWCInput = inputSelect(thisRow.find(columnSelect('contributionWTRef', parentarray)));
 
                 //WT revenue share %
-                var trRSInput = inputSelect(thisRow.find(columnSelect('revShareWTRef', parentarray)));
+                let trRSInput = inputSelect(thisRow.find(columnSelect('revShareWTRef', parentarray)));
 
                 //netincome - subtotal (row level)
-                var trNRevInput = inputSelect(thisRow.find(columnSelect('revNetRef', parentarray)));
+                let trNRevInput = inputSelect(thisRow.find(columnSelect('revNetRef', parentarray)));
 
                 //revenue attributable - subtotal (row level)
-                var trARevInput = inputSelect(thisRow.find(columnSelect('revWTRef', parentarray)));
+                let trARevInput = inputSelect(thisRow.find(columnSelect('revWTRef', parentarray)));
 
                 if (thisRow.index() != Tablesize) {
 
                     //clean input values for calcs
-                    var cleanIGI = trIGInput.val().replace(/£/g, "");
-                    var cleanDCI = trDCInput.val().replace(/£/g, "");
+                    let cleanIGI = trIGInput.val().replace(/£/g, "");
+                    let cleanDCI = trDCInput.val().replace(/£/g, "");
                     //remove '£'
 
-                    var cleanWCI = trWCInput.val().replace(/%/g, "");
-                    var cleanRSI = trRSInput.val().replace(/%/g, "");
+                    let cleanWCI = trWCInput.val().replace(/%/g, "");
+                    let cleanRSI = trRSInput.val().replace(/%/g, "");
                     //remove '%'
 
-                    var WCIpct = cleanWCI.replace(/,/g, "") / 100;
-                    var RCIpct = cleanRSI.replace(/,/g, "") / 100;
+                    let WCIpct = cleanWCI.replace(/,/g, "") / 100;
+                    let RCIpct = cleanRSI.replace(/,/g, "") / 100;
                     //turn into numeric fraction
 
                     //Do the calcs - set values as variables
-                    var rNet = cleanIGI.replace(/,/g, "") - cleanDCI.replace(/,/g, "");
+                    let rNet = cleanIGI.replace(/,/g, "") - cleanDCI.replace(/,/g, "");
                     //net revenue
 
-                    var rAtt = rNet * WCIpct * RCIpct;
+                    let rAtt = rNet * WCIpct * RCIpct;
                     //revenue attributable to WT
 
                     //send formatted values to subtotals
@@ -2810,38 +2767,38 @@ var revenueCalc = function (parentarray) {
 
 //5) equity calcable calculations:
 var equityCalc = function (parentarray) {
-    var getETable = jQuery(".ChoiceStructure");
+    let getETable = jQuery(".ChoiceStructure");
     //select the table
 
     getETable.on({
         keyup: function () {
             getETable.find("tbody tr").each(function () {
-                var calcERow = jQuery(this);
+                let calcERow = jQuery(this);
 
                 //define the fields:
-                var calcTInpt = inputSelect(calcERow.find(columnSelect("totalSharesRef", parentarray)));
+                let calcTInpt = inputSelect(calcERow.find(columnSelect("totalSharesRef", parentarray)));
                 //total shares
 
-                var calcCIPT = inputSelect(calcERow.find(columnSelect("contributionWTRef", parentarray)));
+                let calcCIPT = inputSelect(calcERow.find(columnSelect("contributionWTRef", parentarray)));
                 //WT contribution (%)
 
-                var calcSIpt = inputSelect(calcERow.find(columnSelect("equityShareWTRef", parentarray)));
+                let calcSIpt = inputSelect(calcERow.find(columnSelect("equityShareWTRef", parentarray)));
                 //WT equity share (%)
 
-                var totIpt = inputSelect(calcERow.find(columnSelect("equityWTRef", parentarray)))
+                let totIpt = inputSelect(calcERow.find(columnSelect("equityWTRef", parentarray)))
 
                 //clean values for calcs
-                var cleanCWT = calcCIPT.val().replace(/%/g, "");
-                var cleanSWT = calcSIpt.val().replace(/%/g, "");
+                let cleanCWT = calcCIPT.val().replace(/%/g, "");
+                let cleanSWT = calcSIpt.val().replace(/%/g, "");
                 // remove "%"
 
-                var cleanShares = calcTInpt.val().replace(/,/g, "");
+                let cleanShares = calcTInpt.val().replace(/,/g, "");
 
-                var ContPct = cleanCWT.replace(/,/g, "") / 100;
-                var SharePCT = cleanSWT.replace(/,/g, "") / 100;
+                let ContPct = cleanCWT.replace(/,/g, "") / 100;
+                let SharePCT = cleanSWT.replace(/,/g, "") / 100;
                 //turn into numeric fraction and
 
-                var sharesTotal = cleanShares * ContPct * SharePCT;
+                let sharesTotal = cleanShares * ContPct * SharePCT;
                 //set calc as variable
 
                 if (calcTInpt.val() != "" && calcCIPT.val() != ""
@@ -2857,39 +2814,31 @@ var equityCalc = function (parentarray) {
 
 var equityFormatting = function (parentarray) {
 
-    jQuery(".ChoiceStructure tbody").find("tr").each(function () {
+    QuestionIDs.TwelveD.find(".ChoiceStructure tbody tr").each(function () {
         //select the rows
-        var inputsE = jQuery(this);//current row
+        let inputsE = jQuery(this);//current row
 
         //build selectors:
-        var TSInpt = inputSelect(inputsE.find(columnSelect("totalSharesRef", parentarray)));
+        let TSInpt = inputSelect(inputsE.find(columnSelect("totalSharesRef", parentarray)));
         //total shares
 
-        var WCIPT = inputSelect(inputsE.find(columnSelect("contributionWTRef", parentarray)));
+        let WCIPT = inputSelect(inputsE.find(columnSelect("contributionWTRef", parentarray)));
         //WT contribution (%)
 
-        var WCJIPT = textareaselect(inputsE.find(columnSelect("contJustificationRef", parentarray)));
+        let WCJIPT = textareaselect(inputsE.find(columnSelect("contJustificationRef", parentarray)));
         //WT contribution justification
 
-        var ESIpt = inputSelect(inputsE.find(columnSelect("equityShareWTRef", parentarray)));
+        let ESIpt = inputSelect(inputsE.find(columnSelect("equityShareWTRef", parentarray)));
         //WT equity share (%)
 
-        var WSIpt = inputSelect(inputsE.find(columnSelect("equityWTRef", parentarray)));
+        let WSIpt = inputSelect(inputsE.find(columnSelect("equityWTRef", parentarray)));
         //shares due to Wellcome
 
+        let pctFields = [WCIPT, ESIpt];//%fields
 
+        let allFields = [TSInpt, WCIPT, ESIpt];
 
-        //create arrays for looping:
-        var pctFields = [WCIPT, ESIpt];
-        //%fields
-
-        var allFields = [TSInpt, WCIPT, ESIpt];
-
-
-        //calc formatting
         for (value of allFields) {
-
-            //formatting functions:
             let equityFocus = function () {
                 for (let value of pctFields) {
                     //remove % from value to ensure net revenue 
@@ -2898,11 +2847,10 @@ var equityFormatting = function (parentarray) {
                 };
 
                 inputActive(value);
-                //show current input as active
 
                 //get blanks and non blanks as arrays:
-                var Fblanks = getBlank(allFields);
-                var FnotBlanks = getNotBlank(allFields);
+                let Fblanks = getBlank(allFields);
+                let FnotBlanks = getNotBlank(allFields);
 
                 if (FnotBlanks.length > Fblanks.length && FnotBlanks.length != 3) {
                     //when two fields are not blank and one is
@@ -2910,31 +2858,19 @@ var equityFormatting = function (parentarray) {
                     //display error messages as needed
                     if (Fblanks.indexOf(TSInpt) > -1) {
                         //if Total Shares is blank
-
                         focusError(TSInpt, "TS", WSIpt);
+                        for (let value of FnotBlanks) { relatedInput(value) };
 
-                        for (let value of FnotBlanks) {
-                            relatedInput(value)
-                        }
                     } else if (Fblanks.indexOf(WCIPT) > -1) {
                         //if Wellcome Contribution is blank
-
                         focusError(WCIPT, "WC", WSIpt);
+                        for (let value of FnotBlanks) { relatedInput(value) };
 
-                        for (let value of FnotBlanks) {
-                            relatedInput(value)
-                        }
                     } else if (Fblanks.indexOf(ESIpt) > -1) {
                         //if Equity share is blank
-
                         focusError(ESIpt, "ES", WSIpt);
-
-                        for (let value of FnotBlanks) {
-                            relatedInput(value)
-                        }
+                        for (let value of FnotBlanks) { relatedInput(value) };
                     };
-
-
 
                 } else {
                     //otherwise just clear highlight from total field
@@ -2956,17 +2892,16 @@ var equityFormatting = function (parentarray) {
                 // remove "%"
 
                 //clean the commas form the values
-                var cleanTS = TSInpt.val().replace(/,/g, "");
-                var cleanWC = cleanCWT.replace(/,/g, "") / 100;
-                var cleanES = cleanSWT.replace(/,/g, "") / 100;
+                let cleanTS = TSInpt.val().replace(/,/g, "");
+                let cleanWC = cleanCWT.replace(/,/g, "") / 100;
+                let cleanES = cleanSWT.replace(/,/g, "") / 100;
 
                 //get blanks and non blanks as arrays:
-                var Bblanks = getBlank(allFields);
+                let Bblanks = getBlank(allFields);
                 //blank fields
 
-                var BnotBlanks = getNotBlank(allFields);
+                let BnotBlanks = getNotBlank(allFields);
                 //non-blank fields
-
 
                 if (BnotBlanks.length > Bblanks.length && BnotBlanks.length != 3) {
                     //when two fields are not blank and one is
@@ -2974,75 +2909,40 @@ var equityFormatting = function (parentarray) {
                     //display error messages as needed
                     if (Bblanks.indexOf(TSInpt) > -1) {
                         //if Total Shares is blank
-
                         blurError(TSInpt, "TS", WSIpt);
-                        for (let value of BnotBlanks) {
-                            fullReset(value)
-                        }
-
+                        for (let value of BnotBlanks) { fullReset(value); };
 
                     } else if (Bblanks.indexOf(WCIPT) > -1) {
                         //if Wellcome Contribution is blank
-
                         blurError(WCIPT, "WC", WSIpt);
-                        for (let value of BnotBlanks) {
-                            fullReset(value)
-                        }
+                        for (let value of BnotBlanks) { fullReset(value); };
 
                     } else if (Bblanks.indexOf(ESIpt) > -1) {
                         //if Equity share is blank
-
                         blurError(ESIpt, "ES", WSIpt);
-                        for (let value of BnotBlanks) {
-                            fullReset(value)
-                        }
-                    }
-
+                        for (let value of BnotBlanks) { fullReset(value); };
+                    };
                 } else {
                     //otherwise just clear highlight from total field
                     //no error text needed
                     totalSelect(WSIpt);
-
-                    //remove highlights from all fields
-                    for (let value of allFields) {
-                        fullReset(value);
-                    };
+                    for (let value of allFields) { fullReset(value); };
                 };
 
                 //format fields which aren't blank:
-                if (ESIpt.val().length > 0) {
-                    //%format Equity Wellcome contribution if not blank
-                    ESIpt.val(englishPerecent(cleanES))
-                };
-
-                if (WCIPT.val().length > 0) {
-                    //%format Equity Share if not blank
-                    WCIPT.val(englishPerecent(cleanWC))
-                };
-
-                if (TSInpt.val().length > 0) {
-                    //apply number frmatting to this field
-                    TSInpt.val(formatNumber(cleanTS));
-                }
+                if (ESIpt.val().length > 0) { ESIpt.val(englishPerecent(cleanES)); };
+                if (WCIPT.val().length > 0) { WCIPT.val(englishPerecent(cleanWC)); };
+                if (TSInpt.val().length > 0) { TSInpt.val(formatNumber(cleanTS)); };
             };//blur
 
             //on load:
             equityFocus();
             equityBlur();
 
-
-            //on focus/blur:
             value.on({
-
-                focus: function () {
-                    equityFocus();
-
-                },
-
-                blur: function () {
-                    equityBlur();
-                }
-            })
+                focus: function () { equityFocus(); },
+                blur: function () { equityBlur(); }
+            });
         };
 
         //WC justification format:
