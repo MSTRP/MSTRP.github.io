@@ -849,9 +849,9 @@ div #Footer {
         min-width: min-content;
 }
 
-.ResponseSummary~.QuestionOuter {
+/* .ResponseSummary~.QuestionOuter {
         min-width: max-content;
-}
+} */
 
 .ResponseSummary~.QuestionOuter.TE, .ResponseSummary~.QuestionOuter .FileUpload, .ResponseSummary~.QuestionOuter .question_Text, .ResponseSummary~.QuestionOuter .matrixQText>div:first-of-type {
         max-width: 1399px;
@@ -890,11 +890,12 @@ div #Footer {
         #SkinContent {
                 top: 0cm;
                 left: 0cm;
+                float: left;
         }
-        @page {
+        /*       @page {
                 size: A1 landscape;
-                /* margin: 2cm; */
-        }
+                margin: 2cm;
+        } */
         a:link, a:visited, a {
                 background: transparent;
                 font-weight: bold;
@@ -922,8 +923,8 @@ div #Footer {
                 page-break-inside: avoid;
                 display: block;
         } */
-        textarea, input, .q-checkbox, select {
-                background-color: unset;
+        .QuestionOuter .InputText, .QuestionOuter .q-checkbox, .QuestionOuter select {
+                background-color: white !important;
         }
         table.ChoiceStructure {
                 /*    left: -50cm; */
@@ -952,9 +953,14 @@ div #Footer {
         #ResponseSummaryHeader, #EndOfSurvey, .navOuter, .ResponseSummary~.Separator, .non-null, .noPrint, .QuestionOuter.FileUpload, #Buttons, #QID17/* new transaction upload header */
         , #QID64/* declaration downloads */
         , #QID67/* declaration upload */
+        , #QID69 /* Declaration upload */
         , #QID70/* supporting docs */
+        , #QID83/* pre-completion check JS */
         , #QID84/* Browser info */
-        ,.menuHelper /* Menu highlight help text */
+        , #QID86/* delcaration download */
+        , .menuHelper/* Menu highlight help text */
+        , .check~.helpText/* completion check text alert */
+        , #ExtendSubmissions/* Extended submissions  */
         , .Scroll--left, .Scroll--right/* side scroll buttons */
         , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track {
                 display: none !important;
