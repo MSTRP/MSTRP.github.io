@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.1.3';//increment me when publishing changes
+var version = "live Beta update " + '1.2.1.4';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1250,7 +1250,7 @@ var fieldSub = function (calcField, targetField, startNumber) {
 
 //-------print formatting:
 var nullTag = function () {
-    let inputs = jQuery(".ChoiceStructure:not(table) input");
+    let inputs = jQuery(".ChoiceStructure:not(table) input.InputText");
     let wrappers = jQuery(".QuestionOuter");
     let alwaysPrint = [
         "QR~QID3~1", "QR~QID3~2", "QR~QID3~4", "QR~QID3~6",//Key contact form inputs IDs
