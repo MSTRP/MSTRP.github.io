@@ -714,9 +714,6 @@ div #Footer {
         cursor: context-menu;
 }
 
-#Plug {
-        display: none;
-}
 
 #declarationimg:hover, #declarationimg:focus {
         -webkit-filter: brightness(150%);
@@ -818,7 +815,12 @@ div #Footer {
 #caseStudies_Template {
         display: none;
 }
+/* Question specific */
 
+/* Invoicing address input field */
+.QR-QID56-4{
+       min-width: 800px; 
+}
 /*inline CSS*/
 
 .QuestionBody {
@@ -876,7 +878,7 @@ div #Footer {
         }
         .Skin, #SkinContent, div .SBSMatrix, .question_Text, .QuestionText, table.ChoiceStructure {
                 max-width: none;
-                min-width: none !important;
+                min-width: none /* !important */;
         }
         /*  .question_Text, legend~fieldset {
                 display: block;
