@@ -1269,6 +1269,7 @@ var nullTag = function () {
             for (let wrapper of wrappers) {
                 if (inputID.slice(3, 6) === jQuery(wrapper).attr("id")) {
                     jQuery(wrapper).addClass("noPrint");
+                    console.log("wrapper ID: ", jQuery(wrapper).attr("id"), " noPrint class added")
                 };
             };
         };
