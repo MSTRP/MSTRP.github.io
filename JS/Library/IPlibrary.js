@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.0.8';//increment me when publishing changes
+var version = "live Beta update " + '1.2.0.9';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -35,8 +35,8 @@ var theme = {
         totalBorder: "#C29207", //Runny Yolk 2
         autofillBackground: "#FFF9A6",//Submarine 2
         relatedBackground: "#BAE2E2"//Bora Bora 3
-    },
-    /* darkMode: {
+    }/* ,
+    darkMode: {
         text: "#ffffff",
         border: "#ffffff",
         primary: "#b1b1b1",
@@ -1263,14 +1263,16 @@ var nullTag = function () {
         let input = jQuery(this);
         let inputID = input.attr("id");
 
-        if (alwaysPrint.toString().indexOf(inputID) < 0) {
-            if (checkBlank(input.val()) === "Not Blank") {
-                for (let wrapper of wrappers) {
-                    if (inputID.indexOf(jQuery(wrapper).attr("id")) > -1) {
-                        jQuery(wrapper).addClass("noPrint");
-                    };
+        if (alwaysPrint.toString().indexOf(inputID) < 0 &&
+            checkBlank(input.val()) === "Not Blank") {
+            console.log("inputID: ", inputID, " inputVal: ", input.val());
+
+            for (let wrapper of wrappers) {
+                if (inputID.slice(3, 6) === wrapper.attr("id")) {
+                    jQuery(wrapper).addClass("noPrint");
                 };
             };
+
         };
 
 
@@ -2144,7 +2146,7 @@ var carry3b = function (answerlist) {
     allRows.each(function () {
         let thisRow = jQuery(this);
         let rowindex = thisRow.index();
-        let header = thisRow.find("th");
+        let header = thisRow.find("th .LabelWrapper label span");
 
         //define values for row
         let aNo = awardNo[rowindex];//award No.
