@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.0.9';//increment me when publishing changes
+var version = "live Beta update " + '1.2.1.0';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1264,18 +1264,14 @@ var nullTag = function () {
         let inputID = input.attr("id");
 
         if (alwaysPrint.toString().indexOf(inputID) < 0 &&
-            checkBlank(input.val()) === "Not Blank") {
+            checkNum(input.val()) === "Not B/0") {
             console.log("inputID: ", inputID, " inputVal: ", input.val());
-
             for (let wrapper of wrappers) {
-                if (inputID.slice(3, 6) === wrapper.attr("id")) {
+                if (inputID.slice(3, 6) === jQuery(wrapper).attr("id")) {
                     jQuery(wrapper).addClass("noPrint");
                 };
             };
-
         };
-
-
     });
 };
 
