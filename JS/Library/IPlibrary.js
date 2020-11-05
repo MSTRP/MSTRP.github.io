@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.1.0';//increment me when publishing changes
+var version = "live Beta update " + '1.2.1.1';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -2176,13 +2176,12 @@ var carry3b = function (answerlist) {
         } else if (header.text().replace(/ /g, "") == "") {
             //set row label to number when carried value is blank
             let rowNumber = rowindex + 1;
-            header.find(".LabelWrapper label span").append(rowNumber);
+            header.append(rowNumber);
         } else {
             //overwrite the carried text with row number
             let rowNumber = rowindex + 1;
-            let headerLabel = header.find(".LabelWrapper label span");
-            headerLabel.text(headerLabel.text().replace(headerLabel.text(), rowNumber));
-            console.log("header adjusted, new heade for row ", rowNumber, " is: ", headerLabel.text());
+            header.text(header.text().replace(header.text(), rowNumber));
+            console.log("header adjusted, new heade for row ", rowNumber, " is: ", header.text());
         }
     });
 };
