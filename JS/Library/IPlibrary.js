@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.1.2';//increment me when publishing changes
+var version = "live Beta update " + '1.2.1.3';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1264,7 +1264,7 @@ var nullTag = function () {
         let inputID = input.attr("id");
 
         if (alwaysPrint.toString().indexOf(inputID) < 0 &&
-            checkNum(jQuery(input).val()) === "Not B/0") {
+            checkNum(input) === "Not B/0") {
             console.log("inputID: ", inputID, " inputVal: ", input.val());
             for (let wrapper of wrappers) {
                 if (inputID.slice(3, 6) === jQuery(wrapper).attr("id")) {
