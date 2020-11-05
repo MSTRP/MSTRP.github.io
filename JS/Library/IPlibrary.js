@@ -2146,7 +2146,7 @@ var carry3b = function (answerlist) {
     allRows.each(function () {
         let thisRow = jQuery(this);
         let rowindex = thisRow.index();
-        let header = thisRow.find("th .LabelWrapper label span");
+        let header = thisRow.find("th");
 
         //define values for row
         let aNo = awardNo[rowindex];//award No.
@@ -2180,12 +2180,13 @@ var carry3b = function (answerlist) {
         } else if (header.text().replace(/ /g, "") == "") {
             //set row label to number when carried value is blank
             let rowNumber = rowindex + 1;
-            header.append(rowNumber);
+            header.find(".LabelWrapper label span").append(rowNumber);
         } else {
             //overwrite the carried text with row number
             let rowNumber = rowindex + 1;
-            header.text(header.text().replace(header.text(), rowNumber));
-            console.log("header adjusted, new heade for row ", rowNumber, " is: ", header.text());
+            let headerLabel = header.find(".LabelWrapper label span");
+            headerLabel.text(headerLabel.text().replace(headerLabel.text(), rowNumber));
+            console.log("header adjusted, new heade for row ", rowNumber, " is: ", headerLabel.text());
         }
     });
 };
