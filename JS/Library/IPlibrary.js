@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.1.4';//increment me when publishing changes
+var version = "live Beta update " + '1.2.1.5';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1267,7 +1267,7 @@ var nullTag = function () {
             checkNum(input) === "Not B/0") {
             console.log("inputID: ", inputID, " inputVal: ", input.val());
             for (let wrapper of wrappers) {
-                if (inputID.slice(3, 6) === jQuery(wrapper).attr("id")) {
+                if (inputID.split("~")[1] === jQuery(wrapper).attr("id")) {
                     jQuery(wrapper).addClass("noPrint");
                     console.log("wrapper ID: ", jQuery(wrapper).attr("id"), " noPrint class added")
                 };
