@@ -6,6 +6,7 @@
         --tertiaryColour: #e0e0e0;
         --helpText: #0000ff;
         --pageWidth: calc(100% - 15px);
+        --reportingYear: "2021";
 }
 
 /*FooPicker Date Picker*/
@@ -386,12 +387,12 @@ body {
 
 @media screen and (max-width: 1399px) {
         .Skin #SkinContent {
-                width: 1080px;
+                width: 100%;
                 clear: left;
                 top: 42px;
         }
         div .SBSMatrix {
-                max-width: 1080px;
+                max-width: 100%;
                 padding-left: 5px;
                 padding-right: 5px;
         }
@@ -399,12 +400,12 @@ body {
 
 @media screen and (min-width: 1400px) {
         .Skin #SkinContent {
-                width: 1400px;
+                width: 100%;
                 clear: left;
                 top: 42px;
         }
         div .SBSMatrix {
-                max-width: 1400px;
+                max-width: 100%;
                 padding-left: 5px;
                 padding-right: 5px;
         }
@@ -714,7 +715,6 @@ div #Footer {
         cursor: context-menu;
 }
 
-
 #declarationimg:hover, #declarationimg:focus {
         -webkit-filter: brightness(150%);
         filter: brightness(150%);
@@ -815,12 +815,15 @@ div #Footer {
 #caseStudies_Template {
         display: none;
 }
+
 /* Question specific */
 
 /* Invoicing address input field */
-.QR-QID56-4{
-       min-width: 800px; 
+
+.QR-QID56-4 {
+        min-width: 800px;
 }
+
 /*inline CSS*/
 
 .QuestionBody {
@@ -846,14 +849,9 @@ div #Footer {
                 min-height: 150px !important;
         }
 }
-
 .ResponseSummary~.QuestionOuter .Inner, .ResponseSummary~.QuestionOuter .matrixQText, .ResponseSummary~div .SBSMatrix, .ResponseSummary~.QuestionOuter .fieldset {
         min-width: min-content;
 }
-
-/* .ResponseSummary~.QuestionOuter {
-        min-width: max-content;
-} */
 
 .ResponseSummary~.QuestionOuter.TE, .ResponseSummary~.QuestionOuter .FileUpload, .ResponseSummary~.QuestionOuter .question_Text, .ResponseSummary~.QuestionOuter .matrixQText>div:first-of-type {
         max-width: 1399px;
@@ -878,88 +876,101 @@ div #Footer {
         }
         .Skin, #SkinContent, div .SBSMatrix, .question_Text, .QuestionText, table.ChoiceStructure {
                 max-width: none;
-                min-width: none /* !important */;
+                min-width: none;
         }
-        /*  .question_Text, legend~fieldset {
-                display: block;
-                float: none
-        } */
-        /*        #SkinContent, 
-        .QuestionText {
-                padding: none;
-                float: none;
-        } */
+       
         #SkinContent {
                 top: 0cm;
                 left: 0cm;
-                float: left;
         }
-        /*       @page {
+        @page {
                 size: A1 landscape;
                 margin: 2cm;
-        } */
+                /*  @bottom-center {
+                        --reportingYear: "2021";
+                        content: var(--reportingYear) " Consolidated IP & Commercialisation Report";
+                } */
+        }
         a:link, a:visited, a {
                 background: transparent;
                 font-weight: bold;
                 text-align: left;
         }
         a {
-                page-break-inside: avoid
+                break-inside: avoid
         }
         a[href^=http]:after {
                 text-decoration: underline;
                 content: " (" attr(href) ")";
                 color: var(--helpText);
         }
-        /*  $a:after > img {
-                   content: "";
-                }
-                 */
-        /*  article a[href^="#"]:after {
-                   content: "";
-                } */
-        /*    a:not(:local-link):after {
-                content: " < " attr(href) "> ";
-        } */
-        /*  .QuestionOuter {
-                page-break-inside: avoid;
-                display: block;
-        } */
-        .QuestionOuter .InputText, .QuestionOuter .q-checkbox, .QuestionOuter select {
-                background-color: white !important;
-        }
+
         table.ChoiceStructure {
-                /*    left: -50cm; */
                 clear: left;
                 float: none;
-                break-before: page;
-                /*   position: relative; */
-                /*  transform: scale(0.9); */
                 break-inside: avoid;
-                /*    page-break-before: always !important; */
         }
-        /*          .question_Text, table.ChoiceStructure {
-                z-index: 0;
-        } */
-        /*     .question_Text {
-                clear: right;
-        } */
+        /* Table branding */
+        table.ChoiceStructure tbody tr:nth-child(even), table.ChoiceStructure tbody tr:nth-child(even) .InputText, table.ChoiceStructure tbody tr:nth-child(even) .q-checkbox, table.ChoiceStructure tbody tr:nth-child(even) select {
+                background: #e6e6e6 !important;
+        }
+        table.ChoiceStructure tbody tr:nth-child(odd), table.ChoiceStructure tbody tr:nth-child(odd) .InputText, table.ChoiceStructure tbody tr:nth-child(odd) .q-checkbox, table.ChoiceStructure tbody tr:nth-child(odd) select {
+                background: white !important;
+        }
+        table.ChoiceStructure thead {
+                background: #002E45;
+                color: white
+        }
+        table.ChoiceStructure thead .helpText {
+                color: #FFF8BD;
+        }
+        table.ChoiceStructure tbody th {
+                font-weight: bold;
+        }
+        table.ChoiceStructure tbody {
+                color: #002E45;
+        }
+        table.ChoiceStructure .Essay {
+                resize: none;
+        }
+        table.ChoiceStructure select {
+                o-appearance: none;
+                -ms-appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+        }
+        .SBS .c2, .SBS .Separator1 {
+                border-right: none !important;
+        }
+        .SBS .Answers td, .Skin .SBS .Answers th {
+                border-bottom: none !important;
+        }
+        .SBS .Essay, .SBS .Short, .SBS .Medium, .SBS .Long, .SBS .q-checkbox, .SBS select {
+                border: none !important;
+        }
+        .Skin .SBS td, .Skin .SBS thead th, .SBS .Essay, .SBS .Short, .SBS .Medium .SBS .Long {
+                text-align: left;
+        }
+        /* Table with total row */
+        #QID58 table.ChoiceStructure tbody tr:last-child th, #QID58 table.ChoiceStructure tbody tr:last-child td {
+                border-top: 4px solid #002E45;
+                border-bottom: 4px solid #002E45;
+                font-weight: bold;
+        }
         .ResponseSummary~.QuestionOuter {
-                size: A1 portrait;
-                page-break-inside: avoid;
+                break-inside: avoid;
         }
-        /*     .ResponseSummary~.QuestionOuter:not(.FileUpload, #QID4, #QID17, #QID64, #QID67), .question_Text, .QuestionText {
-                float: none;
-                page-break-after: always;
-        } */
+        /* Hidden elements */
         #ResponseSummaryHeader, #EndOfSurvey, .navOuter, .ResponseSummary~.Separator, .non-null, .noPrint, .QuestionOuter.FileUpload, #Buttons, #QID17/* new transaction upload header */
-        , #QID64/* declaration downloads */
+        , #QID63/* declaration downloads */
         , #QID67/* declaration upload */
-        , #QID69 /* Declaration upload */
+        , #QID69/* Declaration upload */
         , #QID70/* supporting docs */
         , #QID83/* pre-completion check JS */
         , #QID84/* Browser info */
         , #QID86/* delcaration download */
+        , table.ChoiceStructure .Headings .helpText/* details question help text */
         , .menuHelper/* Menu highlight help text */
         , .check~.helpText/* completion check text alert */
         , #ExtendSubmissions/* Extended submissions  */
@@ -967,7 +978,4 @@ div #Footer {
         , #HeaderContainer, #LogoContainer, ::-webkit-scrollbar-track {
                 display: none !important;
         }
-        /* .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) input {
-
-        } */
 }
