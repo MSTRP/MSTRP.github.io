@@ -1265,11 +1265,9 @@ var nullTag = function () {
 
         if (alwaysPrint.toString().indexOf(inputID) < 0 &&
             checkNum(input) === "Not B/0") {
-            console.log("inputID: ", inputID, " inputVal: ", input.val());
             for (let wrapper of wrappers) {
                 if (inputID.split("~")[1] === jQuery(wrapper).attr("id")) {
                     jQuery(wrapper).addClass("noPrint");
-                    console.log("wrapper ID: ", jQuery(wrapper).attr("id"), " noPrint class added")
                 };
             };
         };
