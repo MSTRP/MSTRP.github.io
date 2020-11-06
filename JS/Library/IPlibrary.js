@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.1.5';//increment me when publishing changes
+var version = "live Beta update " + '1.2.1.6';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -2843,7 +2843,7 @@ var equityFormatting = function (parentarray) {
 
         let allFields = [TSInpt, WCIPT, ESIpt];
 
-        for (value of allFields) {
+        for (let value of allFields) {
             let equityFocus = function () {
                 for (let value of pctFields) {
                     //remove % from value to ensure net revenue 
