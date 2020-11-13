@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.1.6';//increment me when publishing changes
+var version = "live Beta update " + '1.2.1.7';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1690,16 +1690,16 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
         ];
 
         //get page and table widths in px
-        let tablewidth = jQuery(".ChoiceStructure").width();
-        let questionpagewidth = jQuery(".Skin #SkinContent").width();
+        let tablewidth = jQuery("table.ChoiceStructure").width();
+        let tableWrapperWidth = jQuery("div .SBSMatrix").width();
 
         //if more than 30 rows displayed, load when 2 rows are visible. Otherwise 10%
         let tablelength = jQuery(load_Target).find("tr").length;
         let load = (tablelength > 30) ? 2 / tablelength : 0.1;
 
         //function to display load buttons when target is in view:
-        var observer = new IntersectionObserver(function (entries) {
-            if (entries[0]['isIntersecting'] == true && tablewidth > questionpagewidth) {
+        let observer = new IntersectionObserver(function (entries) {
+            if (entries[0]['isIntersecting'] == true && tablewidth > tableWrapperWidth) {
                 //when the load target is in view:
                 jQuery('.Scroll--left')
                     .on({
@@ -2296,8 +2296,8 @@ var format6 = function (formatting_columnRefs) {
             if (hasAgreement.val() != "2" || hasAgreement.val() == "2" && noInfobox.val().length > 0) {
                 // if no is not selected,
                 // or no is selected and the comments box is filled in
-                removehighLight2(hasAgreement, noInfobox)
-            }
+                removehighLight2(hasAgreement, noInfobox);
+            };
         };
 
         //formatting on load:
@@ -2373,8 +2373,8 @@ var buttons6a = function (next, details) {
 
                 nextbuttonDefault(sections[next]);
                 ////next button changes to "Section 7: Other live agreements"
-            }
-        })
+            };
+        });
     });
 };
 //4) 6 new transactions upload carry forward
@@ -2412,7 +2412,7 @@ var carry6 = function (answerlist) {
             };
         };
     });
-}
+};
 
 //3) 10 Revenue calctable formatting:
 var revenueFormatting = function (parentarray) {
@@ -2446,13 +2446,13 @@ var revenueFormatting = function (parentarray) {
                 for (let value of netcalcFields) {
                     //remove '£' from value to ensure net revenue 
                     //displays as a number and avoid NaN error
-                    value.val(value.val().replace(/£/g, ""))
+                    value.val(value.val().replace(/£/g, ""));
                 };
 
                 for (let value of attCalcfields) {
                     //remove % from value to ensure net revenue 
                     //displays as a number and avoid NaN error
-                    value.val(value.val().replace(/%/g, ""))
+                    value.val(value.val().replace(/%/g, ""));
                 };
                 inputActive(value);
                 //highlight border of active current input
@@ -2477,15 +2477,15 @@ var revenueFormatting = function (parentarray) {
                             if (calcBlanks.indexOf(revShareWTInput) > -1) {
                                 //if Wellcome rev share is blank
 
-                                focusError(value, "WR", selectorFieldRA)
+                                focusError(value, "WR", selectorFieldRA);
                                 //send error message to total field and apply highlights
 
                             } else if (calcBlanks.indexOf(contributionWTInput) > -1) {
                                 //if Wellcome contirbution is blank
 
-                                focusError(value, "WC", selectorFieldRA)
+                                focusError(value, "WC", selectorFieldRA);
                                 //send error message to total field and apply highlights
-                            }
+                            };
                         };
 
                         if (calcNotBlanks.indexOf(incomeGrossInput) > -1) {
@@ -2499,7 +2499,7 @@ var revenueFormatting = function (parentarray) {
 
                             } else {
                                 //otherwise highlight them all
-                                for (let val of calcNotBlanks) { relatedInput(val); }
+                                for (let val of calcNotBlanks) { relatedInput(val); };
                             };
                         };
                     };
@@ -2570,7 +2570,7 @@ var revenueFormatting = function (parentarray) {
                             if (calcBlanks.indexOf(revShareWTInput) > -1) {
                                 //if Wellcome rev share is blank
 
-                                blurError(value, "WR", selectorFieldRA)
+                                blurError(value, "WR", selectorFieldRA);
                                 //send error message to total field and apply highlights
 
                                 contributionWTInput.val(englishPerecent(cleanContPCT));
@@ -2579,17 +2579,17 @@ var revenueFormatting = function (parentarray) {
                             } else if (calcBlanks.indexOf(contributionWTInput) > -1) {
                                 //if Wellcome contirbution is blank
 
-                                blurError(value, "WC", selectorFieldRA)
+                                blurError(value, "WC", selectorFieldRA);
                                 //send error message to total field and apply highlights
 
                                 revShareWTInput.val(englishPerecent(cleanRSPCT));
                                 //percentage formate Wellcome Revenue Share
-                            }
+                            };
                         };
 
                         //remove highlight of non-blank % field:
                         for (let value of attNotBlanks) {
-                            fullReset(value)
+                            fullReset(value);
                         };
 
 
@@ -2602,7 +2602,7 @@ var revenueFormatting = function (parentarray) {
                             let input = object["input"];
                             let clean = object["clean"];
 
-                            input.val(englishPerecent(clean))
+                            input.val(englishPerecent(clean));
                         };
 
                         for (let value of attCalcfields) {
@@ -2610,7 +2610,7 @@ var revenueFormatting = function (parentarray) {
                             //or if none of the % fields are entererd
 
                             resetBackground(value);
-                            resetBorder(value)
+                            resetBorder(value);
                         };
 
                         totalSelect(selectorFieldRA)
@@ -2620,7 +2620,7 @@ var revenueFormatting = function (parentarray) {
                     //remove highlight from all fields:
                     for (let value of netcalcFields) {
                         resetBackground(value);
-                        resetBorder(value)
+                        resetBorder(value);
                     };
                 };
 
@@ -2631,31 +2631,26 @@ var revenueFormatting = function (parentarray) {
                     let clean = object["clean"];
 
                     if (input.val() != "") {
-                        input.val(englishPounds(clean))
-                    }
-                }
+                        input.val(englishPounds(clean));
+                    };
+                };
             };//blur
 
             //onload:
             focusFormat();
             blurFormat();
-            value.on({
-                //logial formatting in click and blur
-
+            value.on({  
                 focus: function () {
                     focusFormat();
                 },
                 blur: function () {
                     blurFormat();
                 }
-            })
+            });
         };
-
         //WC justification
-        formatWC([contributionWTInput, contributionJustInput])
-    })
-
-
+        formatWC([contributionWTInput, contributionJustInput]);
+    });
 };
 
 //4) 10 Revenue calctable calulations:
@@ -2933,9 +2928,15 @@ var equityFormatting = function (parentarray) {
                 };
 
                 //format fields which aren't blank:
-                if (ESIpt.val().length > 0) { ESIpt.val(englishPerecent(cleanES)); };
-                if (WCIPT.val().length > 0) { WCIPT.val(englishPerecent(cleanWC)); };
-                if (TSInpt.val().length > 0) { TSInpt.val(formatNumber(cleanTS)); };
+                if (ESIpt.val().length > 0) {
+                    ESIpt.val(englishPerecent(cleanES));
+                };
+                if (WCIPT.val().length > 0) {
+                    WCIPT.val(englishPerecent(cleanWC));
+                };
+                if (TSInpt.val().length > 0) {
+                    TSInpt.val(formatNumber(cleanTS));
+                };
             };//blur
 
             //on load:
