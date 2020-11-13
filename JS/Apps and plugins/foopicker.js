@@ -5,7 +5,8 @@
  * License: MIT
  * URL: https://github.com/yogasaikrishna/foopicker
  */
-
+var fooVersion = 1.1;
+ console.log("Date Picker version: ", fooVersion);
 var FooPicker = (function () {
   'use strict';
 
@@ -35,12 +36,12 @@ var FooPicker = (function () {
       var pickerDiv = document.getElementById('foopicker-' + _id);
       if (pickerField) {
         var datepicker = pickerField.getBoundingClientRect();
-        var left = datepicker.left;
+        var right = datepicker.right;
         var top = datepicker.top + 220;
         if (pickerDiv) {
           pickerDiv.style.position = 'fixed';
           pickerDiv.style.bottom = top + 'px';
-          pickerDiv.style.left = left + 'px';
+          pickerDiv.style.left = right + 'px';
           pickerDiv.style.zIndex = '99999';
         }
       }
