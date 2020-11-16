@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.1.7';//increment me when publishing changes
+var version = "live Beta update " + '1.2.1.8';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1731,7 +1731,7 @@ var sideScrollButtons = function (element_being_scrolled, load_Target, hoverText
                 };
             } else {
                 for (let value of scroll_Buttons) {
-                    value.stop(true, true).hide();
+                    value.stop(true, true).remove();
                 };
             };
         }, {
