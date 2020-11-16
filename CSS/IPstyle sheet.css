@@ -397,6 +397,10 @@ body {
                 padding-right: 5px;
                 /* margin: auto; */
         }
+        .question_Text {
+                margin-left: 10%;
+                margin-right: 10%;
+        }
 }
 
 @media screen and (min-width: 1400px) {
@@ -409,6 +413,10 @@ body {
                 max-width: 100%;
                 padding-left: 5px;
                 padding-right: 5px;
+        }
+        .question_Text {
+                margin-left: 25%;
+                margin-right: 25%;
         }
 }
 
@@ -427,8 +435,8 @@ body {
 }
 
 .question_Text {
-        margin-left: 30px;
-        margin-right: 30px;
+        margin-left: 20%;
+        margin-right: 20%;
 }
 
 input:focus, textarea:focus {
@@ -532,7 +540,7 @@ a[href]:focus {
 
 #Header {
         position: relative;
-        top: 79px;
+        top: 62px;
         clear: both;
         text-align: center;
 }
