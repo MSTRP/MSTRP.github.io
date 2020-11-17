@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.2.2';//increment me when publishing changes
+var version = "live Beta update " + '1.2.2.3';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -107,16 +107,20 @@ var allQuestions = function (type) {
 
 };
 var filterSelect = function (question) {
-    return jQuery(QuestionIDs[question].filter)
+    return jQuery(QuestionIDs[question].filter);
 };
 
 
 var detailsSelect = function (question) {
-    return jQuery(QuestionIDs[question].details)
+    return jQuery(QuestionIDs[question].details);
 };
 
-
-
+/* var getDID = function (question) {
+    return QuestionIDs[question]["details"];
+};
+var getFID = function (question) {
+    return QuestionIDs[question]["filter"];
+}; */
 
 //section headings
 var sections = {
@@ -1346,7 +1350,7 @@ var nullTag = function () {
 var hideRows = function (questionNumber, filters) {
 
     let summaryPage = (jQuery("#EndOfSurvey").length < 1) ? false : true;
-    let totalTables = [detailsSelect("TwelveD")];
+    let totalTables = [QuestionIDs.TwelveD.details]; 
 
     switch (summaryPage) {
         case true:
@@ -1354,30 +1358,30 @@ var hideRows = function (questionNumber, filters) {
             let question = jQuery(".QuestionOuter");
             let filter = getFilters(questionNumber, filters);
 
-                let rows = question.find("table.ChoiceStructure tbody tr");
-                let isTotalQuestion = (totalTables.indexOf(question.attr("id")) > -1) ? true : false;
-                switch (isTotalQuestion) {
-                    case false:
-                        console.log("hide rows: not total table");
-                        rows.each(function () {
-                            //function will loop through all rows in question
-                            if (jQuery(this).index() >= filter) { jQuery(this).hide(); };
-                        });
-                        break;
-                    case true:
-                        console.log("hide rows: total table");
-                        let totalIndex = question.find(".ChoiceStructure tbody tr:last-child").index();
-                        rows.each(function () {
-                            //function will loop through all rows on page
+            let rows = question.find("table.ChoiceStructure tbody tr");
+            let isTotalQuestion = (totalTables.indexOf(question.attr("id")) > -1) ? true : false;
+            switch (isTotalQuestion) {
+                case false:
+                    console.log("hide rows: not total table");
+                    rows.each(function () {
+                        //function will loop through all rows in question
+                        if (jQuery(this).index() >= filter) { jQuery(this).hide(); };
+                    });
+                    break;
+                case true:
+                    console.log("hide rows: total table");
+                    let totalIndex = question.find(".ChoiceStructure tbody tr:last-child").index();
+                    rows.each(function () {
+                        //function will loop through all rows on page
 
-                            //if the row number on the page is above the filter value
-                            //it is hidden
-                            if (jQuery(this).index() >= filter && jQuery(this).index() == totalIndex) {
-                                jQuery(this).hide();
-                            };
-                        });
-                        break;
-                    };
+                        //if the row number on the page is above the filter value
+                        //it is hidden
+                        if (jQuery(this).index() >= filter && jQuery(this).index() == totalIndex) {
+                            jQuery(this).hide();
+                        };
+                    });
+                    break;
+            };
             break;
 
         case false:
