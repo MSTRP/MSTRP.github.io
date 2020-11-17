@@ -414,7 +414,7 @@ body {
                 padding-left: 5px;
                 padding-right: 5px;
         }
-        .question_Text, .guidancePage {
+        .question_Text:not(li), .guidancePage {
                 margin-left: 25%;
                 margin-right: 25%;
         }
