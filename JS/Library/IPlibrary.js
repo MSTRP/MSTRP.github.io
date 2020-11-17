@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.2.6';//increment me when publishing changes
+var version = "live Beta update " + '1.2.2.7';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1397,8 +1397,9 @@ var hideRows = function (questionNumber, filters) {
                 let thisQuestion = jQuery(id);
                 let myIndex = allDetails.indexOf(id);
                 let myRows = thisQuestion.find("table.ChoiceStructure tbody tr");
-                let isTotalQuestion = (totalTables.toString().indexOf(question.attr("id")) > -1) ? true : false;
-                //select corresponding filter question
+                let isTotalQuestion = (totalTables.toString().indexOf(thisQuestion.attr("id")) > -1) ? true : false;
+                
+                //corresponding filter question
                 let myFilter = jQuery(allfilters[myIndex]).find(".ChoiceStructure:not(table) input.InputText").val();
 
 
