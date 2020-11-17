@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.1.9';//increment me when publishing changes
+var version = "live Beta update " + '1.2.2.0';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1350,42 +1350,41 @@ var hideRows = function (questionNumber, filters) {
 
     switch (summaryPage) {
         case false:
+            console.log("hide rows: not summary page");
             let question = jQuery(".QuestionOuter");
             let filter = getFilters(questionNumber, filters);
-            question.each(function () {
-                let thisQuestion = jQuery(this);
-                let questionID = thisQuestion.attr("id");
-                let rows = thisQuestion.find("table.ChoiceStructure tbody tr");
-                let isTotalQuestion = (totalTables.indexOf(questionID) > -1) ? true : false;
+
+                let rows = question.find("table.ChoiceStructure tbody tr");
+                let isTotalQuestion = (totalTables.indexOf(question.attr("id")) > -1) ? true : false;
                 switch (isTotalQuestion) {
                     case false:
+                        console.log("hide rows: not total table");
                         rows.each(function () {
                             //function will loop through all rows in question
                             if (jQuery(this).index() >= filter) { jQuery(this).hide(); };
                         });
                         break;
                     case true:
+                        console.log("hide rows: total table");
                         let totalIndex = question.find(".ChoiceStructure tbody tr:last-child").index();
                         rows.each(function () {
                             //function will loop through all rows on page
 
                             //if the row number on the page is above the filter value
                             //it is hidden
-                            if (jQuery(this).index() >= filter) {
-
-                                if (jQuery(this).index() == totalIndex) { return; };
+                            if (jQuery(this).index() >= filter && jQuery(this).index() == totalIndex) {
                                 jQuery(this).hide();
                             };
                         });
                         break;
-                };
-            });
+                    };
             break;
 
         case true:
             //logic will be if filter is x then apply y to details
             //need to do full mapping of questionIDs 
             //group all filter and details question id's into arrays
+            console.log("hide rows: summary page");
             let allDetails = allQuestions("details");
             let allfilters = allQuestions("filters");
 
