@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.2.7';//increment me when publishing changes
+var version = "live Beta update " + '1.2.2.8';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -87,6 +87,8 @@ var QuestionIDs = {
         details: "#QID61"
     }
 };
+
+var totalTables = [QuestionIDs.ElevenD.details];
 
 var allQuestions = function (type) {
     let list = [];
@@ -857,15 +859,16 @@ var borderFlash2 = function (hoverSelectors, flashColour, flashSelector) {
 //total row styling and display:
 var totalRowFormat = function (non_blanks) {
     //Non-blanks are optional
-    if (jQuery("#EndOfSurvey").length < 1) {
-        //selectors for last row:
-        let totalRow = jQuery(".ChoiceStructure tbody tr:last-child");
+
+    //selectors for last row:
+    totalTables.forEach(function (id) {
+        let totalRow = jQuery(id).find(".ChoiceStructure tbody tr:last-child");
         let inputsTotal = totalRow.find("input");
         let teTotal = totalRow.find("textarea");
         let input_fields = [inputsTotal, teTotal];
 
-        totalRow.css("background-color", getColour("tertiary"));
-
+        /* totalRow.css("background-color", getColour("tertiary")); */
+        totalRow.addClass("detailsTotal");
         for (let inputs of input_fields) {
             jQuery(inputs).css("font-weight", "bold");
             if (non_blanks != undefined) {
@@ -879,9 +882,11 @@ var totalRowFormat = function (non_blanks) {
                         currentTotal.hide();
                     };
                 });
-            }
+            };
+
         };
-    };
+    })
+
 };
 
 //total column styling and display
@@ -1350,7 +1355,7 @@ var nullTag = function () {
 var hideRows = function (questionNumber, filters) {
 
     let summaryPage = (jQuery("#EndOfSurvey").length < 1) ? false : true;
-    let totalTables = [QuestionIDs.ElevenD.details]; 
+
 
     switch (summaryPage) {
         case false:
@@ -1398,7 +1403,7 @@ var hideRows = function (questionNumber, filters) {
                 let myIndex = allDetails.indexOf(id);
                 let myRows = thisQuestion.find("table.ChoiceStructure tbody tr");
                 let isTotalQuestion = (totalTables.toString().indexOf(thisQuestion.attr("id")) > -1) ? true : false;
-                
+
                 //corresponding filter question
                 let myFilter = jQuery(allfilters[myIndex]).find(".ChoiceStructure:not(table) input.InputText").val();
 
