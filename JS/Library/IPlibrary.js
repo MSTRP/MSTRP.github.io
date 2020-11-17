@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.1.8';//increment me when publishing changes
+var version = "live Beta update " + '1.2.1.9';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -46,17 +46,82 @@ var theme = {
 
 //Question IDs - selectors for question wrappers
 var QuestionIDs = {
-    ThreeB: jQuery("#QID10"),
-    Eleven: jQuery("#QID57"),
-    ElevenD: jQuery("#QID58"),
-    Twelve: jQuery("#QID60"),
-    TwelveD: jQuery("#QID61")
+    ThreeA: {
+        filter: "#QID8",
+        details: "#QID9"
+    },
+    ThreeB: {
+        filter: "#QI100",
+        details: "#QID10"
+    },
+    FourD: {
+        filter: "#QID11",
+        details: "#QID12"
+    },
+    FiveD: {
+        filter: "#QID13",
+        details: "#QID14"
+    },
+    SixAD: {
+        filter: "#QID15",
+        details: "#QID16"
+    },
+    SevenD: {
+        filter: "#QID48",
+        details: "#QID49"
+    },
+    EightD: {
+        filter: "#QID50",
+        details: "#QID51"
+    },
+    NineD: {
+        filter: "#QID52",
+        details: "#QID53"
+    },
+    ElevenD: {
+        filter: "#QID57",
+        details: "#QID58"
+    },
+    TwelveD: {
+        filter: "#QID60",
+        details: "#QID61"
+    }
 };
+
+var allQuestions = function (type) {
+    let list = [];
+    switch (type) {
+        case "filters":
+            Object.values(QuestionIDs).forEach(question => list.push(question.filter));
+            return list;
+        case "details":
+            Object.values(QuestionIDs).forEach(question => list.push(question.details));
+            return list;
+
+        /* default:
+            Object.values(QuestionIDs).forEach(function (question) {
+                list.push([question.filter, question.details]);
+            });
+            return list; */
+    };
+
+};
+var filterSelect = function (question) {
+    return jQuery(QuestionIDs[question].filter)
+};
+
+
+var detailsSelect = function (question) {
+    return jQuery(QuestionIDs[question].details)
+};
+
+
+
 
 //section headings
 var sections = {
     Back: "←",
-    Three: "Section 3: Invention disclosures",
+    Three: "Section 3: Invention disclosures and new patent applications",
     ThreeA: "Invention disclosure details",
     ThreeB: "Patent applications filed details",
     Four: "Section 4: Granted patents",
@@ -328,6 +393,8 @@ var getFilters = function (question, filters) {
         };
     };
 };
+
+
 
 //2) array and object methods:
 var filterBlanks = function (selector) {
@@ -1277,13 +1344,86 @@ var nullTag = function () {
 /*----------------------SECTION 2: Display logic --------------------*/
 //1) hide rows 
 var hideRows = function (questionNumber, filters) {
-    let rows = jQuery(".ChoiceStructure tbody").find("tr");
-    let filter = getFilters(questionNumber, filters);
 
-    rows.each(function () {
-        //function will loop through all rows in question
-        if (jQuery(this).index() >= filter) { jQuery(this).hide(); };
-    });
+    let summaryPage = (jQuery("#EndOfSurvey").length < 0) ? false : true;
+    let totalTables = [detailsSelect("TwelveD")];
+
+    switch (summaryPage) {
+        case false:
+            let question = jQuery(".QuestionOuter");
+            let filter = getFilters(questionNumber, filters);
+            question.each(function () {
+                let thisQuestion = jQuery(this);
+                let questionID = thisQuestion.attr("id");
+                let rows = thisQuestion.find("table.ChoiceStructure tbody tr");
+                let isTotalQuestion = (totalTables.indexOf(questionID) > -1) ? true : false;
+                switch (isTotalQuestion) {
+                    case false:
+                        rows.each(function () {
+                            //function will loop through all rows in question
+                            if (jQuery(this).index() >= filter) { jQuery(this).hide(); };
+                        });
+                        break;
+                    case true:
+                        let totalIndex = question.find(".ChoiceStructure tbody tr:last-child").index();
+                        rows.each(function () {
+                            //function will loop through all rows on page
+
+                            //if the row number on the page is above the filter value
+                            //it is hidden
+                            if (jQuery(this).index() >= filter) {
+
+                                if (jQuery(this).index() == totalIndex) { return; };
+                                jQuery(this).hide();
+                            };
+                        });
+                        break;
+                };
+            });
+            break;
+
+        case true:
+            //logic will be if filter is x then apply y to details
+            //need to do full mapping of questionIDs 
+            //group all filter and details question id's into arrays
+            let allDetails = allQuestions("details");
+            let allfilters = allQuestions("filters");
+
+
+            allDetails.forEach(function (id) {
+                let thisQuestion = jQuery(id);
+                let myIndex = allDetails.indexOf(id);
+                let myRows = thisQuestion.find("table.ChoiceStructure tbody tr");
+                let isTotalQuestion = (totalTables.indexOf(id) > -1) ? true : false;
+                //select corresponding filter question
+                let myFilter = jQuery(allfilters[myIndex]).find(".ChoiceStructure:not(table) input.InputText").val();
+
+
+                switch (isTotalQuestion) {
+                    case false:
+                        myRows.each(function () {
+                            //function will loop through all rows in question
+                            if (jQuery(this).index() >= myFilter) { jQuery(this).hide(); };
+                        });
+                        break;
+                    case true:
+                        let totalIndex = thisQuestion.find(".ChoiceStructure tbody tr:last-child").index();
+                        myRows.each(function () {
+                            //function will loop through all rows on page
+
+                            //if the row number on the page is above the filter value
+                            //it is hidden
+                            if (jQuery(this).index() >= filter && jQuery(this).index() < totalIndex) {
+
+                                jQuery(this).hide();
+                            };
+                        });
+                        break;
+                };
+
+            });
+            break;
+    };
 };
 
 //2) hide rows with total row
@@ -2092,34 +2232,34 @@ var loadMenu = function (progressBartracker) {
 //--------------------Section 5: Question specific
 //1) 3A buttons on click
 /* var buttons3a = function (NPF_cloumn, detailsRef, nextRef) {
-
+ 
     let table = jQuery(".QuestionBody");
-
+ 
     table.on("click keyup", function () {
         var fRolling = 0;
         var fCount = 0;
-
+ 
         table.find("tbody tr").each(function () {
-
+ 
             var npfSelect = selectSelect(jQuery(this).find(columnSelect(NPF_cloumn)));
             //select the dropdown 
-
+ 
             if (npfSelect.val() == 2) {
                 //if F is selected add 1 to thr olling tally
-
+ 
                 var fTally = 1;
             } else {
                 //otherwise add nothing
-
+ 
                 var fTally = 0;
             };
             //rolling calcs:
             fCount += fTally,
                 fRolling += fCount;
-
+ 
             if (fRolling > 0) {
                 //if 1 or more Fs are selected
-
+ 
                 nextbuttonDefault(sections[detailsRef]);
                 //set button text to "details"
             } else {
@@ -2137,7 +2277,7 @@ var carry3b = function (answerlist) {
     let uniqueID = answerlist["uniqueID"];
     let inventors = answerlist["inventors"];
 
-    let allRows = QuestionIDs.ThreeB.find("tbody tr");
+    let allRows = detailsSelect("ThreeB").find("tbody tr");
     allRows.each(function () {
         let thisRow = jQuery(this);
         let rowindex = thisRow.index();
@@ -2417,7 +2557,7 @@ var carry6 = function (answerlist) {
 //3) 10 Revenue calctable formatting:
 var revenueFormatting = function (parentarray) {
 
-    QuestionIDs.ElevenD.find(".ChoiceStructure tbody tr").each(function () {
+    detailsSelect("ElevenD").find(".ChoiceStructure tbody tr").each(function () {
         //for each table row:
         let inputs = jQuery(this);
         //selector for current row
@@ -2639,7 +2779,7 @@ var revenueFormatting = function (parentarray) {
             //onload:
             focusFormat();
             blurFormat();
-            value.on({  
+            value.on({
                 focus: function () {
                     focusFormat();
                 },
@@ -2812,7 +2952,7 @@ var equityCalc = function (parentarray) {
 
 var equityFormatting = function (parentarray) {
 
-    QuestionIDs.TwelveD.find(".ChoiceStructure tbody tr").each(function () {
+    detailsSelect("TwelveD").find(".ChoiceStructure tbody tr").each(function () {
         //select the rows
         let inputsE = jQuery(this);//current row
 
