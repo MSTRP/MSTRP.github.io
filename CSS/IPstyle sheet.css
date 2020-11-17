@@ -838,6 +838,12 @@ div #Footer {
         min-width: 800px;
 }
 
+/* Total Rows */
+
+.detailsTotal {
+        background: var(--secondaryColour);
+}
+
 /*inline CSS*/
 
 .QuestionBody {
