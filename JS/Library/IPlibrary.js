@@ -1359,7 +1359,7 @@ var hideRows = function (questionNumber, filters) {
             let filter = getFilters(questionNumber, filters);
 
             let rows = question.find("table.ChoiceStructure tbody tr");
-            let isTotalQuestion = (totalTables.indexOf(question.attr("id")) > -1) ? true : false;
+            let isTotalQuestion = (totalTables.toString().indexOf(question.attr("id")) > -1) ? true : false;
             switch (isTotalQuestion) {
                 case false:
                     console.log("hide rows: not total table");
@@ -1397,7 +1397,7 @@ var hideRows = function (questionNumber, filters) {
                 let thisQuestion = jQuery(id);
                 let myIndex = allDetails.indexOf(id);
                 let myRows = thisQuestion.find("table.ChoiceStructure tbody tr");
-                let isTotalQuestion = (totalTables.indexOf(id) > -1) ? true : false;
+                let isTotalQuestion = (totalTables.toString().indexOf(question.attr("id")) > -1) ? true : false;
                 //select corresponding filter question
                 let myFilter = jQuery(allfilters[myIndex]).find(".ChoiceStructure:not(table) input.InputText").val();
 
