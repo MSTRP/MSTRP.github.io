@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.2.0';//increment me when publishing changes
+var version = "live Beta update " + '1.2.2.1';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1230,8 +1230,8 @@ var setScroll = function () {
 
 //shortcut labels for nav buttons:
 var navlabels = function () {
-    jQuery("#PreviousButton").attr('title', "Go Back 1 page (Ctrl + Alt + P)");
-    jQuery("#NextButton").attr('title', "Next (Ctrl + Alt + N)");
+    jQuery("#PreviousButton").attr('title', "Save and go Back 1 page (Ctrl + Alt + P)");
+    jQuery("#NextButton").attr('title', "Save and go forward 1 page (Ctrl + Alt + N)");
 };
 
 //show questions
@@ -1349,7 +1349,7 @@ var hideRows = function (questionNumber, filters) {
     let totalTables = [detailsSelect("TwelveD")];
 
     switch (summaryPage) {
-        case false:
+        case true:
             console.log("hide rows: not summary page");
             let question = jQuery(".QuestionOuter");
             let filter = getFilters(questionNumber, filters);
@@ -1380,7 +1380,7 @@ var hideRows = function (questionNumber, filters) {
                     };
             break;
 
-        case true:
+        case false:
             //logic will be if filter is x then apply y to details
             //need to do full mapping of questionIDs 
             //group all filter and details question id's into arrays
