@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.2.4';//increment me when publishing changes
+var version = "live Beta update " + '1.2.2.5';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1350,7 +1350,7 @@ var nullTag = function () {
 var hideRows = function (questionNumber, filters) {
 
     let summaryPage = (jQuery("#EndOfSurvey").length < 1) ? false : true;
-    let totalTables = [QuestionIDs.TwelveD.details]; 
+    let totalTables = [QuestionIDs.ElevenD.details]; 
 
     switch (summaryPage) {
         case false:
