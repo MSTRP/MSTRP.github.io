@@ -1,7 +1,7 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.2.3';//increment me when publishing changes
+var version = "live Beta update " + '1.2.2.4';//increment me when publishing changes
 console.log("Version: ", version);
 
 
@@ -1353,7 +1353,7 @@ var hideRows = function (questionNumber, filters) {
     let totalTables = [QuestionIDs.TwelveD.details]; 
 
     switch (summaryPage) {
-        case true:
+        case false:
             console.log("hide rows: not summary page");
             let question = jQuery(".QuestionOuter");
             let filter = getFilters(questionNumber, filters);
@@ -1384,7 +1384,7 @@ var hideRows = function (questionNumber, filters) {
             };
             break;
 
-        case false:
+        case true:
             //logic will be if filter is x then apply y to details
             //need to do full mapping of questionIDs 
             //group all filter and details question id's into arrays
