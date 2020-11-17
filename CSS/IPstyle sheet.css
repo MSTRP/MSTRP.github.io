@@ -397,7 +397,7 @@ body {
                 padding-right: 5px;
                 /* margin: auto; */
         }
-        .question_Text {
+        .question_Text:not(li), .guidancePage {
                 margin-left: 10%;
                 margin-right: 10%;
         }
@@ -410,11 +410,11 @@ body {
                 top: 42px;
         }
         div .SBSMatrix {
-                max-width: 100%;
+                max-width: calc(100vw - 15px);
                 padding-left: 5px;
                 padding-right: 5px;
         }
-        .question_Text {
+        .question_Text, .guidancePage {
                 margin-left: 25%;
                 margin-right: 25%;
         }
@@ -857,8 +857,6 @@ div #Footer {
         margin-left: unset;
 }
 
-
-
 @media screen and (max-width: 1399px) {
         .ResponseSummary~.QuestionOuter .ChoiceStructure:not(table) textarea {
                 min-height: 350px !important;
@@ -877,7 +875,7 @@ div #Footer {
                 min-height: 150px !important;
         }
         .ResponseSummary~.QuestionOuter.MC ul.ChoiceStructure {
-                width:50vw;
+                width: 50vw;
                 margin-right: 40%;
         }
 }
