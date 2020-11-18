@@ -74,5 +74,5 @@ Qualtrics.SurveyEngine.addOnReady(function () {
         nextbuttonDefault("Submit report");
         jQuery("#NextButton").css("background-color", "blue");
         jQuery("#NextButton").attr('title', "Submit Report"); //blue submit button
-    }
+    };
 });
