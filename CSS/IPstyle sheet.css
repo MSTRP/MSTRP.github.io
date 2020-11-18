@@ -387,17 +387,17 @@ body {
 
 @media screen and (max-width: 1399px) {
         .Skin #SkinContent {
-                width: calc(100vw - 15px);
+                width: var(--pageWidth);
                 clear: left;
                 top: 42px;
         }
         div .SBSMatrix {
-                max-width: calc(100vw - 15px);
+                max-width: var(--pageWidth);
                 padding-left: 5px;
                 padding-right: 5px;
                 /* margin: auto; */
         }
-        .question_Text:not(li), .guidancePage {
+        .question_Text, .guidancePage {
                 margin-left: 10%;
                 margin-right: 10%;
         }
@@ -409,16 +409,16 @@ body {
 
 @media screen and (min-width: 1400px) {
         .Skin #SkinContent {
-                width: calc(100vw - 15px);
+                width: var(--pageWidth);
                 clear: left;
                 top: 42px;
         }
         div .SBSMatrix {
-                max-width: calc(100vw - 15px);
+                max-width: var(--pageWidth);
                 padding-left: 5px;
                 padding-right: 5px;
         }
-        .question_Text:not(li), .guidancePage {
+        .question_Text, .guidancePage {
                 margin-left: 25%;
                 margin-right: 25%;
         }
@@ -849,7 +849,7 @@ div #Footer {
 /* Total Rows */
 
 .detailsTotal {
-        background: var(--secondaryColour);
+        background: var(--tertiaryColour);
 }
 
 /*inline CSS*/
@@ -867,7 +867,7 @@ div #Footer {
 /*Response Summary*/
 
 .ResponseSummary~.QuestionOuter .question_Text, .ResponseSummary~.QuestionOuter .QuestionText {
-        max-width: calc(100vw - 15px);
+        max-width: var(--pageWidth);
         margin-left: unset;
 }
 
@@ -879,11 +879,11 @@ div #Footer {
                 margin-left: unset;
         }
         .ResponseSummary~.QuestionOuter.MC ul.ChoiceStructure {
-                width: calc(100vw - 15px);
+                width: var(--pageWidth);
                 float: left;
         }
         .ResponseSummary~.QuestionOuter.FileUpload {
-                max-width: calc(100vw - 15px);
+                max-width: var(--pageWidth);
                 padding-left: 3%;
                 padding-right: 3%;
         }
@@ -898,7 +898,7 @@ div #Footer {
                 margin-right: 40%;
         }
         .ResponseSummary~.QuestionOuter.FileUpload {
-                max-width: calc(100vw - 15px);
+                max-width: var(--pageWidth);
                 padding-left: 3%;
                 padding-right: 15%;
         }
