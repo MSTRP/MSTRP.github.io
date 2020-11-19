@@ -882,7 +882,7 @@ div #Footer {
               /*   width: var(--pageWidth); */
                 float: left;
         }
-        .ResponseSummary~.QuestionOuter.FileUpload {
+        .ResponseSummary~.QuestionOuter .FileUpload {
                 max-width: var(--pageWidth);
                 padding-left: 3%;
                 padding-right: 3%;
@@ -897,7 +897,7 @@ div #Footer {
                 width: 50vw;
                 margin-left: 0;
         }
-        .ResponseSummary~.QuestionOuter.FileUpload {
+        .ResponseSummary~.QuestionOuter .FileUpload {
                 max-width: var(--pageWidth);
                 padding-left: 3%;
                 padding-right: 15%;
