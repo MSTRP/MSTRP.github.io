@@ -403,7 +403,7 @@ body {
         }
         .ChoiceStructure li.Selection {
                 max-width: 70vw;
-            /*     min-width: fit-content; */
+                /*     min-width: fit-content; */
         }
 }
 
@@ -424,7 +424,7 @@ body {
         }
         .ChoiceStructure li.Selection {
                 max-width: 50vw;
-             /*    min-width: fit-content; */
+                /*    min-width: fit-content; */
         }
 }
 
@@ -879,7 +879,7 @@ div #Footer {
                 margin-left: unset;
         }
         .ResponseSummary~.QuestionOuter.MC ul.ChoiceStructure {
-              /*   width: var(--pageWidth); */
+                /*   width: var(--pageWidth); */
                 float: left;
         }
         .ResponseSummary~.QuestionOuter .FileUpload {
@@ -908,11 +908,14 @@ div #Footer {
         min-width: min-content;
 }
 
-.ResponseSummary~.QuestionOuter.TE, .ResponseSummary~.QuestionOuter .FileUpload, .ResponseSummary~.QuestionOuter .matrixQText>div:first-of-type {
+.ResponseSummary~.QuestionOuter.TE, .ResponseSummary~.QuestionOuter .FileUpload, .FileUpload.ResponseSummaryQuestion, .ResponseSummary~.QuestionOuter .matrixQText>div:first-of-type {
         max-width: var(--pageWidth);
 }
-
-.ResponseSummary~.QuestionOuter.FileUpload .dropzone {
+.ResponseSummary~.QuestionOuter.MC .QuestionBody {
+        max-width: var(--pageWidth);
+        margin-left: 0;
+} 
+.ResponseSummary~.QuestionOuter.FileUpload .dropzone, .FileUpload.ResponseSummaryQuestion .dropzone {
         max-width: 1080px;
 }
 
