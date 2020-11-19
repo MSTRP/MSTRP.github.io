@@ -403,7 +403,7 @@ body {
         }
         .ChoiceStructure li.Selection {
                 max-width: 70vw;
-                min-width: fit-content;
+            /*     min-width: fit-content; */
         }
 }
 
@@ -424,7 +424,7 @@ body {
         }
         .ChoiceStructure li.Selection {
                 max-width: 50vw;
-                min-width: fit-content;
+             /*    min-width: fit-content; */
         }
 }
 
