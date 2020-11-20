@@ -39,7 +39,7 @@ var FooPicker = (function () {
         /* var fooPickerWidth = 182; // see .foopicker class in IP stylesheet
         var adjust = fooPickerWidth - pickerDiv.style.width; */
         var left = datepicker.left - 52 ;
-        var top = datepicker.bottom /* - 7 */;
+        var top = datepicker.bottom - 250;
         var windowWidth = (window.innerWidth == undefined) ? document.documentElement.clientWidth : window.innerWidth;
         if (pickerDiv) {
           pickerDiv.style.position = 'fixed';
