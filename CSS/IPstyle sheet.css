@@ -273,6 +273,7 @@ body {
 
 #section1 .completion-tracker_progress {
         width: calc(inherit - 2px);
+        -moz-margin-left: 2px;
         margin-left: 2px;
 }
 
@@ -398,7 +399,9 @@ body {
                 /* margin: auto; */
         }
         .question_Text, .guidancePage {
+                -moz-margin-left: 10%;
                 margin-left: 10%;
+                -moz-margin-right: 10%;
                 margin-right: 10%;
         }
         .ChoiceStructure li.Selection {
@@ -419,7 +422,9 @@ body {
                 padding-right: 5px;
         }
         .question_Text, .guidancePage {
+                -moz-margin-left: 25%;
                 margin-left: 25%;
+                -moz-margin-right: 25%;
                 margin-right: 25%;
         }
         .ChoiceStructure li.Selection {
@@ -430,7 +435,9 @@ body {
 
 .Skin .TE .FORM table {
         width: 80%;
+        -moz-margin-left: 20%;
         margin-left: 20%;
+        -moz-margin-right: 20%;
         margin-right: 20%;
 }
 
@@ -709,6 +716,7 @@ div #Footer {
 }
 
 #PreviousButton {
+        -moz-margin-left: 66px;
         margin-left: 66px;
         left: 1%;
 }
@@ -913,6 +921,7 @@ div #Footer {
 }
 .ResponseSummary~.QuestionOuter.MC .QuestionBody {
         max-width: var(--pageWidth);
+        -moz-margin-left: 0;
         margin-left: 0;
 } 
 .ResponseSummary~.QuestionOuter.FileUpload .dropzone, .FileUpload.ResponseSummaryQuestion .dropzone {
