@@ -5,7 +5,7 @@
  * License: MIT
  * URL: https://github.com/yogasaikrishna/foopicker
  */
-var fooVersion = 3.6;
+var fooVersion = 3.7;
 console.log("Date Picker version: ", fooVersion);
 var FooPicker = (function () {
   'use strict';
@@ -39,7 +39,7 @@ var FooPicker = (function () {
         /* var fooPickerWidth = 182; // see .foopicker class in IP stylesheet
         var adjust = fooPickerWidth - pickerDiv.style.width; */
         var left = datepicker.left - 52 ;
-        var top = datepicker.bottom - 270;
+        var top = datepicker.bottom - 290;
         var windowWidth = (window.innerWidth == undefined) ? document.documentElement.clientWidth : window.innerWidth;
         if (pickerDiv) {
           pickerDiv.style.position = 'fixed';
