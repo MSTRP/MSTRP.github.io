@@ -5,7 +5,7 @@
  * License: MIT
  * URL: https://github.com/yogasaikrishna/foopicker
  */
-var fooVersion = 3.4;
+var fooVersion = 3.5;
 console.log("Date Picker version: ", fooVersion);
 var FooPicker = (function () {
   'use strict';
