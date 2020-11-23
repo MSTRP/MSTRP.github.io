@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.3.1';//increment me when publishing changes
+var version = '1.2.3.2';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2011,22 +2011,25 @@ var printPage = function () {
 
 //5) Accessibility
 //make elements tabable
-var tabMe = function (selectors) {
+var tabMe = function (selectors, index) {
     //selectors can be a string e.g. ".someClass" or and array of strings 
     //e.g. ['#someID1', '#someID2', etc...]
+    //index is optional, use number for singular case, use start number for list case
     let check = typeof selectors;
     switch (check) {
         case "string":
-            jQuery(selectors).wrap("<a tabindex='1' href='#'></a>");
+            let order = (index === undefined) ? "" : " tabindex='" + index + "' ";
+            jQuery(selectors).wrap("<a" + order + "href='#'></a>");
             break;
         case "object":
             for (let selector in selectors) {
-                let wrapper = "<a tabindex='" + selector + "' href='#'></a>";
+                let order = (index === undefined) ? selector + 1 : index + selector + 1;
+                let wrapper = "<a tabindex='" + order + "' href='#'></a>";
                 jQuery(selectors[selector]).wrap(wrapper);
                 break;
             };
-    }
-}
+    };
+};
 
 //---------------------SECTION 4: WIDGETS ------------------
 
