@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.3.0';//increment me when publishing changes
+var version = '1.2.3.1';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2210,7 +2210,7 @@ var loadMenu = function (progressBartracker) {
             hideMenu();
         };
     });
-    
+
     //button Switch on Tab
     menu.ButtonTab.on({
         focusin: function () {
@@ -2220,61 +2220,58 @@ var loadMenu = function (progressBartracker) {
             hideMenu();
         }
     });
+};
 
+//Progressbar show-hide
+var progressBar = {
+    selectors: {
+        ptoggle: jQuery("#pdButton"),//wrapper
+        toggleSwitch: jQuery("#toggle-switcher"), //toggle
+        toggleArea: jQuery(".toggle-button"),//toggle track
+        progressBar: jQuery(".ProgressBarContainer")//progress bar
+    },
+    actions: {
+        off: function () {
+            //toggle switch to off position:
+            progressBar.selectors.toggleArea.css("background-color", "white");
+            progressBar.selectors.toggleSwitch.css("background-color", "#f1f1f1");
+            progressBar.selectors.toggleSwitch.css("left", "0");
+            progressBar.selectors.progressBar.hide(100);
 
-
-    //Progressbar show-hide
-    let pbIO = progressBartracker;
-    //get progress bar setting on load (default is on)
-
-    //selectors
-    let ptoggle = jQuery("#pdButton");//wrapper
-    let toggleSwitch = jQuery("#toggle-switcher"); //toggle
-    let toggleArea = jQuery(".toggle-button");//toggle track
-    let progressBar = jQuery(".ProgressBarContainer");//progress bar
-
-    //toggle actions
-    let offPosition = function () {
-        //make toggle track white + move switcher to right
-        toggleArea.css("background-color", "white");
-        toggleSwitch.css("background-color", "#f1f1f1");
-        toggleSwitch.css("left", "0");
-    };
-
-    let onPosition = function () {
-        //make toggle track theme secondary colour green + move switcher to left
-        toggleArea.css("background-color", getColour("secondary"));
-        toggleSwitch.css("background-color", getColour("secondary"));
-        toggleSwitch.css("left", "16px");
-    };
-
-
-    //on load
-    if (pbIO == "on") {
-        progressBar.show();
-        onPosition();
-    } else if (pbIO == "off") {
-        progressBar.hide();
-        offPosition();
-    };
-
-    //on click
-    ptoggle.click(function () {
-        console.log("pb siwtch clicked");
-        if (pbIO == "on") {
-            progressBar.hide(100);
-            offPosition();
-            pbIO = "off";
-            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
             //send value to embedded data 
-        } else if (pbIO == "off") {
-            progressBar.show(200);
-            onPosition();
-            pbIO = "on";
-            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
+            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', "off");
+        },
+        on: function () {
+            //toggle switch to on position:
+            progressBar.selectors.toggleArea.css("background-color", getColour("secondary"));
+            progressBar.selectors.toggleSwitch.css("background-color", getColour("secondary"));
+            progressBar.selectors.toggleSwitch.css("left", "16px");
+            progressBar.selectors.progressBar.show(200);
+
             //send value to embedded data 
+            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', "on");
         }
-    });
+    },
+    switch: function (progressBartracker) {
+        switch (progressBartracker) {
+            case "on":
+                progressBar.actions.off();
+                break;
+            case "off":
+                progressBar.actions.on();
+        };
+    },
+    load: function (progressBartracker) {
+        switch (progressBartracker) {
+            case "on":
+                progressBar.actions.on();
+
+                break;
+            case "off":
+                progressBar.actions.off();
+
+        };
+    }
 };
 
 //--------------------Section 5: Question specific
