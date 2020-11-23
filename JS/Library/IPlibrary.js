@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.3.2';//increment me when publishing changes
+var version = '1.2.3.3';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2159,7 +2159,7 @@ var menu = {
     ]
 };
 
-var loadMenu = function (progressBartracker) {
+var loadMenu = function () {
     //progressbar tracker =  piped text code for embeded data used to track of//on status
     //accepts string values "off" and "on". default value is "on"
     let menuSwitch = "off";
@@ -2233,16 +2233,13 @@ var progressBar = {
         toggleArea: jQuery(".toggle-button"),//toggle track
         progressBar: jQuery(".ProgressBarContainer")//progress bar
     },
-    actions: {
+    toggle = {
         off: function () {
             //toggle switch to off position:
             progressBar.selectors.toggleArea.css("background-color", "white");
             progressBar.selectors.toggleSwitch.css("background-color", "#f1f1f1");
             progressBar.selectors.toggleSwitch.css("left", "0");
             progressBar.selectors.progressBar.hide(100);
-
-            //send value to embedded data 
-            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', "off");
         },
         on: function () {
             //toggle switch to on position:
@@ -2250,30 +2247,24 @@ var progressBar = {
             progressBar.selectors.toggleSwitch.css("background-color", getColour("secondary"));
             progressBar.selectors.toggleSwitch.css("left", "16px");
             progressBar.selectors.progressBar.show(200);
-
-            //send value to embedded data 
-            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', "on");
         }
     },
-    switch: function (progressBartracker) {
-        switch (progressBartracker) {
-            case "on":
-                progressBar.actions.off();
-                break;
-            case "off":
-                progressBar.actions.on();
+    load: function (listener) {
+        if (listener == "off") {
+            this.toggle.off();
         };
     },
-    load: function (progressBartracker) {
-        switch (progressBartracker) {
+    click: function (listener) {
+        switch (listener) {
             case "on":
-                progressBar.actions.on();
-
+                this.toggle.off();
                 break;
             case "off":
-                progressBar.actions.off();
-
+                this.toggle.on();
+                break;
         };
+        //send value to embedded data
+        Qualtrics.SurveyEngine.setEmbeddedData('progressBar', (listener === "on") ? "off" : "on");
     }
 };
 
