@@ -1,8 +1,13 @@
 "use strict";
 
 //version tracking
-var version = "live Beta update " + '1.2.2.9';//increment me when publishing changes
-console.log("Version: ", version);
+var phase = {
+    live: "Live Reporting Period ",
+    closed: "Dev Cycle "
+};
+
+var version = '1.2.3.0';//increment me when publishing changes
+console.log("Version: ", phase.closed + version);
 
 
 //---------------------------Sections contents:
@@ -2004,6 +2009,25 @@ var printPage = function () {
     window.print();
 };
 
+//5) Accessibility
+//make elements tabable
+var tabMe = function (selectors) {
+    //selectors can be a string e.g. ".someClass" or and array of strings 
+    //e.g. ['#someID1', '#someID2', etc...]
+    let check = typeof selectors;
+    switch (check) {
+        case "string":
+            jQuery(selectors).wrap("<a tabindex='1' href='#'></a>");
+            break;
+        case "object":
+            for (let selector in selectors) {
+                let wrapper = "<a tabindex='" + selector + "' href='#'></a>";
+                jQuery(selectors[selector]).wrap(wrapper);
+                break;
+            };
+    }
+}
+
 //---------------------SECTION 4: WIDGETS ------------------
 
 //1) date picker:
@@ -2121,6 +2145,7 @@ var setHoverText = function (question, filterlist) {
 //3 menu button
 var menu = {
     Button: jQuery("#Logo img"),
+    ButtonTab: jQuery("#Logo a"),
     Height: (jQuery("#reportTitle").text().includes("Retention")) ? "191px" : "343px",
     menu: jQuery("#navOuter"),
     List: jQuery(".navTable"),
@@ -2152,7 +2177,7 @@ var loadMenu = function (progressBartracker) {
         menuSwitch = "off";
     };
 
-    //button switch
+    //button switch on click
     menu.Button.click(function () {
         switch (menuSwitch) {
             case "off":
@@ -2162,12 +2187,6 @@ var loadMenu = function (progressBartracker) {
                 hideMenu();
                 break;
         };
-        /*     if (menuSwitch == "off") {
-                //doesn't load on response summary and end of survey pages
-                showMenu();
-            } else if (menuSwitch == "on") {
-                hideMenu();
-            }; */
     });
 
     //hide menu when leaving the menu with mouse
@@ -2182,6 +2201,26 @@ var loadMenu = function (progressBartracker) {
             && !menu.Button.is(e.target)) //nor the menu button
         { hideMenu(); };
     });
+
+
+    //Accessibility:
+    //close menu with Esc key
+    jQuery(document).keydown(function (e) {
+        if (menuSwitch === "on" && e.keyCode == 27) {
+            hideMenu();
+        };
+    });
+    
+    //button Switch on Tab
+    menu.ButtonTab.on({
+        focusin: function () {
+            showMenu();
+        },
+        focusout: function () {
+            hideMenu();
+        }
+    });
+
 
 
     //Progressbar show-hide
