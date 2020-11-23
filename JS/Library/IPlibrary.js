@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.3.3';//increment me when publishing changes
+var version = '1.2.3.4';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2233,7 +2233,7 @@ var progressBar = {
         toggleArea: jQuery(".toggle-button"),//toggle track
         progressBar: jQuery(".ProgressBarContainer")//progress bar
     },
-    toggle = {
+    toggle: {
         off: function () {
             //toggle switch to off position:
             progressBar.selectors.toggleArea.css("background-color", "white");
