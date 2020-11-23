@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.3.6';//increment me when publishing changes
+var version = '1.2.3.7';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -782,15 +782,11 @@ var removehighLight2 = function (border, background) {
 
 //blur page:
 var pageBLur = function () {
-    for (let element of menu.blurElements) {
-        element.css("filter", "blur(3px)");
-    };
+    menu.blurElements.css("filter", "blur(3px)");
 };
 
 var pageClear = function () {
-    for (let element of menu.blurElements) {
-        element.css("filter", "none");
-    };
+    menu.blurElements.css("filter", "none");
 };
 
 //------Animations:
@@ -2147,16 +2143,12 @@ var setHoverText = function (question, filterlist) {
 
 //3 menu button
 var menu = {
-    Button: jQuery("#Logo img"),
-    ButtonTab: jQuery("#Logo a"),
+    Buttons: jQuery("#Logo img, #Logo a"),
+    /*     ButtonTab: jQuery("#Logo a"), */
     Height: (jQuery("#reportTitle").text().includes("Retention")) ? "191px" : "343px",
     menu: jQuery("#navOuter"),
     List: jQuery(".navTable"),
-    blurElements: [
-        jQuery("#SkinContent"),//page
-        jQuery("#reportTitle"),//title
-        jQuery("#Logo img")//logo
-    ]
+    blurElements: jQuery("#SkinContent, #reportTitle, #Logo img")//page, title and menu respectively
 };
 
 var loadMenu = function () {
@@ -2179,22 +2171,9 @@ var loadMenu = function () {
         menu.menu.animate({ height: '0px' }, 100);
         menuSwitch = "off";
     };
-    let buttons = [menu.ButtonTab, menu.Button];
 
-    buttons.forEach(function(e){
-        e.click(function(){
-            switch (menuSwitch) {
-                case "off":
-                    showMenu();
-                    break;
-                case "on":
-                    hideMenu();
-                    break;
-            };
-        });
-    });                     
-    //button switch on click
-    menu.Button.click(function () {
+
+    menu.Buttons.click(function () {
         switch (menuSwitch) {
             case "off":
                 showMenu();
@@ -2204,7 +2183,18 @@ var loadMenu = function () {
                 break;
         };
     });
-
+    /*  //button switch on click
+     menu.Button.click(function () {
+         switch (menuSwitch) {
+             case "off":
+                 showMenu();
+                 break;
+             case "on":
+                 hideMenu();
+                 break;
+         };
+     });
+  */
     //hide menu when leaving the menu with mouse
     menu.menu.mouseleave(function () {
         hideMenu();
