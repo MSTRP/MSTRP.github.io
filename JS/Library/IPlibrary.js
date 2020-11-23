@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.3.4';//increment me when publishing changes
+var version = '1.2.3.6';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2179,7 +2179,20 @@ var loadMenu = function () {
         menu.menu.animate({ height: '0px' }, 100);
         menuSwitch = "off";
     };
+    let buttons = [menu.ButtonTab, menu.Button];
 
+    buttons.forEach(function(e){
+        e.click(function(){
+            switch (menuSwitch) {
+                case "off":
+                    showMenu();
+                    break;
+                case "on":
+                    hideMenu();
+                    break;
+            };
+        });
+    });                     
     //button switch on click
     menu.Button.click(function () {
         switch (menuSwitch) {
@@ -2213,16 +2226,6 @@ var loadMenu = function () {
             hideMenu();
         };
     });
-
-    //button Switch on Tab
-    menu.ButtonTab.on({
-        focusin: function () {
-            showMenu();
-        },
-        focusout: function () {
-            hideMenu();
-        }
-    });
 };
 
 //Progressbar show-hide
@@ -2255,16 +2258,17 @@ var progressBar = {
         };
     },
     click: function (listener) {
-        switch (listener) {
-            case "on":
+        let pbIO = (listener === "on") ? "off" : "on";
+        switch (pbIO) {
+            case "off":
                 this.toggle.off();
                 break;
-            case "off":
+            case "on":
                 this.toggle.on();
                 break;
         };
         //send value to embedded data
-        Qualtrics.SurveyEngine.setEmbeddedData('progressBar', (listener === "on") ? "off" : "on");
+        Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
     }
 };
 
