@@ -273,7 +273,6 @@ body {
 
 #section1 .completion-tracker_progress {
         width: calc(inherit - 2px);
-        -moz-margin-left: 2px;
         margin-left: 2px;
 }
 
@@ -399,9 +398,7 @@ body {
                 /* margin: auto; */
         }
         .question_Text, .guidancePage {
-                -moz-margin-left: 10%;
                 margin-left: 10%;
-                -moz-margin-right: 10%;
                 margin-right: 10%;
         }
         .ChoiceStructure li.Selection {
@@ -422,9 +419,8 @@ body {
                 padding-right: 5px;
         }
         .question_Text, .guidancePage {
-                -moz-margin-left: 25%;
                 margin-left: 25%;
-                -moz-margin-right: 25%;
+                ;
                 margin-right: 25%;
         }
         .ChoiceStructure li.Selection {
@@ -435,9 +431,7 @@ body {
 
 .Skin .TE .FORM table {
         width: 80%;
-        -moz-margin-left: 20%;
         margin-left: 20%;
-        -moz-margin-right: 20%;
         margin-right: 20%;
 }
 
@@ -476,6 +470,10 @@ a[href]:focus {
         outline-style: dashed;
         outline-width: 2px;
         outline-color: var(--helpText);
+}
+
+#Logo a:focus {
+        outline-style: none;
 }
 
 .headingBlank {
@@ -633,7 +631,7 @@ div #Footer {
         display: inline-block;
 }
 
-.menuLink:hover {
+.menuLink:hover, .menuLink:focus, #pdButton:focus {
         background-color: var(--tertiaryColour);
         box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.562);
 }
@@ -642,7 +640,7 @@ div #Footer {
         cursor: pointer;
 }
 
-.menuLink:hover .navElement, .navElement2:hover, .navElement3:hover {
+.menuLink:hover .navElement, .navElement2:hover, .navElement3:hover, #pdButton:focus {
         color: var(--primaryColour);
 }
 
@@ -716,7 +714,6 @@ div #Footer {
 }
 
 #PreviousButton {
-        -moz-margin-left: 66px;
         margin-left: 66px;
         left: 1%;
 }
@@ -922,7 +919,6 @@ div #Footer {
 
 .ResponseSummary~.QuestionOuter.MC .QuestionBody {
         max-width: var(--pageWidth);
-        -moz-margin-left: 0;
         margin-left: 0;
 }
 
@@ -936,6 +932,11 @@ div #Footer {
 
 .ResponseSummary~.QuestionOuter .preCompletion {
         display: none;
+}
+
+.ResponseSummary~.QuestionOuter, .QuestionOuter.ResponseSummaryQuestion {
+        display: block;
+        clear: both;
 }
 
 @media print {
