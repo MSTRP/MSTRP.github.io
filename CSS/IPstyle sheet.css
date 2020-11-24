@@ -512,7 +512,7 @@ a[href]:focus {
         max-height: 25px !important;
 }
 
-#Logo img:hover, #Logo img:focus {
+#Logo img:hover, #Logo img:focus, #Logo a:focus img {
         box-shadow: 0 4px 8px 0 rgb(255, 255, 255), 0 6px 20px 0 rgb(255, 255, 255);
 }
 
