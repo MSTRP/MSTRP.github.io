@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.3.8';//increment me when publishing changes
+var version = '1.2.3.9';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2213,19 +2213,14 @@ var loadMenu = function () {
 
     //Accessibility:
     jQuery(document).keydown(function (e) {
+        //close menu with Esc key
+        if (menuSwitch === "on" && e.keycode == 27) {
+            hideMenu();
+        };
 
-        switch (e.keycode) {
-            case 27: //close menu with Esc key
-                if (menuSwitch === "on") {
-                    hideMenu();
-                };
-                break;
-
-            case 13: //open menu with Enter 
-                if (jQuery("#Logo a").is(":focus")) {
-                    showMenu()
-                };
-                break;
+        //open menu with Enter key
+        if (jQuery("#Logo a").is(":focus") && e.keycode == 13) {
+            showMenu()
         };
     });
 };
@@ -2271,8 +2266,9 @@ var progressBar = {
         };
         //send value to embedded data
         Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
-        console.table ({listener}, {pbIO});
-    }};
+        console.log({ listener }, { pbIO });
+    }
+};
 
 //--------------------Section 5: Question specific
 //1) 3A buttons on click
