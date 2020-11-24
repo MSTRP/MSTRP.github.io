@@ -617,7 +617,7 @@ div #Footer {
         height: 9px;
 }
 
-#navOuter a, #pdButton, .navElement3, #printPage {
+#navOuter a, .navElement3, #printPage {
         color: rgb(255, 255, 255);
         font-weight: bold;
 }
@@ -631,7 +631,7 @@ div #Footer {
         display: inline-block;
 }
 
-.menuLink:hover, .menuLink:focus, #pdButton:focus {
+.menuLink:hover, .menuLink a:focus {
         background-color: var(--tertiaryColour);
         box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.562);
 }
@@ -640,8 +640,12 @@ div #Footer {
         cursor: pointer;
 }
 
-.menuLink:hover .navElement, .navElement2:hover, .navElement3:hover, #pdButton:focus {
+.menuLink:hover .navElement, .navElement2:hover, .navElement3:hover {
         color: var(--primaryColour);
+}
+
+.menuLink:hover .toggle-button #toggle-switcher, .menuLink a:focus .toggle-button #toggle-switcher{
+        border-color: var(--primaryColour);
 }
 
 .menuLink a[href]:not(.navElement2):hover {
