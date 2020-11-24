@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.4.1';//increment me when publishing changes
+var version = '1.2.4.2';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2219,7 +2219,7 @@ var loadMenu = function () {
         };
 
         //open menu with Enter key
-        if (jQuery("#Logo a").is(":focus") && e.keycode == 13) {
+        if (jQuery(document.activeElement).toString().indexOf("Logo a") > -1 && e.keycode == 13) {
             showMenu()
         };
     });
@@ -2272,7 +2272,7 @@ var progressBar = {
             //send value to embedded data
             Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
             let newembeddedval = Qualtrics.SurveyEngine.getEmbeddedData('progressBar', pbIO);
-            console.log({ listener }, { pbIO }, {newembeddedval });
+            console.log({ listener }, { pbIO }, { newembeddedval });
         });
     }
 };
