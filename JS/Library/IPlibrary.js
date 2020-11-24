@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.4.0';//increment me when publishing changes
+var version = '1.2.4.1';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2249,26 +2249,31 @@ var progressBar = {
             progressBar.selectors.progressBar.show(200);
         }
     },
-    load: function (listener) {
+    switcher: function (listener) {
+        let pbIO = listener;
+
+        //load
         if (listener == "off") {
             this.toggle.off();
         };
-    },
-    click: function (listener) {
-        let pbIO = listener;
-        switch (pbIO) {
-            case "off":
-                this.toggle.on();;
-                pbIO = "on";
-                return pbIO;
-            case "on":
-                this.toggle.off();
-                pbIO = "off";
-                return pbIO;
-        };
-        //send value to embedded data
-        Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
-        console.log({ listener }, { pbIO });
+
+        //toggle
+        this.selectors.ptoggle.click(function () {
+            switch (pbIO) {
+                case "off":
+                    progressBar.toggle.on();;
+                    pbIO = "on";
+                    return pbIO;
+                case "on":
+                    progressBar.toggle.off();
+                    pbIO = "off";
+                    return pbIO;
+            };
+            //send value to embedded data
+            Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
+            let newembeddedval = Qualtrics.SurveyEngine.getEmbeddedData('progressBar', pbIO);
+            console.log({ listener }, { pbIO }, {newembeddedval });
+        });
     }
 };
 
