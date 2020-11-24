@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.3.7';//increment me when publishing changes
+var version = '1.2.3.8';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -1152,16 +1152,16 @@ var menuScroll = function () {
 
     jQuery(".Skin").scroll(function () {
 
-        //selectors:
+        //selectors:progressBar
         let logo = jQuery("#LogoContainer");
-        let progressBar = jQuery(".ProgressBarContainer");
+        let pBar = progressBar.progressBar
 
         if (jQuery(".Skin").scrollTop() != 0) {
             //if the window is not at the scroll top
 
             //add box shadow
-            progressBar.css('-webkit-box-shadow', 'rgba(0, 0, 0, 0.3) 0px 1px 4px 0px');
-            progressBar.css('-moz-box-shadow', 'rgba(0, 0, 0, 0.3) 0px 1px 4px 0px');
+            pBar.css('-webkit-box-shadow', 'rgba(0, 0, 0, 0.3) 0px 1px 4px 0px');
+            pBar.css('-moz-box-shadow', 'rgba(0, 0, 0, 0.3) 0px 1px 4px 0px');
             //progress bar
 
             logo.css('-webkit-box-shadow', 'rgba(0, 0, 0, 0.3) 0px 1px 4px 0px');
@@ -1170,7 +1170,7 @@ var menuScroll = function () {
             //header
 
             //move the progress bar up
-            progressBar.animate({
+            pBar.animate({
                 top: '35px',
             }, 100);
 
@@ -1183,8 +1183,8 @@ var menuScroll = function () {
         } else {
             //otherwise
             //remove boxshadow
-            progressBar.css('-webkit-box-shadow', 'none');
-            progressBar.css('-moz-box-shadow', 'none');
+            pBar.css('-webkit-box-shadow', 'none');
+            pBar.css('-moz-box-shadow', 'none');
             //prgressbar
 
             logo.css("box-shadow", "none");
@@ -1193,7 +1193,7 @@ var menuScroll = function () {
             //header
 
             //apply default size
-            progressBar.stop(true, true).css("top", "60px");
+            pBar.stop(true, true).css("top", "60px");
             //progressbar
 
             jQuery(".Skin #Logo img").stop(true, true).css("max-height", "50px");
@@ -2143,7 +2143,7 @@ var setHoverText = function (question, filterlist) {
 
 //3 menu button
 var menu = {
-    Buttons: jQuery("#Logo img, #Logo a"),
+    Button: jQuery("#Logo img, :focus"),
     /*     ButtonTab: jQuery("#Logo a"), */
     Height: (jQuery("#reportTitle").text().includes("Retention")) ? "191px" : "343px",
     menu: jQuery("#navOuter"),
@@ -2173,7 +2173,7 @@ var loadMenu = function () {
     };
 
 
-    menu.Buttons.click(function () {
+    menu.Button.click(function () {
         switch (menuSwitch) {
             case "off":
                 showMenu();
@@ -2183,6 +2183,8 @@ var loadMenu = function () {
                 break;
         };
     });
+
+
     /*  //button switch on click
      menu.Button.click(function () {
          switch (menuSwitch) {
@@ -2210,10 +2212,20 @@ var loadMenu = function () {
 
 
     //Accessibility:
-    //close menu with Esc key
     jQuery(document).keydown(function (e) {
-        if (menuSwitch === "on" && e.keyCode == 27) {
-            hideMenu();
+
+        switch (e.keycode) {
+            case 27: //close menu with Esc key
+                if (menuSwitch === "on") {
+                    hideMenu();
+                };
+                break;
+
+            case 13: //open menu with Enter 
+                if (jQuery("#Logo a").is(":focus")) {
+                    showMenu()
+                };
+                break;
         };
     });
 };
@@ -2259,8 +2271,8 @@ var progressBar = {
         };
         //send value to embedded data
         Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
-    }
-};
+        console.table ({listener}, {pbIO});
+    }};
 
 //--------------------Section 5: Question specific
 //1) 3A buttons on click
