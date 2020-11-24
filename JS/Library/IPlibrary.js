@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.3.9';//increment me when publishing changes
+var version = '1.2.4.0';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -1154,7 +1154,7 @@ var menuScroll = function () {
 
         //selectors:progressBar
         let logo = jQuery("#LogoContainer");
-        let pBar = progressBar.progressBar
+        let pBar = progressBar.selectors.progressBar
 
         if (jQuery(".Skin").scrollTop() != 0) {
             //if the window is not at the scroll top
@@ -2255,14 +2255,16 @@ var progressBar = {
         };
     },
     click: function (listener) {
-        let pbIO = (listener === "on") ? "off" : "on";
+        let pbIO = listener;
         switch (pbIO) {
             case "off":
-                this.toggle.off();
-                break;
+                this.toggle.on();;
+                pbIO = "on";
+                return pbIO;
             case "on":
-                this.toggle.on();
-                break;
+                this.toggle.off();
+                pbIO = "off";
+                return pbIO;
         };
         //send value to embedded data
         Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
