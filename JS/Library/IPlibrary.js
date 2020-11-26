@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.4.2';//increment me when publishing changes
+var version = '1.2.4.3';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2148,6 +2148,7 @@ var menu = {
     Height: (jQuery("#reportTitle").text().includes("Retention")) ? "191px" : "343px",
     menu: jQuery("#navOuter"),
     List: jQuery(".navTable"),
+    menuItem: jQuery(".menuLink"),
     blurElements: jQuery("#SkinContent, #reportTitle, #Logo img")//page, title and menu respectively
 };
 
@@ -2171,7 +2172,11 @@ var loadMenu = function () {
         menu.menu.animate({ height: '0px' }, 100);
         menuSwitch = "off";
     };
-
+    
+    //launch link/action when clicknig anywhere on the menu item
+    menu.menuItem.click(function () {
+        jQuery(this).find("a").click();
+    });
 
     menu.Button.click(function () {
         switch (menuSwitch) {
@@ -2184,19 +2189,6 @@ var loadMenu = function () {
         };
     });
 
-
-    /*  //button switch on click
-     menu.Button.click(function () {
-         switch (menuSwitch) {
-             case "off":
-                 showMenu();
-                 break;
-             case "on":
-                 hideMenu();
-                 break;
-         };
-     });
-  */
     //hide menu when leaving the menu with mouse
     menu.menu.mouseleave(function () {
         hideMenu();
@@ -2369,7 +2361,7 @@ var carry3b = function (answerlist) {
             let rowNumber = rowindex + 1;
             header.text(header.text().replace(header.text(), rowNumber));
             console.log("header adjusted, new heade for row ", rowNumber, " is: ", header.text());
-        }
+        };
     });
 };
 
