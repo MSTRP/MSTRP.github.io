@@ -44,10 +44,12 @@ ${e://Field/Header}
     var listeners = {
         hotkeyNavigate: "${e://Field/hotKeyNav}",
         organisation: "${e://Field/organisation}",
-        organisationName: "${q://QID3/ChoiceTextEntryValue/6}"
+        organisationName: "${q://QID3/ChoiceTextEntryValue/6}",
+        progressBar: "${e://Field/progressBar}"
     };
 
     Qualtrics.SurveyEngine.addOnload(function () {
+
         //------Browser check
         if (jQuery("#Guidance_NOTES").length > 0) {
             broswerAlert();
@@ -69,7 +71,9 @@ ${e://Field/Header}
     Qualtrics.SurveyEngine.addOnReady(function () {
         //---------Menu
         menuScroll(); //shadow when scrolling 
-        loadMenu('${e://Field/progressBar}'); //menu button
+        tabMe("#Logo img", 1);
+        loadMenu(listeners.progressBar); //menu button
+        progressBar.switcher(listeners.progressBar);
         //---------Hotkey Navigate ---- ADD ON READY
         hotkeyNavigate(this);
         //-------sideways scroller for matrices (ADD ON READY):
@@ -82,7 +86,6 @@ ${e://Field/Header}
             nextbuttonDefault("Submit report");
             jQuery("#NextButton").css("background-color", "blue");
             jQuery("#NextButton").attr('title', "Submit Report"); //blue submit button
-            nullTag();
         };
     });
 </script>

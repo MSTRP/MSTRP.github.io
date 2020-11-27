@@ -31,15 +31,12 @@ var filters = [
 var listeners = {
     hotkeyNavigate: "${e://Field/hotKeyNav}",
     organisation: "${e://Field/organisation}",
-    organisationName: "${q://QID3/ChoiceTextEntryValue/6}"
+    organisationName: "${q://QID3/ChoiceTextEntryValue/6}",
+    progressBar: "${e://Field/progressBar}"
 };
 
 Qualtrics.SurveyEngine.addOnload(function () {
-    /*var plug = document.getElementById("Plug"); //Get the Defined element
-    var plugBox = document.getElementById("PushStickyFooter"); //Get the Defined element
-    plug.style.cssText += ';display:none !important;'; //Set the defined element's display style to "none"
-    plugBox.style.cssText += ';display:none !important;'; //hide the container too
-    */
+
     //------Browser check
     if (jQuery("#Guidance_NOTES").length > 0) {
         broswerAlert();
@@ -61,7 +58,9 @@ Qualtrics.SurveyEngine.addOnload(function () {
 Qualtrics.SurveyEngine.addOnReady(function () {
     //---------Menu
     menuScroll(); //shadow when scrolling 
-    loadMenu('${e://Field/progressBar}'); //menu button
+    tabMe("#Logo img", 1);
+    loadMenu(listeners.progressBar); //menu button
+    progressBar.switcher(listeners.progressBar);
     //---------Hotkey Navigate ---- ADD ON READY
     hotkeyNavigate(this);
     //-------sideways scroller for matrices (ADD ON READY):
