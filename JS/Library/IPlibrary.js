@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.4.3';//increment me when publishing changes
+var version = '1.2.4.4';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2153,8 +2153,6 @@ var menu = {
 };
 
 var loadMenu = function () {
-    //progressbar tracker =  piped text code for embeded data used to track of//on status
-    //accepts string values "off" and "on". default value is "on"
     let menuSwitch = "off";
     //functions to open and close the menu:
     let showMenu = function () {
@@ -2172,13 +2170,13 @@ var loadMenu = function () {
         menu.menu.animate({ height: '0px' }, 100);
         menuSwitch = "off";
     };
-    
+
     //launch link/action when clicknig anywhere on the menu item
     menu.menuItem.click(function () {
         jQuery(this).find("a").click();
     });
 
-    menu.Button.click(function () {
+    menu.Button.unbind('click').click(function () {
         switch (menuSwitch) {
             case "off":
                 showMenu();
@@ -2242,6 +2240,9 @@ var progressBar = {
         }
     },
     switcher: function (listener) {
+        //listener  =  piped text code for embeded data used to track off/on status
+        //accepts string values "off" and "on". default value is "on"
+
         let pbIO = listener;
 
         //load
