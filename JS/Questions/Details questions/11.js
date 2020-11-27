@@ -1,6 +1,6 @@
 Qualtrics.SurveyEngine.addOnload(function () {
     //-----------Display logic
-    hideRows2("11", filters);
+    hideRows("11", filters);
 
     //-------------------load Extended submissions template text:
     loadTemplate(qFilters.ElevenD);
