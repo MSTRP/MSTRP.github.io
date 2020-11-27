@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.4.5';//increment me when publishing changes
+var version = '1.2.4.6';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2200,19 +2200,33 @@ var loadMenu = function () {
         { hideMenu(); };
     });
 
-
+    let pressedKeys = [];
     //Accessibility:
-    jQuery(document).keydown(function (e) {
-        //close menu with Esc key
-        if (menuSwitch === "on" && e.keycode == 27) {
-            hideMenu();
-        };
+    jQuery(document)
+        .keydown(function (e) {
 
-        //open menu with Enter key
-        if (jQuery(document.activeElement).toString().indexOf("Logo a") > -1 && e.keycode == 13) {
-            showMenu()
-        };
-    });
+            if (e === 17 || pressedKeys[0] === 17) {
+                pressedKeys.push(e.keyCode);
+            };
+
+            //close menu with Esc key
+            if (menuSwitch === "on" && e.keycode == 27) {
+                hideMenu();
+            };
+
+            /* //open menu with Enter key
+            if (jQuery(document.activeElement).toString().indexOf("Logo a") > -1 && e.keycode == 13) {
+                showMenu()
+            }; */
+
+            //open menu with shortcut: Ctrl + Alt + M
+            if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 77) {
+                showMenu();
+            };
+        })
+        .keyup(function () {
+            pressedKeys = [];
+        });
 };
 
 //Progressbar show-hide
