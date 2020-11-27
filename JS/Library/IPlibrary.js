@@ -6,8 +6,8 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.5.0';//increment me when publishing changes
-console.log("Version: ", phase.closed + version);
+var version = '1.2.5.1';//increment me when publishing changes
+console.log("Version: ", phase.live + version);
 
 
 //---------------------------Sections contents:
@@ -2172,11 +2172,11 @@ var loadMenu = function () {
         menuSwitch = "off";
     };
 
-    //launch link/action when clicknig anywhere on the menu item
-    menu.menuItem.click(function () {
-        let thisItem = jQuery(this).eq();
-        menu.menuLink[thisItem].trigger("click"); 
-    });
+    /*  //launch link/action when clicknig anywhere on the menu item
+     menu.menuItem.click(function () {
+         let thisItem = jQuery(this).eq();
+         menu.menuLink[thisItem].trigger("click"); 
+     }); */
 
 
     menu.Button.click(function () {
@@ -2211,7 +2211,7 @@ var loadMenu = function () {
             pressedKeys.push(e.keyCode);
 
             //close menu with Esc key
-            if (menuSwitch === "on" && e.keycode == 27) {
+            if (menuSwitch === "on" && pressedKeys[0] == 27) {
                 hideMenu();
             };
 
@@ -2223,6 +2223,7 @@ var loadMenu = function () {
             //open menu with shortcut: Ctrl + Alt + M
             if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 77) {
                 showMenu();
+                menuSwitch = "on";
             };
         })
         .keyup(function () {
