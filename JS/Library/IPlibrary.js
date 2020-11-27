@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.4.7';//increment me when publishing changes
+var version = '1.2.4.8';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2214,10 +2214,10 @@ var loadMenu = function () {
                 hideMenu();
             };
 
-            /* //open menu with Enter key
-            if (jQuery(document.activeElement).toString().indexOf("Logo a") > -1 && e.keycode == 13) {
-                showMenu()
-            }; */
+            //open menu with Enter key when the menu is highlighted by tab
+            if (jQuery("#Logo").toString().indexOf(jQuery("*:focus")) > -1 && e.keycode == 13) {
+                showMenu();
+            };
 
             //open menu with shortcut: Ctrl + Alt + M
             if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 77) {
