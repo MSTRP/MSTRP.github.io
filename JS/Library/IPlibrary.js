@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.4.6';//increment me when publishing changes
+var version = '1.2.4.7';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2173,7 +2173,7 @@ var loadMenu = function () {
 
     //launch link/action when clicknig anywhere on the menu item
     menu.menuItem.click(function () {
-        jQuery(this).find("a").off().click();
+        jQuery(this).find("a").trigger("click");
     });
 
     menu.Button.click(function () {
