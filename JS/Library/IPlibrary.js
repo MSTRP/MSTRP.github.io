@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.4.9';//increment me when publishing changes
+var version = '1.2.5.0';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2149,6 +2149,7 @@ var menu = {
     menu: jQuery("#navOuter"),
     List: jQuery(".navTable"),
     menuItem: jQuery(".menuLink"),
+    menuLink: jQuery(".menuLink a"),
     blurElements: jQuery("#SkinContent, #reportTitle, #Logo img")//page, title and menu respectively
 };
 
@@ -2172,14 +2173,11 @@ var loadMenu = function () {
     };
 
     //launch link/action when clicknig anywhere on the menu item
-    menu.menuItem.each(function () {
-        let item = jQuery(this);
-
-        item.click(function () {
-            item.find("a:first-of-type").trigger("click");
-        });
-        //jQuery(this).find("a").trigger("click");
+    menu.menuItem.click(function () {
+        let thisItem = jQuery(this).eq();
+        menu.menuLink[thisItem].trigger("click"); 
     });
+
 
     menu.Button.click(function () {
         switch (menuSwitch) {
@@ -2210,19 +2208,17 @@ var loadMenu = function () {
     jQuery(document)
         .keydown(function (e) {
 
-            if (e.keycode === 17 || pressedKeys[0] === 17) {
-                pressedKeys.push(e.keyCode);
-            };
+            pressedKeys.push(e.keyCode);
 
             //close menu with Esc key
             if (menuSwitch === "on" && e.keycode == 27) {
                 hideMenu();
             };
 
-            //open menu with Enter key when the menu is highlighted by tab
+            /* //open menu with Enter key when the menu is highlighted by tab
             if (jQuery("#Logo").toString().indexOf(jQuery("*:focus")) > -1 && e.keycode == 13) {
                 showMenu();
-            };
+            }; */
 
             //open menu with shortcut: Ctrl + Alt + M
             if (pressedKeys[0] === 17 && pressedKeys[1] === 18 && pressedKeys[2] === 77) {
@@ -2283,8 +2279,8 @@ var progressBar = {
             };
             //send value to embedded data
             Qualtrics.SurveyEngine.setEmbeddedData('progressBar', pbIO);
-            let newembeddedval = Qualtrics.SurveyEngine.getEmbeddedData('progressBar', pbIO);
-            console.log({ listener }, { pbIO }, { newembeddedval });
+            /*   let newembeddedval = Qualtrics.SurveyEngine.getEmbeddedData('progressBar', pbIO);
+              console.log({ listener }, { pbIO }, { newembeddedval }); */
         });
     }
 };
