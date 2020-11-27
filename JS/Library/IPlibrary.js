@@ -6,7 +6,7 @@ var phase = {
     closed: "Dev Cycle "
 };
 
-var version = '1.2.4.8';//increment me when publishing changes
+var version = '1.2.4.9';//increment me when publishing changes
 console.log("Version: ", phase.closed + version);
 
 
@@ -2172,8 +2172,13 @@ var loadMenu = function () {
     };
 
     //launch link/action when clicknig anywhere on the menu item
-    menu.menuItem.click(function () {
-        jQuery(this).find("a").trigger("click");
+    menu.menuItem.each(function () {
+        let item = jQuery(this);
+
+        item.click(function () {
+            item.find("a:first-of-type").trigger("click");
+        });
+        //jQuery(this).find("a").trigger("click");
     });
 
     menu.Button.click(function () {
@@ -2205,7 +2210,7 @@ var loadMenu = function () {
     jQuery(document)
         .keydown(function (e) {
 
-            if (e === 17 || pressedKeys[0] === 17) {
+            if (e.keycode === 17 || pressedKeys[0] === 17) {
                 pressedKeys.push(e.keyCode);
             };
 
